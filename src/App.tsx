@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, {useState} from 'react';
 import TabHeader, { TabItemInterface } from './components/TabHeader'
 import Profile from './components/Profile'
 import Cancer from './components/Cancer'
 import Cardiac from './components/Cardiac'
 import Diabets from './components/Diabets'
 
-
+import "react-datepicker/dist/react-datepicker.css";
 import "./css/animate.min.css"
 import "./css/bootstrap.min.css"
 import "./css/style.css"
@@ -16,34 +16,40 @@ import "./css/skins/square/yellow.css"
 
 import "./css/custom.css"
 
+
 const tabs: Array<TabItemInterface> = [
   {
     id: 1,
+    label: "Agent 1/1",
+    component: <Diabets />,
+  },
+  {
+    id: 2,
     label: "Profile 2/3",
     component: <Profile />,
     error: true
   },
   {
-    id: 2,
+    id: 3,
     label: "Cardiac 3/3",
     component: <Cardiac />,
     success: true
   },
   {
-    id: 3,
+    id: 4,
     label: "Cancer 0/5",
     component: <Cancer />
   },
   {
-    id: 4,
+    id: 5,
     label: "Diabets 1/2",
     component: <Diabets />,
   },
 ]
 
 function App() {
-  const [activeTab, setActiveTab] = React.useState<TabItemInterface>(tabs[0])
-  
+  const [activeTab, setActiveTab] = useState<TabItemInterface>(tabs[0])
+
   return (
    <React.Fragment>
 
@@ -58,7 +64,9 @@ function App() {
           <div className="tab-content">
             <div className="tab-pane fade show active">
               <div className="subheader"></div>
-              <div className="row">{activeTab.component}</div>
+              <div className="row">
+                  {activeTab.component}
+              </div>
             </div>
           </div>
         </div>

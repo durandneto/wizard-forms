@@ -1,8 +1,11 @@
 import { Fragment, useState } from "react"
+import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+
 import { TabItemInterface } from '../TabHeader'
 import PersonalInfo from "./personal-info.component"
 import Address from "./address.component"
 import MedicareID from "./medical.component"
+import PhysicianInformation from "./physician-information.component"
 
 const Tabs: Array<TabItemInterface> = [
    {
@@ -21,6 +24,11 @@ const Tabs: Array<TabItemInterface> = [
       id: 3,
       label: "Medicare ID",
       component: <MedicareID />,
+   },
+   {
+      id: 4,
+      label: "Primary Care",
+      component: <PhysicianInformation />,
    },
 ]
 
@@ -52,7 +60,22 @@ const Profile = () => {
       <div className="col-xl-9 col-lg-8">
          <div id="wizard_container">
             <div id="top-wizard">
-               <strong>{activeTab.label}</strong>
+               <Container>
+                  <Row>
+                     <Col>
+                        <Breadcrumb>
+                           <BreadcrumbItem>Profile</BreadcrumbItem>
+                           <BreadcrumbItem active>{activeTab.label}</BreadcrumbItem>
+                        </Breadcrumb>
+                     </Col>
+                  </Row>
+                  <Row>
+                     <Col>
+                        <h3>{activeTab.label}</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
+                     </Col>
+                  </Row>
+               </Container>
             </div>
             <div id="middle-wizard">
                {activeTab.component}

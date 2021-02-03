@@ -1,25 +1,24 @@
 import { Fragment, useState } from "react"
+import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { TabItemInterface } from '../TabHeader'
-import PersonalInfo from "../Profile/personal-info.component"
-import Address from "../Profile/address.component"
-import MedicareID from "../Profile/medical.component"
+import DummyComponent from "../DummyComponent"
 
 const Tabs: Array<TabItemInterface> = [
    {
       id: 1,
       label: "Diagnostic",
-      component: <PersonalInfo />,
+      component: <DummyComponent />,
       success: true
    },
    {
       id: 2,
       label: "Medications",
-      component: <Address />,
+      component: <DummyComponent />,
    },
    {
       id: 3,
       label: "Family Member",
-      component: <MedicareID />,
+      component: <DummyComponent />,
    },
 ]
 
@@ -51,7 +50,22 @@ const Diabets = () => {
       <div className="col-xl-9 col-lg-8">
          <div id="wizard_container">
             <div id="top-wizard">
-               <strong>{activeTab.label}</strong>
+               <Container>
+                  <Row>
+                     <Col>
+                        <Breadcrumb>
+                           <BreadcrumbItem>Diabets</BreadcrumbItem>
+                           <BreadcrumbItem active>{activeTab.label}</BreadcrumbItem>
+                        </Breadcrumb>
+                     </Col>
+                  </Row>
+                  <Row>
+                     <Col>
+                        <h3>{activeTab.label}</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
+                     </Col>
+                  </Row>
+               </Container>
             </div>
             <div id="middle-wizard">
                {activeTab.component}
