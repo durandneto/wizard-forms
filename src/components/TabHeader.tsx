@@ -34,7 +34,7 @@ const TabHeader = ({ activeTab, tabs, onClickTab }: TabHeaderInterface) => (
                         </li>
                     ))
                 }
-                <li><button type="button" className="forward">Save</button></li>
+                <li><button type="button" className="forward">Submit form</button></li>
             </ul>
         </nav>
   </header>

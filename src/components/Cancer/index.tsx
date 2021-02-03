@@ -55,7 +55,7 @@ const Cancer = () => {
                   (tabIndex < Tabs.length - 1) && 
                      <button onClick={() => {
                            setTab(tabIndex + 1)
-                     }} type="button" name="forward" className="forward">Forward</button>
+                     }} type="button" name="save">Save</button>
                }
             </div>
          </div>
