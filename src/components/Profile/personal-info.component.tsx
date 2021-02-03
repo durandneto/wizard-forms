@@ -1,6 +1,5 @@
 import { Container, Row, Col, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 
-import "react-datepicker/dist/react-datepicker.css";
 interface formInputInterface {
   id: string;
   label: string;

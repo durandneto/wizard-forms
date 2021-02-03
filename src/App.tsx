@@ -6,7 +6,6 @@ import Cancer from './components/Cancer'
 import Cardiac from './components/Cardiac'
 import Diabets from './components/Diabets'
 
-import "react-datepicker/dist/react-datepicker.css";
 import "./css/animate.min.css"
 import "./css/bootstrap.min.css"
 import "./css/style.css"
