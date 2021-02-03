@@ -51,12 +51,7 @@ const Cancer = () => {
                {activeTab.component}
             </div>
             <div id="bottom-wizard">
-               {
-                  (tabIndex < Tabs.length - 1) && 
-                     <button onClick={() => {
-                           setTab(tabIndex + 1)
-                     }} type="button" name="save">Save</button>
-               }
+               <button  type="button" className="forward" name="save">Save</button>
             </div>
          </div>
       </div>
