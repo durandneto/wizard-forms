@@ -1,5 +1,6 @@
 export interface  TabItemInterface {
     id: number;
+    index: number;
     label: string;
     error?: boolean;
     success?: boolean;

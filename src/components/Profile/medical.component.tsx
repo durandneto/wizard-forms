@@ -7,7 +7,11 @@ import {
   Button,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Form,
+  Col,
+  Row,
+  Container
  } from 'reactstrap';
 
 const MedicareID = () => {
@@ -19,12 +23,18 @@ const MedicareID = () => {
   const toggleSplit = () => setSplitButtonOpen(!splitButtonOpen);
 
   return (
-    <div>
-      <InputGroup>
-        <Input placeholder="Medicare ID" />
-        <InputGroupAddon addonType="append"><Button color="secondary">Check Elgibility</Button></InputGroupAddon>
-      </InputGroup>
-    </div>
+      <Container>
+        <Row>
+          <Col xs="12">
+            <Form>
+              <InputGroup>
+                <Input placeholder="Medicare ID" />
+                <InputGroupAddon addonType="append"><Button color="secondary">Check Elgibility</Button></InputGroupAddon>
+              </InputGroup>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
   );
 }
 

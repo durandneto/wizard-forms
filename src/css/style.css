@@ -57,8 +57,8 @@ h6 {
     font-weight: 700;
 }
 h1, h2, h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 h2 {
     font-size: 30px;
@@ -248,7 +248,6 @@ a.close_in:hover {
     z-index: 99;
 }
 .wrapper_in {
-    padding: 0 50px 60px 50px;
     z-index: 9;
     position: absolute;
     overflow-y:scroll;
@@ -782,19 +781,15 @@ button.submit.circle:before {
     color: #fff;
 }
 #top-wizard {
-    text-align: center;
-    padding: 15px 0;
     border-bottom: 1px solid #e8ebed;
     position: relative;
     text-transform: uppercase;
     font-size: 11px;
 }
-#middle-wizard {
-    padding: 30px 0 30px 50px;
-}
+#middle-wizard {padding: 15px 0;}
 #bottom-wizard {
     text-align: right;
-    padding: 15px 0 15px 0;
+    padding: 15px 0;
     border-top: 1px solid #e8ebed;
 }
 .ui-widget {}
@@ -1508,11 +1503,11 @@ ul.list li {
 ul.list li:hover {
     cursor: pointer;
     opacity: 0.8;
-    background-color: #ebebeb;
+    background-color: #e9ecef;
 }
 ul.list li.active{
     color: #409fff;
-    background-color: #ebebeb;
+    background-color: #e9ecef;
 }
 
 /* Hamburger menu button*/

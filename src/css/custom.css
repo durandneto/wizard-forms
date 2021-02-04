@@ -1,3 +1,41 @@
 /*============================================================================================*/
 /* Your custom styles below */
 /*============================================================================================*/
+.progress_container{
+    display: flex;
+    background-color: #e9ecef;
+    padding: 5px;
+    border-radius: .25rem;
+    margin-bottom: 15px;
+}
+.progress_left_col {
+    align-items: center;
+    display: flex;
+    padding: 0 5px;
+}
+.progress_right_col {
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    padding: 0;
+}
+
+.progress_container_top {
+    position: fixed;
+    width: 50%;
+    right: 20px;
+    top: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    z-index: 9999;
+    align-items: center;
+    display: flex;
+}
+
+.progress_container_top_left {
+    width: 70%;
+    margin: 0 15px;
+}
+.progress_container_top_right {
+    width: 20%;
+}
