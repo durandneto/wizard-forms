@@ -33,7 +33,11 @@
 }
 
 .progress_container_top_left {
-    width: 70%;
+    width: 20%;
+    text-align: right;
+}
+.progress_container_top_middle {
+    width: 60%;
     margin: 0 15px;
 }
 .progress_container_top_right {
