@@ -29,7 +29,7 @@ const MyProgress = (props: any) => {
                    return (
                         <span style={style} onClick={() => props.setTab(index)} key={`profile-tab-index-${index}`} >
                            {
-                              index > 0 && `| `
+                              index > 0 && ` | `
                            }
                            {
                               tab.label
