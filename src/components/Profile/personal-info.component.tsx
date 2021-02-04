@@ -1,5 +1,6 @@
-import { Container, Row, Col, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
-
+import { useState } from "react"
+import { DropdownToggle, DropdownMenu, DropdownItem, InputGroupButtonDropdown, InputGroup, InputGroupAddon, Button, Container, Row, Col, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
+import InputMask from 'react-input-mask';
 interface formInputInterface {
   id: string;
   label: string;
@@ -14,6 +15,15 @@ const FormInput = ({id, label}: formInputInterface) => (
 const Ethnicity: Array<string>= ["Asian", "African American", "Ashkenzai Jewish", "Caucasian", "French Canadian", "Hispanic", "Indian", "Middle Eastern", "Native American", "Pacific Islander", "Other"]
 const Separator = () => <Col xs="12"><hr /></Col>
 const PersonalInfo = () => {
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownAltOpen, setAltDropdownOpen] = useState(false);
+  const [code, setCode] = useState("Area")
+  const [altCode, setAltCode] = useState("Area")
+
+  const toggleDropDown = () => setDropdownOpen(!dropdownOpen);
+  const toggleAltDropDown = () => setAltDropdownOpen(!dropdownAltOpen);
+
   return (
   <div className="col-xs-12">
     <Form>
@@ -33,11 +43,53 @@ const PersonalInfo = () => {
               </FormGroup>
           </Col>
           <Col xs="12" sm="6">
-            <FormInput id="firstContact" label="Phone" />
+              <Label for={`form-input-id-phone`}>Phone</Label>
+              <InputGroup>
+                <InputGroupButtonDropdown addonType="append" isOpen={dropdownOpen} toggle={toggleDropDown}>
+                  <DropdownToggle caret>
+                    {code}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem header>Area</DropdownItem>
+                    <DropdownItem onClick={() => setCode("+ 1")}>+ 1</DropdownItem>
+                    <DropdownItem onClick={() => setCode("+ 778")}>+ 778</DropdownItem>
+                    <DropdownItem onClick={() => setCode("+ 236")}>+ 236</DropdownItem>
+                  </DropdownMenu>
+                </InputGroupButtonDropdown>
+                <Input
+                  type="tel"
+                  mask="999 999 9999"
+                  maskChar=" "
+                  id="form-input-id-phone"
+                  tag={InputMask}
+                />
+              </InputGroup>
           </Col>
           <Col xs="12" sm="6">
-            <FormInput id="AltContactNumber" label="Alt. Phone" />
+              <Label for={`form-input-id-phone`}>Alt. Phone</Label>
+              <InputGroup>
+                <InputGroupButtonDropdown addonType="append" isOpen={dropdownAltOpen} toggle={toggleAltDropDown}>
+                  <DropdownToggle caret>
+                    {altCode}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem header>Area</DropdownItem>
+                    <DropdownItem onClick={() => setAltCode("+ 1")}>+ 1</DropdownItem>
+                    <DropdownItem onClick={() => setAltCode("+ 778")}>+ 778</DropdownItem>
+                    <DropdownItem onClick={() => setAltCode("+ 236")}>+ 236</DropdownItem>
+                  </DropdownMenu>
+                </InputGroupButtonDropdown>
+                <Input
+                  type="tel"
+                  mask="999 999 9999"
+                  maskChar=" "
+                  id="form-input-id-phone"
+                  tag={InputMask}
+                />
+              </InputGroup>
           </Col>
+          <br />
+          <br />
           <Col xs="12">
             <FormInput id="emailAddress" label="Email Address" />
           </Col>
