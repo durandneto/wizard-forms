@@ -82,12 +82,15 @@ function App() {
                       {
                         tabs.map((tab: TabItemInterface, index: number) => 
                             <li onClick={() => {
-                              setPrevTab(activeTab)
                               setActiveTab(tab)
-                              setNextTab(tabs[index + 1])
-                              if (index === 0) {
+                              if (tab.index === 0) {
                                 setPrevTab(tabs[-1])
-                              } 
+                              }  else {
+                                setPrevTab(tabs[tab.index - 1])
+                              }
+                              setNextTab(tabs[tab.index + 1])
+
+
                             }} key={`profile-tab-index-${index}`} className={tab.id === activeTab.id ? "active" : ""}>
                               {tab.label}
                               {
