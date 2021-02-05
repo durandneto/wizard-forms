@@ -1,4 +1,5 @@
-import { Container, Row, Col, Form, FormGroup, Label, Input, CustomInput, FormFeedback, FormText } from 'reactstrap';
+import { Container, Row, Col, Form, FormGroup, Label, Input, CustomInput, FormFeedback, FormText,
+  InputGroup, Button, InputGroupAddon } from 'reactstrap';
 
 interface formInputInterface {
   id: string;
@@ -16,21 +17,29 @@ const Address = () => {
     <Form>
       <Container>
         <Row>
+          <Col  xs="4">
+            <FormGroup className="position-relative">
+              <Label>Postal code</Label>
+              <InputGroup>
+                <Input placeholder="Postal code" />
+                <InputGroupAddon addonType="append"><Button color="secondary">Search Address</Button></InputGroupAddon>
+              </InputGroup>
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
           <Col xs="12" sm="6">
             <FormGroup className="position-relative">
               <Label for="examplePassword">Full Address</Label>
               <Input invalid />
               <FormFeedback tooltip>Invalid Address, Example of a valid address here.</FormFeedback>
-          </FormGroup>
+            </FormGroup>
           </Col>
           <Col xs="12" sm="6">
             <FormInput id="address2" label="Address (line 2)" />
           </Col> 
           <Col xs="12" sm="6" >
             <FormInput id="city" label="City / State" />
-          </Col> 
-          <Col xs="12" sm="6" >
-            <FormInput id="postalCode" label="Postal Code" />
           </Col> 
         </Row>
       </Container>
