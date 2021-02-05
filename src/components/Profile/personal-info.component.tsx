@@ -30,10 +30,10 @@ const PersonalInfo = () => {
       <Container>
         <Row>
           <Col xs="12" sm="4">
-            <FormInput id="userFirstName" label="First name" />
+            <FormInput id="userFirstName" label="First name (*)" />
           </Col>
           <Col xs="12" sm="4">
-            <FormInput id="userLastName" label="Last name" />
+            <FormInput id="userLastName" label="Last name (*)" />
           </Col>
           <Col xs="12" sm="4">
               <Label for="RadioMale">Gender</Label>
