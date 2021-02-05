@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react"
-import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 import { TabItemInterface } from '../TabHeader'
 import PersonalInfo from "./personal-info.component"

@@ -65,7 +65,7 @@ function App() {
       <div id="header_in">
         <div id="logo_in"><img src={"https://oberholtzermedia.com/wp-content/uploads/2020/12/oberholtzerMediaLogo.png"} height="48" data-retina="true" alt="Quote" /></div>
       </div>
-      <ProgressHeader />
+      <ProgressHeader tabs={tabs} />
 
       {/* <TabHeader tabs={tabs} activeTab={activeTab} onClickTab={(clickedTab: TabItemInterface) => setActiveTab(clickedTab)}/> */}
 
