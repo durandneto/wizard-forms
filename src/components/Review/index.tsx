@@ -77,8 +77,8 @@ const ModalExample = (props: any) => {
                                                         {
                                                              item.data.error && (
                                                                 <NavbarText>
-                                                                    <div id="ScheduleUpdateButton" >
-                                                                    <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
+                                                                    <div id={`propover-error-${item.id}`} >
+                                                                        <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
                                                                     {/* <Button onClick={()=>{
                                                                         // const t = tables
                                                                         // t[tabIndex][itemIndex] = !t[tabIndex][itemIndex]
@@ -90,7 +90,7 @@ const ModalExample = (props: any) => {
                                                                         }
                                                                     </Button> */}
                                                                 </div>
-                                                                <UncontrolledPopover trigger="hover" placement="left" target="ScheduleUpdateButton">
+                                                                <UncontrolledPopover trigger="hover" placement="left" target={`propover-error-${item.id}`} >
                                                                 {({ scheduleUpdate }) => (
                                                                     <PopoverContent  {...item}/>
                                                                     )}
@@ -100,13 +100,13 @@ const ModalExample = (props: any) => {
                                                         }
                                                         {
                                                             item.data.success && ( <>
-                                                            <div id="ScheduleUpdateButtonSuccess" >
+                                                            <div id={`propover-success-${item.id}`} >
                                                                 <i style={{color: "#155724"}} className="icon-ok-1"></i>
                                                             </div>
-                                                            <UncontrolledPopover trigger="hover" placement="left" target="ScheduleUpdateButtonSuccess">
+                                                            <UncontrolledPopover trigger="hover" placement="left" target={`propover-success-${item.id}`}>
                                                             {({ scheduleUpdate }) => (
                                                                 <PopoverContentSuccess />
-                                                                )}
+                                                            )}
                                                             </UncontrolledPopover>
                                                         </>)
                                                         }

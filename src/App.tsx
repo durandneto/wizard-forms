@@ -15,6 +15,7 @@ import "./css/skins/square/yellow.css"
 import "./css/custom.css"
 
 import { validateAddress, checkMedicare } from "./actions/profile"
+import { PopoverBody, PopoverHeader, UncontrolledPopover } from 'reactstrap';
 
 const reversePopulate = 
   // eslint-disable-next-line array-callback-return
@@ -24,6 +25,45 @@ const reversePopulate =
         return acc;
       }
     },{})
+
+
+    const PopoverContent = ({ tabs }: any) => {
+    
+      return (
+          <>
+          <PopoverHeader>Error <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i></PopoverHeader>
+          <PopoverBody>
+              {/* <span dangerouslySetInnerHTML={{__html: tab.data.error}} ></span> */}
+              {
+                tabs.map((t: any) => {
+
+                  if (t.data.error) {
+                    return (<div>
+                    <h6>{t.label}</h6>
+                    <p dangerouslySetInnerHTML={{__html: t.data.error}} ></p>
+                  </div>)
+                  }
+                })
+              }
+          </PopoverBody>
+          </>
+      );
+      }
+  
+  const PopoverContentSuccess = (props: any) => {
+      
+      return (
+          <>
+          <PopoverHeader>Success <i style={{color: "#155724"}} className="icon-ok-1"></i></PopoverHeader>
+          <PopoverBody>
+              This section was successfully Validated
+          </PopoverBody>
+          </>
+      );
+      }
+  
+
+      
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabHeaderInterface>(TabsContext[0])
@@ -150,9 +190,9 @@ function App() {
                   <ul className="list">
                       {
                         tabsContext.map((tab: any, index: number) => 
-                            {
+                         {
                               console.log("tab", tab)
-                              return (<li onClick={() => {
+                              return (<li  id={`profile-tab-index-${index}`}  key={`profile-tab-index-${index}`}  onClick={() => {
                               setActiveTab(tab)
                               if (tab.index === 0) {
                                 setPrevTab(tabsContext[-1])
@@ -161,17 +201,35 @@ function App() {
                               }
                               setNextTab(tabsContext[tab.index + 1])
 
-                            }} key={`profile-tab-index-${index}`} className={tab.id === activeTab?.id ? "active" : ""}>
+                            }} className={tab.id === activeTab?.id ? "active" : ""}>
                               {tab.label}
                               {
-                                tab.tabs.filter((t: TabItemInterface) => t.data.error).length > 0 && <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
+                                tab.tabs.filter((t: TabItemInterface) => t.data.error).length > 0 && 
+                                <>
+                                <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
+                                <UncontrolledPopover trigger="hover" placement="left" target={`profile-tab-index-${index}`}>
+                                {({ scheduleUpdate }) => (
+                                    <PopoverContent tabs={tab.tabs} />
+                                )}
+                                </UncontrolledPopover>
+                                </>
                               }
                               {
-                                tab.success && <i style={{color: "#155724"}} className="icon-ok-1"></i>
+                                tab.success && <>
+                                <i style={{color: "#155724"}} className="icon-ok-1"></i>
+                                  <UncontrolledPopover trigger="hover" placement="left" target={`profile-tab-index-${index}`}>
+                                {({ scheduleUpdate }) => (
+                                    <PopoverContentSuccess />
+                                )}
+                                </UncontrolledPopover>
+                                </>
                               }
-                            </li>)}
+                            </li>
+                            )
+                            }
                         )
-                      }
+                      } 
+                          
                   </ul>
                   
                 </aside>

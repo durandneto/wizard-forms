@@ -3,10 +3,25 @@ import {
   Container,
   Row,
   Col,
-  Button
+  Button,
+  PopoverHeader,
+  PopoverBody,
+  UncontrolledPopover
 } from 'reactstrap';
 import { useContext } from 'react';
 import { AppContext } from '../context/App.Contex';
+
+const PopoverContent = ({ tab }: any) => {
+    
+   return (
+       <>
+       <PopoverHeader>Error <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i></PopoverHeader>
+       <PopoverBody>
+           <span dangerouslySetInnerHTML={{__html: tab.data.error}} ></span>
+       </PopoverBody>
+       </>
+   );
+   }
 
 const MyProgress = () => {
    const { activeTab, setActivePanel, nextTab,
@@ -23,7 +38,7 @@ const MyProgress = () => {
                    const style = tab.success ? {color: '#222' } : {}
                    if (tab.id === activeTab.activeTab.id) style.color = "#409fff"
                    return (
-                        <span style={style} onClick={() => {setActivePanel(tab)}} key={`profile-tab-index-${index}`} >
+                        <span style={style} onClick={() => {setActivePanel(tab)}} key={`profile-tab-index-progress-${index}`} id={`profile-tab-index-progress-${index}`} >
                            {
                               index > 0 && ` | `
                            }
@@ -31,7 +46,14 @@ const MyProgress = () => {
                               tab.label
                            }
                            {
-                              tab.data.error && <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
+                              tab.data.error && <>
+                              <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
+                              <UncontrolledPopover trigger="hover" placement="left" target={`profile-tab-index-progress-${index}`}>
+                              {({ scheduleUpdate }) => (
+                                  <PopoverContent tab={tab}/>
+                              )}
+                              </UncontrolledPopover>
+                              </>
                            }
                            {
                               tab.data.success && <i style={{color: "#155724"}} className="icon-ok-1"></i>

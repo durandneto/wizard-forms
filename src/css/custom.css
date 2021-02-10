@@ -13,6 +13,10 @@
     display: flex;
     padding: 0 5px;
 }
+.progress_left_col :hover {
+    color: #409fff;
+    cursor: pointer;
+}
 .progress_right_col {
     align-items: center;
     justify-content: flex-end;
