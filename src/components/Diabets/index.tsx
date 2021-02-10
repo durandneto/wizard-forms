@@ -31,7 +31,7 @@ const Diabets = (props: any) => {
    const activeTab: TabItemInterface = Tabs[tabIndex]
    return (
       <div id="wizard_container">
-      <div id="top-wizard">
+      {/* <div id="top-wizard">
          <Container>
             <Row>
                <Col>
@@ -65,7 +65,7 @@ const Diabets = (props: any) => {
          {activeTab.component}
       </div>
       <div id="bottom-wizard">
-      </div>
+      </div> */}
    </div>
 )}
 

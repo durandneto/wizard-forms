@@ -1,33 +1,29 @@
-import React, { useState } from 'react';
 import { TabItemInterface } from './TabHeader'
 import {
-  Collapse,
-  Navbar,
-  Nav,
-  NavItem,
-  NavLink,
-  Alert,
-  Progress,
   Container,
   Row,
   Col,
-  ToastBody
+  Button
 } from 'reactstrap';
+import { useContext } from 'react';
+import { AppContext } from '../context/App.Contex';
 
-const MyProgress = (props: any) => {
-
+const MyProgress = () => {
+   const { activeTab, setActivePanel, nextTab,
+      prevTab, backToPrevTab, goToNextTab} = useContext(AppContext)
+   console.log("MyProgress",activeTab)
   return (
    <div className="progress_container">
       <Container>
         <Row>
           <Col className="progress_left_col">
           {
-               props.tabs.map((tab: TabItemInterface, index: number) => {
+               activeTab.tabs.map((tab: TabItemInterface, index: number) => {
 
                    const style = tab.success ? {color: '#222' } : {}
-                   if (tab.id === props.activeTab.id) style.color = "#409fff"
+                   if (tab.id === activeTab.activeTab.id) style.color = "#409fff"
                    return (
-                        <span style={style} onClick={() => props.setTab(index)} key={`profile-tab-index-${index}`} >
+                        <span style={style} onClick={() => {setActivePanel(tab)}} key={`profile-tab-index-${index}`} >
                            {
                               index > 0 && ` | `
                            }
@@ -35,10 +31,10 @@ const MyProgress = (props: any) => {
                               tab.label
                            }
                            {
-                              tab.error && <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
+                              tab.data.error && <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
                            }
                            {
-                              tab.success && <i style={{color: "#155724"}} className="icon-ok-1"></i>
+                              tab.data.success && <i style={{color: "#155724"}} className="icon-ok-1"></i>
                            }
                         </span>
                   )}
@@ -47,20 +43,25 @@ const MyProgress = (props: any) => {
             </Col>
             <Col className="progress_right_col">
                {
-                  props.currentIndex > 0 && <button onClick={props.onPrev} type="button" className="backward"  name="prev">Prev</button>
+                  activeTab.activeTab.index > 0 && <Button onClick={() => {
+                     setActivePanel(activeTab.tabs[activeTab.activeTab.index - 1])
+                  }} type="button" className="backward"  size="sm" name="prev">Prev</Button>
                }
                {
-                  props.prevTab?.label !==  props.tabs[props.currenIndex]?.label && props.currentIndex === 0 && <button onClick={props.backToPrevTab} type="button" className="backward"  name="prev">Back to {props.prevTab.label}</button>
+                  prevTab && activeTab.activeTab.index === 0 && <Button onClick={backToPrevTab} type="button" className="backward" size="sm" name="prev">Back to {prevTab?.label}</Button>
                }
                {
-                 props.currentIndex < props.tabs.length - 1 && <button onClick={props.onNext} type="button" className="forward"  name="save">Next</button>
+                 activeTab.activeTab.index < activeTab.tabs.length - 1 && <Button onClick={() => {
+                  setActivePanel(activeTab.tabs[activeTab.activeTab.index + 1])
+               }} type="button" className="forward"  size="sm" name="save">Next</Button>
+               }
+               
+               {
+                 nextTab && activeTab.activeTab.index === activeTab.tabs.length - 1 && <Button onClick={goToNextTab} type="button" className="forward" size="sm" name="save">Got to {nextTab?.label}</Button>
                }
                {
-                 props.nextTab && props.currentIndex === props.tabs.length - 1 && <button onClick={props.goToNextTab} type="button" className="forward"  name="save">Got to {props.nextTab.label}</button>
-               }
-               {
-                 !props.nextTab && props.currentIndex === props.tabs.length - 1 && <button type="button" className="forward"  name="save">Submit</button>
-               }
+                 !nextTab && activeTab.activeTab.index === activeTab.tabs.length - 1 && <Button type="button" className="forward" size="sm"  name="save">Submit</Button>
+               } 
             </Col> 
          </Row> 
       </Container> 

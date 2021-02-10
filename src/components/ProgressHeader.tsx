@@ -2,8 +2,8 @@ import  {useState } from "react"
 import { Progress } from "reactstrap"
 import Review from "./Review"
 
-const ProgressHeader = ( props:any ) => {
-    
+const ProgressHeader = () => {
+
     const [isOpen, setModal] = useState(false); 
   
     const toggle = () => setModal(!isOpen);
@@ -19,7 +19,7 @@ const ProgressHeader = ( props:any ) => {
         <div className="progress_container_top_right">
             <button onClick={toggle} type="button" className="forward">Submit form</button>
         </div>
-        <Review tabs={props.tabs} isOpen={isOpen} toggle={toggle}/>
+        <Review isOpen={isOpen} toggle={toggle}/>
     </div>
 )
 }
