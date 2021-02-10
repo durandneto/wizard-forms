@@ -16,13 +16,22 @@ import "./css/custom.css"
 
 import { validateAddress, checkMedicare } from "./actions/profile"
 
+const reversePopulate = 
+  // eslint-disable-next-line array-callback-return
+  (Context: Array<TabHeaderInterface>, slug: string) => Context.reduce( (acc: any, c: any) => {
+      if (c.slug === slug) {
+        c.tabs.map((tt: TabItemInterface) => ( acc[tt.slug] = tt.data ));
+        return acc;
+      }
+    },{})
+
 function App() {
   const [activeTab, setActiveTab] = useState<TabHeaderInterface>(TabsContext[0])
   const [nextTab, setNextTab] = useState<TabHeaderInterface>(TabsContext[1])
   const [prevTab, setPrevTab] = useState<TabHeaderInterface>(TabsContext[-1] || null)
   const [tabsContext, setTabsContext] = useState<TabHeaderInterface[]>(TabsContext)
+  const [Profile, setProfile] = useState<any>(() => reversePopulate(TabsContext, "Profile"))
 
-  // const [Profile, setProfile] = useState<ProfileInterface>(ProfileData)
  
   const backToPrevTab = useCallback(() => {
     console.log("backToPrevTab")
@@ -88,7 +97,7 @@ function App() {
       tabsContext,
       goToNextTab,
       backToPrevTab,
-      // Profile,
+      Profile,
       // setProfile,
       updateContext,
       validateAddress,
@@ -106,16 +115,17 @@ function App() {
       setTabsContext,
       setActivePanel,
       updateContext,
-      // Profile,
+      Profile,
       // setProfile
    ])
 
-  //  useEffect(() => {
-  //   debugger
-  //   const newTabsContext = tabsContext
-  //   // newTabsContext.Profile = Profile
-  //   setTabsContext(newTabsContext)
-  //  }, [Profile, tabsContext, activeTab])
+   useEffect(() => {
+    setProfile(reversePopulate(TabsContext, "Profile"))
+   }, [tabsContext])
+
+   useEffect(() => {
+    console.log(Profile)
+   }, [Profile])
 
    console.log("render")
   return (
@@ -123,7 +133,8 @@ function App() {
 
     <div id="main_container" className="visible">
       <div id="header_in">
-        <div id="logo_in"><img src={"https://oberholtzermedia.com/wp-content/uploads/2020/12/oberholtzerMediaLogo.png"} height="48" data-retina="true" alt="Quote" /></div>
+        {/* <div id="logo_in"><img src={"https://oberholtzermedia.com/wp-content/uploads/2020/12/oberholtzerMediaLogo.png"} height="48" data-retina="true" alt="Quote" /></div> */}
+        <div id="logo_in">Form</div>
       </div>
       <ProgressHeader />
 

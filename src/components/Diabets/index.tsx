@@ -8,6 +8,7 @@ const Tabs: Array<TabItemInterface> = [
    {
       id: 1,
       label: "Diagnostic",
+      slug: "Diagnostic",
       component: <DummyComponent />,
       success: true,
       index: 0
@@ -15,12 +16,14 @@ const Tabs: Array<TabItemInterface> = [
    {
       id: 2,
       label: "Medications",
+      slug: "Medications",
       component: <DummyComponent />,
       index: 1
    },
    {
       id: 3,
       label: "Family Member",
+      slug: "FamilyMember",
       component: <DummyComponent />,
       index: 2
    },

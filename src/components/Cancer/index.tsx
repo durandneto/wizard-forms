@@ -8,12 +8,14 @@ const Tabs: Array<TabItemInterface> = [
    {
       id: 1,
       label: "Diagnostic",
+      slug: "Diagnostic",
       component: <DummyComponent />,
       index: 0
    },
    {
       id: 3,
       label: "Family Member",
+      slug: "FamilyMember",
       component: <DummyComponent />,
       index: 1
    },

@@ -4,6 +4,8 @@ import { AppContext } from '../../../context/App.Contex';
 import { ProfileInterface } from '../../../context/Profile.Contex';
 
 const AddressTable = (props: any) => {
+  const { Profile }  = useContext(AppContext)
+  const { Address } = Profile
   return (
     <Table size="sm" hover>
       <thead>
@@ -13,7 +15,7 @@ const AddressTable = (props: any) => {
       </thead>
       <tbody>
         <tr>
-          <td>{`${props.context.streetLine}, ${props.context.city} - ${props.context.state} ${props.context.postalCode}`}</td>
+          <td>{`${Address.streetLine}, ${Address.city} - ${Address.state} ${Address.postalCode}`}</td>
         </tr>
       </tbody>
     </Table>

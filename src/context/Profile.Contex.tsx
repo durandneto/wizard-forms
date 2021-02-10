@@ -47,7 +47,7 @@ export const ProfilePrimaryCareData = {
    fullName: "",
    phone: "",
 }
-
+// Cardio ober1001A Lionell Yewitt 2/9/1951 Medicare 5v32-m08-gc02
 export const ProfileMedicareData = {
    memberID: "9dx2tp7pc18",
    Provider_LastName: "Fastflow Marketing",
@@ -55,7 +55,7 @@ export const ProfileMedicareData = {
    payerCode: "00007",
    Patient_Last: "Gaytan",
    Patient_First: "Rodolfo",
-   Patient_DOB: "1/22/1938",
+   Patient_DOB: "8/30/1949",
 }
 
 export const ProfileAddressData = {
@@ -98,6 +98,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
    {
       id: 1,
       label: "Personal Information.",
+      slug: "PersonalInfo",
       component: (props:any) => <PersonalInfo {...props} />,
       index: 0,
       data: ProfileData.User
@@ -105,6 +106,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
    {
       id: 2,
       label: "Address",
+      slug: "Address",
       component:  (props:any) =>  <Address {...props}  />,
       index: 1,
       data: ProfileData.Address
@@ -112,6 +114,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
    {
       id: 3,
       label: "Medicare ID",
+      slug: "Medicare",
       component:  (props:any) =>  <MedicareID {...props}  />,
       index: 2,
       data: ProfileData.Medicare
@@ -119,6 +122,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
    {
       id: 4,
       label: "Primary Care",
+      slug: "PrimaryCare",
       component:  (props:any) =>  <PrimaryCare {...props}  />,
       index: 3,
       data: ProfileData.PrimaryCare
@@ -129,6 +133,7 @@ export const ProfileTab: TabHeaderInterface = {
    id: 1,
    index: 0,
    label: "Profile",
+   slug: "Profile",
    component: (props: any) => <Profile  {...props}/>,
    activeTab: ProfileItemsTab[0],
    tabs: ProfileItemsTab,

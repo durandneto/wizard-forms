@@ -19,8 +19,8 @@ const FormInput = ({id, label, value, onChange}: formInputInterface) => (
 
 const Ethnicity: Array<string>= ["Asian", "African American", "Ashkenzai Jewish", "Caucasian", "French Canadian", "Hispanic", "Indian", "Middle Eastern", "Native American", "Pacific Islander", "Other"]
 const PersonalInfo = (props: any) => {
-  const { activeTab: Profile, updateContext, tabsContext }  = useContext(AppContext)
-  const { data: User } = Profile.activeTab
+  const {  Profile, updateContext }  = useContext(AppContext)
+  const { PersonalInfo: User } = Profile
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownAltOpen, setAltDropdownOpen] = useState(false);

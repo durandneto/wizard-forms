@@ -17,8 +17,8 @@ import TableInfo from "./table";
 const MedicareID = (props:any) => {
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { activeTab: Profile, checkMedicare, updateContext }  = useContext(AppContext)
-  const { data: Medicare } = Profile.activeTab
+  const { Profile, checkMedicare, updateContext }  = useContext(AppContext)
+  const { Medicare, PersonalInfo } = Profile
 
   if (props.table) {
       return <TableInfo {...props} />
@@ -27,12 +27,19 @@ const MedicareID = (props:any) => {
     <div className="col-xs-12">
       <Container>
       {
-        Medicare.error && (
+        (Medicare.error || Medicare.success) && (
           <Row>
               <Col>
-                  <Alert color="danger">
+              {
+                Medicare.error && (<Alert color="danger">
                       <div dangerouslySetInnerHTML={{__html: Medicare.error}} ></div>
-                  </Alert>
+                  </Alert>)
+              }
+              {
+                Medicare.success && (<Alert color="success">
+                      <div dangerouslySetInnerHTML={{__html: Medicare.success}} ></div>
+                  </Alert>)
+              }
               </Col>
           </Row>
         )
@@ -52,9 +59,10 @@ const MedicareID = (props:any) => {
                     }  onClick={() => {
                       if (!loading) {
                         setLoading(true)
-                        checkMedicare({}, Medicare)
+                        checkMedicare(PersonalInfo, Medicare)
                         .then((r: any) => {
-                          updateContext("error", r.EDIErrorMessage ? r.EDIErrorMessage : null)
+                          updateContext("error", r.EDIErrorMessage)
+                          updateContext("success", r.AddtionalInfo)
                           setLoading(false)
                         }).catch((err: any) => {
                           updateContext("error", err.response.data.message)

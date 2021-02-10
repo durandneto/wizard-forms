@@ -4,6 +4,9 @@ import { AppContext } from '../../../context/App.Contex';
 import { ProfileInterface } from '../../../context/Profile.Contex';
 
 const ProfileTable = (props: any) => {
+
+  const { Profile }  = useContext(AppContext)
+  const { PersonalInfo } = Profile
   return (
     <Table size="sm" responsive>
       <thead>
@@ -21,15 +24,15 @@ const ProfileTable = (props: any) => {
       </thead>
       <tbody>
         <tr>
-          <td>{props.context.firstName}</td>
-          <td>{props.context.lastName}</td>
-          <td>{props.context.gender}</td>
-          <td>{`${props.context.phoneCode} ${props.context.phone}`}</td>
-          <td>{`${props.context.altPhoneCode} ${props.context.altPhone}`}</td>
-          <td>{props.context.email}</td>
-          <td>{props.context.birthdate}</td>
-          <td>{props.context.ethnicity}</td>
-          <td>{props.context.previousTests.join(",")}</td>
+          <td>{PersonalInfo.firstName}</td>
+          <td>{PersonalInfo.lastName}</td>
+          <td>{PersonalInfo.gender}</td>
+          <td>{`${PersonalInfo.phoneCode} ${PersonalInfo.phone}`}</td>
+          <td>{`${PersonalInfo.altPhoneCode} ${PersonalInfo.altPhone}`}</td>
+          <td>{PersonalInfo.email}</td>
+          <td>{PersonalInfo.birthdate}</td>
+          <td>{PersonalInfo.ethnicity}</td>
+          <td>{PersonalInfo.previousTests.join(",")}</td>
         </tr>
       </tbody>
     </Table>

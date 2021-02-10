@@ -5,8 +5,8 @@ import InputMask from 'react-input-mask';
 import TableInfo from "./table"
 
 const PhysicianInformation = (props:any) => {
-  const { activeTab: Profile, updateContext }  = useContext(AppContext)
-  const { data: PrimaryCare } = Profile.activeTab
+  const { Profile, updateContext }  = useContext(AppContext)
+  const { PrimaryCare } = Profile
 
 
   const [dropdownOpen, setDropdownOpen] = useState(false);

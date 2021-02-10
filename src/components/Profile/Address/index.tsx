@@ -9,8 +9,8 @@ const Address = (props:any) => {
 
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { activeTab: Profile, updateContext, validateAddress }  = useContext(AppContext)
-  const { data: Address } = Profile.activeTab
+  const { Profile, updateContext, validateAddress }  = useContext(AppContext)
+  const { Address } = Profile
 
     if (props.table) {
         return <TableInfo {...props} />
@@ -68,7 +68,7 @@ const Address = (props:any) => {
                 <Label for="postalcode">Postal code</Label>
                 <Input disabled={loading} value={Address.postalCode} id="postalcode" 
                  onChange={(e) => {
-                  updateContext("postalcode", e.target.value)
+                  updateContext("postalCode", e.target.value)
                 }}/>
               </FormGroup>
             </Col> 

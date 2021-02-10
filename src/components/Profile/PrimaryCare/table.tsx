@@ -4,6 +4,8 @@ import { AppContext } from '../../../context/App.Contex';
 import { ProfileInterface } from '../../../context/Profile.Contex';
 
 const PrimaryCareTable = (props: any) => {
+  const { Profile }  = useContext(AppContext)
+  const { PrimaryCare } = Profile
   return (
     <Table size="sm" responsive>
       <thead>
@@ -14,8 +16,8 @@ const PrimaryCareTable = (props: any) => {
       </thead>
       <tbody>
         <tr>
-          <td>{props.context.fullName}</td>
-          <td>{props.context.phone}</td>
+          <td>{PrimaryCare.fullName}</td>
+          <td>{PrimaryCare.phone}</td>
         </tr>
       </tbody>
     </Table>

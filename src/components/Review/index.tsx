@@ -16,7 +16,7 @@ const PopoverContent = (props: any) => {
         <>
         <PopoverHeader>Error <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i></PopoverHeader>
         <PopoverBody>
-            {props.error}
+            <span dangerouslySetInnerHTML={{__html: props.data.error}} ></span>
         </PopoverBody>
         </>
     );
@@ -79,16 +79,16 @@ const ModalExample = (props: any) => {
                                                                 <NavbarText>
                                                                     <div id="ScheduleUpdateButton" >
                                                                     <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
-                                                                    <Button onClick={()=>{
-                                                                        const t = tables
-                                                                        t[tabIndex][itemIndex] = !t[tabIndex][itemIndex]
-                                                                        setTables([...tables, t])
+                                                                    {/* <Button onClick={()=>{
+                                                                        // const t = tables
+                                                                        // t[tabIndex][itemIndex] = !t[tabIndex][itemIndex]
+                                                                        // setTables([...tables, t])
                                                                     }} 
                                                                     color="link">
                                                                         {
                                                                             tables[tabIndex][itemIndex] ? `Quick fix` : `Save`
                                                                         }
-                                                                    </Button>
+                                                                    </Button> */}
                                                                 </div>
                                                                 <UncontrolledPopover trigger="hover" placement="left" target="ScheduleUpdateButton">
                                                                 {({ scheduleUpdate }) => (
@@ -111,7 +111,7 @@ const ModalExample = (props: any) => {
                                                         </>)
                                                         }
                                                     </Navbar>
-                                                    <item.component context={item.data} table={tables[tabIndex][itemIndex]} />
+                                                    <item.component table={tables[tabIndex][itemIndex]} />
                                                 </div>
                                         
                                         )

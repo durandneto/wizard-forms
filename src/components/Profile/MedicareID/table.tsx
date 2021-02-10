@@ -4,6 +4,9 @@ import { AppContext } from '../../../context/App.Contex';
 import { ProfileInterface } from '../../../context/Profile.Contex';
 
 const MedicareTable = (props: any) => {
+
+  const { Profile }  = useContext(AppContext)
+  const { Medicare } = Profile
   return (
     <Table size="sm" hover>
       <thead>
@@ -13,7 +16,7 @@ const MedicareTable = (props: any) => {
       </thead>
       <tbody>
         <tr>
-          <td>{props.context.memberID}</td>
+          <td>{Medicare.memberID}</td>
         </tr>
       </tbody>
     </Table>

@@ -2,8 +2,9 @@ export interface  TabItemInterface {
     id: number;
     index: number;
     label: string;
-    error?: string | number;
-    success?: boolean;
+    slug: string;
+    error?: string | number | boolean;
+    success?:  string | boolean;
     component: any;
     data?: any;
 }
