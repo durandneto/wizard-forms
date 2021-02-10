@@ -27,7 +27,7 @@ const reversePopulate =
     },{})
 
 
-    const PopoverContent = ({ tabs }: any) => {
+    const PopoverContent = ({ tabs, setActivePanel }: any) => {
     
       return (
           <>
@@ -38,7 +38,7 @@ const reversePopulate =
                 tabs.map((t: any) => {
 
                   if (t.data.error) {
-                    return (<div>
+                    return (<div onClick={() => {setActivePanel(t)}} >
                     <h6>{t.label}</h6>
                     <p dangerouslySetInnerHTML={{__html: t.data.error}} ></p>
                   </div>)
@@ -209,7 +209,9 @@ function App() {
                                 <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
                                 <UncontrolledPopover trigger="hover" placement="left" target={`profile-tab-index-${index}`}>
                                 {({ scheduleUpdate }) => (
-                                    <PopoverContent tabs={tab.tabs} />
+                                    <PopoverContent tabs={tab.tabs} setActivePanel={(tab2:any) => {
+                                      // setActivePanel(tab2)
+                                    }}/>
                                 )}
                                 </UncontrolledPopover>
                                 </>
