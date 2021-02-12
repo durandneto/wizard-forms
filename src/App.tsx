@@ -167,7 +167,8 @@ function App() {
       setError,
       setActivePanel,
       checkMedicare,
-      setIsSavingData
+      setIsSavingData,
+      setIsReviewingData
    })}, [
       nextTab,
       prevTab,

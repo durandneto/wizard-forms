@@ -6,7 +6,7 @@ const BMITable = (props: any) => {
   const { Diabetes }  = useContext(AppContext)
   const { FamilyMember } = Diabetes
   return (
-    <Table size="sm" hover>
+    <Table size="sm" responsive>
       <thead>
         <tr>
           <th>Full Name</th>

@@ -7,7 +7,7 @@ const AddressTable = (props: any) => {
   const { Profile }  = useContext(AppContext)
   const { Address } = Profile
   return (
-    <Table size="sm" hover>
+    <Table size="sm" responsive>
       <thead>
         <tr>
           <th>Full Address</th>

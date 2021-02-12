@@ -8,7 +8,7 @@ const MedicareTable = (props: any) => {
   const { Profile }  = useContext(AppContext)
   const { Medicare } = Profile
   return (
-    <Table size="sm" hover>
+    <Table size="sm" responsive>
       <thead>
         <tr>
           <th>Medicare memberID</th>

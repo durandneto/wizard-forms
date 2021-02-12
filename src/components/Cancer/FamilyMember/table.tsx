@@ -6,7 +6,7 @@ const CancerTable = (props: any) => {
   const { Cancer }  = useContext(AppContext)
   const { FamilyMember } = Cancer
   return (
-    <Table size="sm" hover>
+    <Table size="sm" responsive>
       <thead>
         <tr>
           <th>Age of diagnosis</th>

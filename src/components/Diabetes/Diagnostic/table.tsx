@@ -7,7 +7,7 @@ const AddressTable = (props: any) => {
   const { Diabetes, updateContext, Error }  = useContext(AppContext)
   const { Diagnostic } = Diabetes
   return (
-    <Table size="sm" hover>
+    <Table size="sm" responsive>
       <thead>
         <tr>
           <th>List of diagnostics</th>

@@ -6,7 +6,7 @@ const CardiacTable = (props: any) => {
   const { Cardiac }  = useContext(AppContext)
   const { FamilyMember } = Cardiac
   return (
-    <Table size="sm" hover>
+    <Table size="sm" responsive>
       <thead>
         <tr>
           <th>Condition Date</th>

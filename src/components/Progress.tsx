@@ -25,7 +25,7 @@ const PopoverContent = ({ tab }: any) => {
 
 const MyProgress = () => {
    const { activeTab, setActivePanel, nextTab,
-      prevTab, backToPrevTab, goToNextTab} = useContext(AppContext)
+      prevTab, backToPrevTab, goToNextTab, setIsReviewingData} = useContext(AppContext)
    console.log("MyProgress",activeTab)
   return (
    <div className="progress_container">
@@ -82,7 +82,7 @@ const MyProgress = () => {
                  nextTab && activeTab.activeTab.index === activeTab.tabs.length - 1 && <Button onClick={goToNextTab} type="button" className="forward" size="sm" name="save">Got to {nextTab?.label}</Button>
                }
                {
-                 !nextTab && activeTab.activeTab.index === activeTab.tabs.length - 1 && <Button type="button" className="forward" size="sm"  name="save">Submit</Button>
+                 !nextTab && activeTab.activeTab.index === activeTab.tabs.length - 1 && <Button type="button" className="forward" size="sm" onClick={() => {setIsReviewingData(true)}} name="save">Submit</Button>
                } 
             </Col> 
          </Row> 
