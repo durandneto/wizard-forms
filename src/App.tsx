@@ -17,6 +17,7 @@ import "./css/custom.css"
 import { validateAddress, checkMedicare } from "./actions/profile"
 import { PopoverBody, PopoverHeader, UncontrolledPopover } from 'reactstrap';
 import SubmitFormModal from './components/SubmitFormModal';
+import Review from './components/Review';
 
 const reversePopulate = 
   // eslint-disable-next-line array-callback-return
@@ -91,6 +92,7 @@ function App() {
   const [Cancer, setCancer] = useState<any>(ContextData.Cancer)
   const [Error, setError] = useState(() => generateErrors(TabsContext))
   const [isSavingData, setIsSavingData] = useState(false)
+  const [isReviewingData, setIsReviewingData] = useState(false)
   const backToPrevTab = useCallback(() => {
     if (prevTab?.index === 0) {
       setPrevTab(tabsContext[- 1])
@@ -199,14 +201,21 @@ function App() {
    console.log("render",{Error}, {tabsContext})
   return (
    <AppContext.Provider value={ContextProvider}>
-     <SubmitFormModal isOpen={isSavingData} />
+     <SubmitFormModal isOpen={isSavingData} onCancel={() => {
+       setIsSavingData(false)
+     }} />
+     <Review isOpen={isReviewingData} toggle={() => {
+       setIsReviewingData( !isReviewingData )
+     }}/>
 
     <div id="main_container" className="visible">
       <div id="header_in">
         {/* <div id="logo_in"><img src={"https://oberholtzermedia.com/wp-content/uploads/2020/12/oberholtzerMediaLogo.png"} height="48" data-retina="true" alt="Quote" /></div> */}
         <div id="logo_in">Form</div>
       </div>
-      <ProgressHeader />
+      <ProgressHeader toggle={() => {
+       setIsReviewingData( !isReviewingData )
+     }}/>
 
       <div className="wrapper_in">
         <div className="container-fluid">
