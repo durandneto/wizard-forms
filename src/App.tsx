@@ -16,6 +16,7 @@ import "./css/custom.css"
 
 import { validateAddress, checkMedicare } from "./actions/profile"
 import { PopoverBody, PopoverHeader, UncontrolledPopover } from 'reactstrap';
+import SubmitFormModal from './components/SubmitFormModal';
 
 const reversePopulate = 
   // eslint-disable-next-line array-callback-return
@@ -89,6 +90,7 @@ function App() {
   const [Cardiac, setCardiac] = useState<any>(ContextData.Cardiac)
   const [Cancer, setCancer] = useState<any>(ContextData.Cancer)
   const [Error, setError] = useState(() => generateErrors(TabsContext))
+  const [isSavingData, setIsSavingData] = useState(false)
   const backToPrevTab = useCallback(() => {
     if (prevTab?.index === 0) {
       setPrevTab(tabsContext[- 1])
@@ -162,7 +164,8 @@ function App() {
       Error,
       setError,
       setActivePanel,
-      checkMedicare
+      checkMedicare,
+      setIsSavingData
    })}, [
       nextTab,
       prevTab,
@@ -196,6 +199,7 @@ function App() {
    console.log("render",{Error}, {tabsContext})
   return (
    <AppContext.Provider value={ContextProvider}>
+     <SubmitFormModal isOpen={isSavingData} />
 
     <div id="main_container" className="visible">
       <div id="header_in">

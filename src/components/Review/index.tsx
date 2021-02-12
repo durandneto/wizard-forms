@@ -37,7 +37,7 @@ const PopoverContentSuccess = (props: any) => {
 
 const ReviewModal = (props: any) => {
 
-    const {tabsContext: tabs} = useContext(AppContext)
+    const {tabsContext: tabs, setIsSavingData} = useContext(AppContext)
     
     // console.log(tabs)
     // debugger
@@ -137,7 +137,11 @@ const ReviewModal = (props: any) => {
             </ModalBody>
             <ModalFooter>
                 <Button color="secondary" onClick={props.toggle}>Cancel</Button>
-                <Button color="primary" onClick={props.toggle}>Submit</Button>{' '}
+                <Button color="primary" onClick={() => {
+                    setIsSavingData(true)
+                    props.toggle()
+                }
+                    }>Submit</Button>{' '}
             </ModalFooter>
         </Modal>
     );

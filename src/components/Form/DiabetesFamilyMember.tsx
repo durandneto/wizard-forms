@@ -43,7 +43,7 @@ const DiabetesFamilyMemberForm = ({model, success, error, onSave, id, loading, d
     <Container >
       <Row>
         <Col xs="11">
-          <h4>Family Member {index + 1}</h4>
+        <h4 style={{color: "#007bff"}}>Family Member {index + 1}</h4>
         </Col>
         <Col xs="1">
           <Button outline color="secondary"
