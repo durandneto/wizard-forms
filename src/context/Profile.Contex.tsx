@@ -10,7 +10,7 @@ export interface ProfileUserDataInterface {
    lastName: string;
    email: string;
    gender: string;
-   birthdate: string;
+   birthDate: string;
    phone: string;
    phoneCode: string;
    altPhone: string;
@@ -49,7 +49,7 @@ export const ProfilePrimaryCareData = {
 }
 // Cardio ober1001A Lionell Yewitt 2/9/1951 Medicare 5v32-m08-gc02
 export const ProfileMedicareData = {
-   memberID: "9dx2tp7pc18",
+   memberID: "",
    Provider_LastName: "Fastflow Marketing",
    Provider_NPI: "1609388842",
    payerCode: "00007",
@@ -71,7 +71,7 @@ export const ProfileUserData: ProfileUserDataInterface = {
    lastName: "",
    email: "",
    gender: "",
-   birthdate: "",
+   birthDate: "",
    phoneCode: "+ 1",
    phone: "",
    altPhoneCode: "+ 1",

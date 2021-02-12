@@ -3,6 +3,7 @@ import { InputGroup, DropdownToggle, DropdownItem, DropdownMenu, InputGroupButto
 import { AppContext } from '../../../context/App.Contex';
 import InputMask from 'react-input-mask';
 import TableInfo from "./table"
+import FormItem from "../../Form/Item"
 
 const PhysicianInformation = (props:any) => {
   const { Profile, updateContext }  = useContext(AppContext)
@@ -34,13 +35,15 @@ const PhysicianInformation = (props:any) => {
         }
         <Row>
           <Col xs="12" sm="6">
-            <FormGroup>
-              <Label for={`DoctorFullname`}>Doctor Full name</Label>
-              <Input bsSize="sm" type="text"   id={`DoctorFullname`} placeholder={"Doctor Full name"} value={PrimaryCare.fullName}
-               onChange={(e) => {
+            <FormItem
+              label="Doctor Full name"
+              id={`DoctorFullname`}
+              placeholder={"Doctor Full name"}
+              value={PrimaryCare.fullName}
+              onChange={(e: any) => {
                 updateContext("fullName", e.target.value)
-              }}  />
-            </FormGroup>
+              }}
+            />
           </Col>
           <Col xs="12" sm="6">
           <Label for={`form-input-id-phone`}>Phone</Label>

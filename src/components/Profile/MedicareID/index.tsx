@@ -1,23 +1,22 @@
 import { useContext, useState } from 'react';
 import {
-  InputGroup,
   InputGroupAddon,
-  Input,
   Button,
   Form,
   Col,
   Row,
   Alert,
-  Container
+  Container,
  } from 'reactstrap';
 import { AppContext } from '../../../context/App.Contex';
 
 import TableInfo from "./table";
+import FormItem from "../../Form/Item"
 
 const MedicareID = (props:any) => {
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { Profile, checkMedicare, updateContext }  = useContext(AppContext)
+  const { Profile, checkMedicare, updateContext, Error, setError }  = useContext(AppContext)
   const { Medicare, PersonalInfo } = Profile
 
   if (props.table) {
@@ -46,18 +45,41 @@ const MedicareID = (props:any) => {
       }
         <Row>
           <Col xs="12">
-            <Form>
-              <InputGroup>
-                <Input 
-                onChange={(e) => updateContext("memberID", e.target.value)}
-                placeholder="Medicare ID" value={Medicare.memberID}  disabled={loading} />
-                <InputGroupAddon addonType="append">
-                  <Button color={
-                      loading 
-                        ? ``
-                        : `secondary`
-                    }  onClick={() => {
-                      if (!loading) {
+            <Form >
+            <FormItem 
+              label="Medicare ID"
+                error={Error.Profile.Medicare}
+                onChange={(e: any) => {
+                  updateContext("memberID", e.target.value)
+                }}
+                placeholder="Medicare ID"
+                id="memberID"
+                value={Medicare.memberID}
+                disabled={loading}
+                appendAddon={() => <InputGroupAddon addonType="append">
+                <Button color={
+                    loading 
+                      ? ``
+                      : `secondary`
+                  }  onClick={() => {
+                    if (!loading) {
+                      if (Medicare.memberID === "") {
+                        setError({
+                          ...Error,
+                          Profile: {
+                            ...Error.Profile,
+                            Medicare: "Medicare ID can not be empty."
+                          }
+                        })
+                      } else {
+                        setError({
+                          ...Error,
+                          Profile: {
+                            ...Error.Profile,
+                            Medicare: null
+                          }
+                        })
+
                         setLoading(true)
                         checkMedicare(PersonalInfo, Medicare)
                         .then((r: any) => {
@@ -69,15 +91,17 @@ const MedicareID = (props:any) => {
                           setLoading(false)
                         })
                       }
-                  }}>
-                    {
-                      loading 
-                        ? `Checking ...`
-                        : `Check Elgibility`
-                    } 
-                 </Button>
-                </InputGroupAddon>
-              </InputGroup>
+
+                    }
+                }}>
+                  {
+                    loading 
+                      ? `Checking ...`
+                      : `Check Elgibility`
+                  } 
+               </Button>
+              </InputGroupAddon>}
+              />
             </Form>
           </Col>
         </Row>

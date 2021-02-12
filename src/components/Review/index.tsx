@@ -35,7 +35,7 @@ const PopoverContentSuccess = (props: any) => {
     }
 
 
-const ModalExample = (props: any) => {
+const ReviewModal = (props: any) => {
 
     const {tabsContext: tabs} = useContext(AppContext)
     
@@ -58,7 +58,7 @@ const ModalExample = (props: any) => {
             <Container>
                 {
                     tabs.map((tab: any, tabIndex: number) => (
-                        <Row>
+                        <Row key={`review-modal-index-${tabIndex}`}>
                             <Col xs="12">
                                 <h4>{tab.label}</h4>
                                 {
@@ -143,4 +143,4 @@ const ModalExample = (props: any) => {
     );
 }
 
-export default ModalExample;
+export default ReviewModal;

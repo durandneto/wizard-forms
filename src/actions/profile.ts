@@ -10,7 +10,7 @@ export const validateAddress = (Address: ProfileAddressDataInterface) => {
 }
 
 export const checkMedicare = (User: ProfileUserDataInterface, Medicare: ProfileMedicareDataInterface) => {
-const DOB = User.birthdate.split("-")
+const DOB = User.birthDate.split("-")
 const dt = `${DOB[1]}/${DOB[2]}/${DOB[0]}`
 
 // ?memberID=9dx2tp7pc18&Patient_DOB=1%2F22%2F1938&Patient_First=Rodolfo&Patient_Last=Gaytan&payerCode=00007&Provider_LastName=Fastflow%20Marketing&Provider_NPI=1609388842

@@ -30,7 +30,7 @@ const ProfileTable = (props: any) => {
           <td>{`${PersonalInfo.phoneCode} ${PersonalInfo.phone}`}</td>
           <td>{`${PersonalInfo.altPhoneCode} ${PersonalInfo.altPhone}`}</td>
           <td>{PersonalInfo.email}</td>
-          <td>{PersonalInfo.birthdate}</td>
+          <td>{PersonalInfo.birthDate}</td>
           <td>{PersonalInfo.ethnicity}</td>
           <td>{PersonalInfo.previousTests.join(",")}</td>
         </tr>

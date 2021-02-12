@@ -151,9 +151,9 @@ const PersonalInfo = (props: any) => {
                 name="date"
                 id="birthDate"
                 placeholder="Birth date"
-                value={User.birthdate}
+                value={User.birthDate}
                 onChange={e => {
-                  updateContext("birthdate", e.target.value)
+                  updateContext("birthDate", e.target.value)
                 }}
                 
               />

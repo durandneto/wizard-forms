@@ -19,11 +19,27 @@ import { PopoverBody, PopoverHeader, UncontrolledPopover } from 'reactstrap';
 
 const reversePopulate = 
   // eslint-disable-next-line array-callback-return
-  (Context: Array<TabHeaderInterface>, slug: string) => Context.reduce( (acc: any, c: any) => {
-      if (c.slug === slug) {
-        c.tabs.map((tt: TabItemInterface) => ( acc[tt.slug] = tt.data ));
+
+    (Context: Array<TabHeaderInterface>) => Context.reduce( (acc: any, c: any) => {
+      acc[c.slug]= c.tabs.reduce(
+        (a: any, cc: any) => 
+        { 
+          a[cc.slug] = cc.data
+          return a
+        },{})
+      return acc;
+  },{})
+
+const generateErrors = 
+  // eslint-disable-next-line array-callback-return
+  (Context: Array<TabHeaderInterface>) => Context.reduce( (acc: any, c: any) => {
+        acc[c.slug]= c.tabs.reduce(
+          (a: any, cc: any) => 
+          { 
+            a[cc.slug] =  null 
+            return a
+          },{})
         return acc;
-      }
     },{})
 
 
@@ -33,8 +49,8 @@ const reversePopulate =
           <>
           <PopoverHeader>Error <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i></PopoverHeader>
           <PopoverBody>
-              {/* <span dangerouslySetInnerHTML={{__html: tab.data.error}} ></span> */}
               {
+                // eslint-disable-next-line array-callback-return
                 tabs.map((t: any) => {
 
                   if (t.data.error) {
@@ -50,32 +66,30 @@ const reversePopulate =
       );
       }
   
-  const PopoverContentSuccess = (props: any) => {
-      
-      return (
-          <>
-          <PopoverHeader>Success <i style={{color: "#155724"}} className="icon-ok-1"></i></PopoverHeader>
-          <PopoverBody>
-              This section was successfully Validated
-          </PopoverBody>
-          </>
-      );
-      }
+const PopoverContentSuccess = (props: any) => {
+    
+    return (
+        <>
+        <PopoverHeader>Success <i style={{color: "#155724"}} className="icon-ok-1"></i></PopoverHeader>
+        <PopoverBody>
+            This section was successfully Validated
+        </PopoverBody>
+        </>
+    );
+  }
   
-
-      
-
 function App() {
   const [activeTab, setActiveTab] = useState<TabHeaderInterface>(TabsContext[0])
   const [nextTab, setNextTab] = useState<TabHeaderInterface>(TabsContext[1])
   const [prevTab, setPrevTab] = useState<TabHeaderInterface>(TabsContext[-1] || null)
   const [tabsContext, setTabsContext] = useState<TabHeaderInterface[]>(TabsContext)
-  const [Profile, setProfile] = useState<any>(() => reversePopulate(TabsContext, "Profile"))
-
- 
+  const [ContextData, setContextData] = useState<any>(() => reversePopulate(TabsContext))
+  const [Profile, setProfile] = useState<any>(ContextData.Profile)
+  const [Diabetes, setDiabetes] = useState<any>(ContextData.Diabetes)
+  const [Cardiac, setCardiac] = useState<any>(ContextData.Cardiac)
+  const [Cancer, setCancer] = useState<any>(ContextData.Cancer)
+  const [Error, setError] = useState(() => generateErrors(TabsContext))
   const backToPrevTab = useCallback(() => {
-    console.log("backToPrevTab")
-    // setNextTab(activeTab)
     if (prevTab?.index === 0) {
       setPrevTab(tabsContext[- 1])
     } else {
@@ -86,6 +100,7 @@ function App() {
   },[activeTab, prevTab, setPrevTab, setNextTab, setActiveTab, tabsContext])
 
   const updateContext = useCallback((key:string, value: any) => {
+    console.log("update context",key, value)
     setTabsContext((c: any) =>   c.map((context: any) => {
       if (context.id === activeTab.id) {
         return {
@@ -138,10 +153,14 @@ function App() {
       goToNextTab,
       backToPrevTab,
       Profile,
-      // setProfile,
+      Diabetes,
+      Cardiac,
+      Cancer,
       updateContext,
       validateAddress,
       setTabsContext,
+      Error,
+      setError,
       setActivePanel,
       checkMedicare
    })}, [
@@ -153,21 +172,28 @@ function App() {
       backToPrevTab,
       tabsContext,
       setTabsContext,
+      Error,
+      setError,
       setActivePanel,
       updateContext,
       Profile,
-      // setProfile
+      Diabetes,
+      Cardiac,
+      Cancer
    ])
 
    useEffect(() => {
-    setProfile(reversePopulate(TabsContext, "Profile"))
+    setContextData(reversePopulate(tabsContext))
    }, [tabsContext])
 
    useEffect(() => {
-    console.log(Profile)
-   }, [Profile])
+    setProfile(ContextData.Profile)
+    setDiabetes(ContextData.Diabetes)
+    setCardiac(ContextData.Cardiac)
+    setCancer(ContextData.Cancer)
+   }, [ContextData])
 
-   console.log("render")
+   console.log("render",{Error}, {tabsContext})
   return (
    <AppContext.Provider value={ContextProvider}>
 
@@ -202,7 +228,7 @@ function App() {
                               setNextTab(tabsContext[tab.index + 1])
 
                             }} className={tab.id === activeTab?.id ? "active" : ""}>
-                              {tab.label}
+                             <span>{tab.label}</span>
                               {
                                 tab.tabs.filter((t: TabItemInterface) => t.data.error).length > 0 && 
                                 <>
