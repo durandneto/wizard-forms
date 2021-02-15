@@ -10,9 +10,8 @@ const Diagnostic = (props:any) => {
 
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { Diabetes, updateContext, Error }  = useContext(AppContext)
-  const { Diagnostic } = Diabetes
-  const { Diabetes : { Diagnostic: ComponentError }} = Error
+  const { Diabetes, updateContext }  = useContext(AppContext)
+  const { tabs: { Diagnostic }} = Diabetes
   
     if (props.table) {
         return <TableInfo {...props} />
@@ -22,11 +21,11 @@ const Diagnostic = (props:any) => {
       <Form>
         <Container>
             {
-              ComponentError && (
+              Diagnostic.error && (
                 <Row>
                     <Col>
                         <Alert color="danger">
-                            {ComponentError}
+                            {Diagnostic.error}
                         </Alert>
                     </Col>
                 </Row>
@@ -44,15 +43,15 @@ const Diagnostic = (props:any) => {
                 DiabetesDiagnosticList.map((diagnostic: string) => (
                   <FormGroup check inline>
                     <Label check>
-                      <Input type="checkbox" value={diagnostic} checked={Diagnostic.list.includes(diagnostic)} onChange={e => {
+                      <Input type="checkbox" value={diagnostic} checked={Diagnostic.data.list.includes(diagnostic)} onChange={e => {
                         if (e.target.checked) {
                           updateContext("list", [
-                            ...Diagnostic.list,
+                            ...Diagnostic.data.list,
                             e.target.value
                           ])
                         } else {
-                          const index = Diagnostic.list.findIndex((i: string) => i === e.target.value)
-                          const newPreviousTests = Diagnostic.list
+                          const index = Diagnostic.data.list.findIndex((i: string) => i === e.target.value)
+                          const newPreviousTests = Diagnostic.data.list
                           newPreviousTests.splice(index, 1)
                           updateContext("list", newPreviousTests)
                         }
@@ -73,7 +72,7 @@ const Diagnostic = (props:any) => {
                     onClick={(e: any) => {
                       updateContext("isRCEDiabetesTransfer", e.target.checked)
                     }}
-                    checked={Diagnostic.isRCEDiabetesTransfer}
+                    checked={Diagnostic.data.isRCEDiabetesTransfer}
                     type="checkbox"
                     id="isRCEDiabetesTransferCheckbox"
                     label="Yes, I'm." />

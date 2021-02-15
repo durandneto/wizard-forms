@@ -13,9 +13,10 @@ const CardiacFamilyMemberComponent = (props:any) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [limit, setLimit] = useState<number>(3)
 
-  const { Cardiac, updateContext, Error, setError }  = useContext(AppContext)
-  const { FamilyMember } = Cardiac
-  console.log("FamilyMember", FamilyMember)
+  const { Cardiac, updateContext }  = useContext(AppContext)
+  const { tabs: { FamilyMember }} = Cardiac
+
+
     if (props.table) {
         return <TableInfo {...props} />
     }
@@ -24,36 +25,35 @@ const CardiacFamilyMemberComponent = (props:any) => {
       <Form>
         <Container>
             {
-              Error.Cardiac.FamilyMember && (
+              FamilyMember.error && (
                 <Row>
                     <Col>
                         <Alert color="danger">
-                            {Error.Cardiac.FamilyMember}
+                            {FamilyMember.error}
                         </Alert>
                     </Col>
                 </Row>
               )
             }
             {
-              FamilyMember.list.length > 0 && FamilyMember.list.map((FM: CardiacFamilyMemberInterface, index: number) =>(
+              FamilyMember.data.list.length > 0 && FamilyMember.data.list.map((FM: CardiacFamilyMemberInterface, index: number) =>(
                 <Row key={`CardiacFamilyMemberDataInterface-${FM.id}`}>
                   <Col xs="12">
                     <CardiacFamilyMemberForm 
                       index={index}
-                      error={Error.Cardiac.FamilyMember && Error.Cardiac.FamilyMember[index]}
+                      error={FamilyMember.error && FamilyMember.error[index]}
                       id={`CardiacFamilyMemberDataInterface-id-${FM.id}`}
                       success={false}
                       onSave={(fm: CardiacFamilyMemberInterface) => {
-                        console.log("CardiacFamilyMemberForm | onchange", {fm},{index})
-                        FamilyMember.list[index] = fm;
-                        updateContext("list",FamilyMember.list)
+                        FamilyMember.data.list[index] = fm;
+                        updateContext("list",FamilyMember.data.list)
                       }}
                       loading={loading}
                       disabled={loading}
                       model={FM}
                       onRemove={() => {
-                        FamilyMember.list.splice(index,1);
-                        updateContext("list",FamilyMember.list)
+                        FamilyMember.data.list.splice(index,1);
+                        updateContext("list",FamilyMember.data.list)
                         setLimit(limit + 1)
                       }}
                     />
@@ -67,7 +67,7 @@ const CardiacFamilyMemberComponent = (props:any) => {
                   <Col xs="12">
                     <Button onClick={() => {
                       updateContext("list", [
-                        ...FamilyMember.list,
+                        ...FamilyMember.data.list,
                         {
                           ...familyMemberData,
                           id: guidGenerator()

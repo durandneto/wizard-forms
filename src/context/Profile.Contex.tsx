@@ -1,9 +1,9 @@
-import Profile from '../components/Profile'
 import { TabItemInterface, TabHeaderInterface } from '../components/TabHeader'
 import PersonalInfo from "../components/Profile/PersonalInfo"
 import Address from "../components/Profile/Address"
 import MedicareID from "../components/Profile/MedicareID"
 import PrimaryCare from "../components/Profile/PrimaryCare"
+import { guidGenerator } from '../utils'
 
 export interface ProfileUserDataInterface {
    firstName: string;
@@ -96,7 +96,7 @@ export const ProfileData = {
 
 const ProfileItemsTab: Array<TabItemInterface> = [
    {
-      id: 1,
+      id: guidGenerator(),
       label: "Personal Information.",
       slug: "PersonalInfo",
       component: (props:any) => <PersonalInfo {...props} />,
@@ -104,7 +104,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
       data: ProfileData.User
    },
    {
-      id: 2,
+      id: guidGenerator(),
       label: "Address",
       slug: "Address",
       component:  (props:any) =>  <Address {...props}  />,
@@ -112,7 +112,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
       data: ProfileData.Address
    },
    {
-      id: 3,
+      id: guidGenerator(),
       label: "Medicare ID",
       slug: "Medicare",
       component:  (props:any) =>  <MedicareID {...props}  />,
@@ -120,7 +120,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
       data: ProfileData.Medicare
    },
    {
-      id: 4,
+      id: guidGenerator(),
       label: "Primary Care",
       slug: "PrimaryCare",
       component:  (props:any) =>  <PrimaryCare {...props}  />,
@@ -130,11 +130,9 @@ const ProfileItemsTab: Array<TabItemInterface> = [
 ]
 
 export const ProfileTab: TabHeaderInterface = {
-   id: 1,
-   index: 0,
+   id: guidGenerator(),
+   index: 1,
    label: "Profile",
    slug: "Profile",
-   component: (props: any) => <Profile  {...props}/>,
-   activeTab: ProfileItemsTab[0],
    tabs: ProfileItemsTab,
 }

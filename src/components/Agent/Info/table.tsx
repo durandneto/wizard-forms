@@ -1,22 +1,22 @@
 import { useContext } from 'react';
 import { Table } from 'reactstrap';
 import { AppContext } from '../../../context/App.Contex';
-import { ProfileInterface } from '../../../context/Profile.Contex';
 
 const AddressTable = (props: any) => {
-  const { Profile }  = useContext(AppContext)
-  const { tabs: { Address : { data: Address} } } = Profile
-  
+  const { Agent }  = useContext(AppContext)
+  const { tabs: { Info : { data: Info } } } = Agent
   return (
     <Table size="sm" responsive>
       <thead>
         <tr>
-          <th>Full Address</th>
+          <th>Recording URL</th>
+          <th>Name</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{`${Address.streetLine}, ${Address.city} - ${Address.state} ${Address.postalCode}`}</td>
+          <td>{Info.url}</td>
+          <td>{Info.name}</td>
         </tr>
       </tbody>
     </Table>

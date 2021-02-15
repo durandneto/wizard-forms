@@ -10,10 +10,9 @@ const BMIComponent = (props:any) => {
 
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { Diabetes, updateContext, Error }  = useContext(AppContext)
-  const { BMI } = Diabetes
+  const { Diabetes, updateContext }  = useContext(AppContext)
+  const { tabs: { BMI }} = Diabetes
 
-  console.log("BMI", {BMI})
     if (props.table) {
         return <TableInfo {...props} />
     }
@@ -22,11 +21,11 @@ const BMIComponent = (props:any) => {
       <Form>
         <Container>
             {
-              Error.Diabetes.BMI && (
+              BMI.error && (
                 <Row>
                     <Col>
                         <Alert color="danger">
-                            {Error.Diabetes.BMI}
+                            {BMI.error}
                         </Alert>
                     </Col>
                 </Row>
@@ -36,13 +35,13 @@ const BMIComponent = (props:any) => {
             <Col xs="12">
               <FormItem 
                 label="BMI"
-                  error={Error.Diabetes.BMI}
+                  error={BMI.error}
                   onChange={(e: any) => {
                     updateContext("value", e.target.value)
                   }}
                   placeholder="BMI"
                   id="BMI"
-                  value={BMI.value}
+                  value={BMI.data.value}
                   disabled={loading}
                 />
             </Col>

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
   InputGroupAddon,
   Button,
@@ -12,26 +12,53 @@ import { AppContext } from '../../../context/App.Contex';
 
 import TableInfo from "./table";
 import FormItem from "../../Form/Item"
+import { ProfileMedicareDataInterface } from '../../../context/Profile.Contex';
 
 const MedicareID = (props:any) => {
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { Profile, checkMedicare, updateContext, Error, setError }  = useContext(AppContext)
-  const { Medicare, PersonalInfo } = Profile
+  const { activeTab, Profile, checkMedicare, registerFunction, updateContext, Error, setError, setActiveTab }  = useContext(AppContext)
+  const { tabs: { Medicare } } = Profile
+  const { tabs: { PersonalInfo } } = Profile
+  console.log({Medicare})
+  // const [internalError, setInternalError]  = useState<string | null>(null)
+
+  // const save = useCallback(() => {
+  //   if (Medicare.memberID === "") {
+  //     setInternalError("Medicare ID can not be empty.")
+  //     updateContext("error", "Medicare ID can not be empty.")
+  //   } else {
+  //     setInternalError(null)
+  //     updateContext("error", null)
+  //   }
+  // },[Medicare.memberID, updateContext])
+
+  // useEffect(() => {
+  //   setActiveTab({
+  //     ...activeTab,
+  //     save
+      
+  //   })
+  //     registerFunction({
+  //       name: "Medicare",
+  //       _cb: save
+  //     })
+  // }, [Medicare.memberID])
 
   if (props.table) {
-      return <TableInfo {...props} />
+    return <TableInfo {...props} />
   }
+
   return (
     <div className="col-xs-12">
       <Container>
       {
-        (Medicare.error || Medicare.success) && (
+        (Medicare.error || Medicare.success) && !loading && (
           <Row>
               <Col>
               {
                 Medicare.error && (<Alert color="danger">
-                      <div dangerouslySetInnerHTML={{__html: Medicare.error}} ></div>
+                      <div dangerouslySetInnerHTML={{__html: JSON.stringify(Medicare.error)}} ></div>
                   </Alert>)
               }
               {
@@ -48,14 +75,21 @@ const MedicareID = (props:any) => {
             <Form >
             <FormItem 
               label="Medicare ID"
-                error={Error.Profile.Medicare}
+                // error={Medicare.error}
                 onChange={(e: any) => {
                   updateContext("memberID", e.target.value)
+                  // setData({
+                  //   ...Medicare,
+                  //   memberID: e.target.value
+                  // })
                 }}
                 placeholder="Medicare ID"
                 id="memberID"
-                value={Medicare.memberID}
+                value={Medicare.data.memberID}
                 disabled={loading}
+                // onBlur={() => {
+                //   updateContext("memberID", Medicare.memberID)
+                // }}
                 appendAddon={() => <InputGroupAddon addonType="append">
                 <Button color={
                     loading 
@@ -63,25 +97,13 @@ const MedicareID = (props:any) => {
                       : `secondary`
                   }  onClick={() => {
                     if (!loading) {
-                      if (Medicare.memberID === "") {
-                        setError({
-                          ...Error,
-                          Profile: {
-                            ...Error.Profile,
-                            Medicare: "Medicare ID can not be empty."
-                          }
-                        })
+                      if (Medicare.data.memberID === "") {
+                        // setInternalError("Medicare ID can not be empty.")
+                        updateContext("error", "Medicare ID can not be empty.")
                       } else {
-                        setError({
-                          ...Error,
-                          Profile: {
-                            ...Error.Profile,
-                            Medicare: null
-                          }
-                        })
-
+                        // setInternalError(null)
                         setLoading(true)
-                        checkMedicare(PersonalInfo, Medicare)
+                        checkMedicare(PersonalInfo.data, Medicare.data)
                         .then((r: any) => {
                           updateContext("error", r.EDIErrorMessage)
                           updateContext("success", r.AddtionalInfo)

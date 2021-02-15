@@ -7,12 +7,11 @@ import TableInfo from "./table"
 import { FamilyMemberHeartConditions } from "../../../context/Cardiac.Contex"
 
 const Diagnostic = (props:any) => {
-
+  
   const [loading, setLoading] = useState<boolean>(false)
+  const { Cardiac, updateContext }  = useContext(AppContext)
+  const { tabs: { Diagnostic }} = Cardiac
 
-  const { Cardiac, updateContext, Error }  = useContext(AppContext)
-  const { Diagnostic } = Cardiac
-  const { Cardiac : { Diagnostic: ComponentError }} = Error
     if (props.table) {
       return <TableInfo {...props} />
     }
@@ -22,11 +21,11 @@ const Diagnostic = (props:any) => {
       <Form>
         <Container>
             {
-              ComponentError && (
+              Diagnostic.error && (
                 <Row>
                     <Col>
                         <Alert color="danger">
-                            {ComponentError}
+                            {Diagnostic.error}
                         </Alert>
                     </Col>
                 </Row>
@@ -47,16 +46,16 @@ const Diagnostic = (props:any) => {
                       <Input
                         type="checkbox"
                         value={condition.value}
-                        checked={Diagnostic.typeOfCardiac.includes(condition.value)}
+                        checked={Diagnostic.data.typeOfCardiac.includes(condition.value)}
                         onChange={e => {
                           if (e.target.checked) {
                             updateContext("typeOfCardiac", [
-                              ...Diagnostic.typeOfCardiac,
+                              ...Diagnostic.data.typeOfCardiac,
                               e.target.value
                             ])
                           } else {
-                            const index = Diagnostic.typeOfCardiac.findIndex((i: string) => i === e.target.value)
-                            const newPreviousTests = Diagnostic.typeOfCardiac
+                            const index = Diagnostic.data.typeOfCardiac.findIndex((i: string) => i === e.target.value)
+                            const newPreviousTests = Diagnostic.data.typeOfCardiac
                             newPreviousTests.splice(index, 1)
                             updateContext("typeOfCardiac", newPreviousTests)
                           }
@@ -79,7 +78,7 @@ const Diagnostic = (props:any) => {
                       <CustomInput
                       inline
                       value={type}
-                      checked={Diagnostic.prescribedMedications === type}
+                      checked={Diagnostic.data.prescribedMedications === type}
                       onClick={(e: any) => {
                         updateContext("prescribedMedications", e.target.value)
                       }}
@@ -103,7 +102,7 @@ const Diagnostic = (props:any) => {
                         updateContext("diabetesType", e.target.value)
                       }}
                       value={type}
-                      checked={Diagnostic.diabetesType === type}
+                      checked={Diagnostic.data.diabetesType === type}
                       type="radio" id={`Cardiac-FamilyMemberHeartConditions-diabetesType-${index}`} key={`Cardiac-FamilyMemberHeartConditions-diabetesType-${index}`} name="Cardiac-FamilyMemberHeartConditions-diabetesType-Radio" label={type} />
                     ))
                   }
@@ -119,7 +118,7 @@ const Diagnostic = (props:any) => {
                   onChange={(e:any) => {
                     updateContext("OTC", e.target.value)
                   }}
-                  value={Diagnostic.OTC}
+                  value={Diagnostic.data.OTC}
                   type="textarea"
                   name="text"
                   id="Cardiac-FamilyMemberHeartConditions-OTC" />
@@ -135,7 +134,7 @@ const Diagnostic = (props:any) => {
                     onClick={(e: any) => {
                       updateContext("isRCECardioTransfer", e.target.checked)
                     }}
-                    checked={Diagnostic.isRCECardioTransfer}
+                    checked={Diagnostic.data.isRCECardioTransfer}
                     type="checkbox"
                     id="isRCECardioTransferCheckbox"
                     label="Yes, I'm." />

@@ -20,12 +20,12 @@ const FormInput = ({id, label, value, onChange}: formInputInterface) => (
 const Ethnicity: Array<string>= ["Asian", "African American", "Ashkenzai Jewish", "Caucasian", "French Canadian", "Hispanic", "Indian", "Middle Eastern", "Native American", "Pacific Islander", "Other"]
 const PersonalInfo = (props: any) => {
   const {  Profile, updateContext }  = useContext(AppContext)
-  const { PersonalInfo: User } = Profile
+  const { tabs: { PersonalInfo } } = Profile
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownAltOpen, setAltDropdownOpen] = useState(false);
-  const [code, setCode] = useState(User.altPhoneCode || "Area")
-  const [altCode, setAltCode] = useState(User.altPhoneCode || "Area")
+  const [code, setCode] = useState(PersonalInfo.data.altPhoneCode || "Area")
+  const [altCode, setAltCode] = useState(PersonalInfo.data.altPhoneCode || "Area")
 
   const toggleDropDown = () => setDropdownOpen(!dropdownOpen);
   const toggleAltDropDown = () => setAltDropdownOpen(!dropdownAltOpen);
@@ -39,11 +39,11 @@ const PersonalInfo = (props: any) => {
     <Form>
       <Container>
       {
-          props.error && (
+          PersonalInfo.error && (
             <Row>
                 <Col>
                     <Alert color="danger">
-                      {props.error}
+                      {PersonalInfo.error}
                     </Alert>
                 </Col>
             </Row>
@@ -51,10 +51,10 @@ const PersonalInfo = (props: any) => {
         }
         <Row>
           <Col xs="12" sm="4">
-            <FormInput id="userFirstName" label="First name (*)" value={User.firstName} onChange={e => {updateContext("firstName", e.target.value)}}/>
+            <FormInput id="PersonalInfoFirstName" label="First name (*)" value={PersonalInfo.data.firstName} onChange={e => {updateContext("firstName", e.target.value)}}/>
           </Col>
           <Col xs="12" sm="4">
-            <FormInput id="userLastName" label="Last name (*)"  value={User.lastName} onChange={e => {
+            <FormInput id="PersonalInfoLastName" label="Last name (*)"  value={PersonalInfo.data.lastName} onChange={e => {
                  updateContext("lastName", e.target.value)
                 }}/>
           </Col>
@@ -64,11 +64,11 @@ const PersonalInfo = (props: any) => {
                 <CustomInput  onChange={e => {
                   updateContext("gender", e.target.value)
                 }}
-                bsSize="sm" type="radio" value="male" checked={User.gender === 'male'} name="gender" id="RadioMale" label="Male"  inline/>
+                bsSize="sm" type="radio" value="male" checked={PersonalInfo.data.gender === 'male'} name="gender" id="RadioMale" label="Male"  inline/>
                 <CustomInput  onChange={e => {
                   updateContext("gender", e.target.value)
                 }}
-                bsSize="sm" type="radio" value="female" checked={User.gender === 'female'}  name="gender" id="RadioFemale" label="Female"  inline/>
+                bsSize="sm" type="radio" value="female" checked={PersonalInfo.data.gender === 'female'}  name="gender" id="RadioFemale" label="Female"  inline/>
               </FormGroup>
           </Col>
           <Col xs="12" sm="6">
@@ -95,7 +95,7 @@ const PersonalInfo = (props: any) => {
                   mask="999 999 9999"
                   maskChar=" "
                   id="form-input-id-phone"
-                  value={User.phone} 
+                  value={PersonalInfo.data.phone} 
                   tag={InputMask}
                   onChange={e => {
                     updateContext("phone", e.target.value)
@@ -128,7 +128,7 @@ const PersonalInfo = (props: any) => {
                   maskChar=" "
                   id="form-input-id-phone"
                   tag={InputMask}
-                  value={User.altPhone} 
+                  value={PersonalInfo.data.altPhone} 
                   onChange={e => {
                     updateContext("altPhone", e.target.value)
                   }}
@@ -138,7 +138,7 @@ const PersonalInfo = (props: any) => {
           <br />
           <br />
           <Col xs="12">
-            <FormInput id="emailAddress" label="Email Address"  value={User.email} onChange={e => {
+            <FormInput id="emailAddress" label="Email Address"  value={PersonalInfo.data.email} onChange={e => {
               updateContext("email", e.target.value)
             }}/>
           </Col>
@@ -151,7 +151,7 @@ const PersonalInfo = (props: any) => {
                 name="date"
                 id="birthDate"
                 placeholder="Birth date"
-                value={User.birthDate}
+                value={PersonalInfo.data.birthDate}
                 onChange={e => {
                   updateContext("birthDate", e.target.value)
                 }}
@@ -167,7 +167,7 @@ const PersonalInfo = (props: any) => {
                     <CustomInput onChange={(e) =>
                       updateContext("ethnicity", e.target.value)
                       
-                    } bsSize="sm" type="radio"  value={et} checked={User.ethnicity === et}  name="RadioEthnicity" id={`Ethnicity-id-${key}`} key={`Ethnicity-id-${key}`} label={et}  inline/>
+                    } bsSize="sm" type="radio"  value={et} checked={PersonalInfo.data.ethnicity === et}  name="RadioEthnicity" id={`Ethnicity-id-${key}`} key={`Ethnicity-id-${key}`} label={et}  inline/>
                   ))
                 }
               </FormGroup>
@@ -178,15 +178,19 @@ const PersonalInfo = (props: any) => {
           <Col xs="12">
               <FormGroup check inline>
                 <Label check>
-                  <Input type="checkbox" value="Cardiac" checked={User.previousTests.includes("Cardiac")} onChange={e => {
+                  <Input 
+                    type="checkbox"
+                    value="Cardiac"
+                    checked={PersonalInfo.data.previousTests.includes("Cardiac")}
+                    onChange={e => {
                     if (e.target.checked) {
                       updateContext("previousTests", [
-                        ...User.previousTests,
+                        ...PersonalInfo.data.previousTests,
                         e.target.value
                       ])
                     } else {
-                      const index = User.previousTests.findIndex((i: string) => i === e.target.value)
-                      const newPreviousTests = User.previousTests
+                      const index = PersonalInfo.data.previousTests.findIndex((i: string) => i === e.target.value)
+                      const newPreviousTests = PersonalInfo.data.previousTests
                       newPreviousTests.splice(index, 1)
                       updateContext("previousTests", newPreviousTests)
                     }
@@ -195,16 +199,16 @@ const PersonalInfo = (props: any) => {
               </FormGroup>
               <FormGroup check inline>
                 <Label check>
-                  <Input type="checkbox" value="Diabetes" checked={User.previousTests.includes("Diabetes")}  onChange={e => {
+                  <Input type="checkbox" value="Diabetes" checked={PersonalInfo.data.previousTests.includes("Diabetes")}  onChange={e => {
                     if (e.target.checked) {
                       updateContext("previousTests", [
-                        ...User.previousTests,
+                        ...PersonalInfo.data.previousTests,
                         e.target.value
                       ])
                     
                     } else {
-                      const index = User.previousTests.findIndex((i: string) => i === e.target.value)
-                      const newPreviousTests = User.previousTests
+                      const index = PersonalInfo.data.previousTests.findIndex((i: string) => i === e.target.value)
+                      const newPreviousTests = PersonalInfo.data.previousTests
                       newPreviousTests.splice(index, 1)
 
                       updateContext("previousTests", newPreviousTests)
@@ -214,19 +218,19 @@ const PersonalInfo = (props: any) => {
               </FormGroup>
               <FormGroup check inline>
                 <Label check>
-                  <Input type="checkbox" value="Cancer" checked={User.previousTests.includes("Cancer")}   onChange={e => {
+                  <Input type="checkbox" value="Cancer" checked={PersonalInfo.data.previousTests.includes("Cancer")}   onChange={e => {
                     if (e.target.checked) {
  
 
                       updateContext("previousTests", [
-                        ...User.previousTests,
+                        ...PersonalInfo.data.previousTests,
                         e.target.value
                       ])
 
 
                     } else {
-                      const index = User.previousTests.findIndex((i: string) => i === e.target.value)
-                      const newPreviousTests = User.previousTests
+                      const index = PersonalInfo.data.previousTests.findIndex((i: string) => i === e.target.value)
+                      const newPreviousTests = PersonalInfo.data.previousTests
                       newPreviousTests.splice(index, 1)
 
                       updateContext("previousTests", newPreviousTests)

@@ -4,7 +4,7 @@ import { AppContext } from '../../../context/App.Contex';
 
 const BMITable = (props: any) => {
   const { Diabetes }  = useContext(AppContext)
-  const { BMI } = Diabetes
+  const { tabs: { BMI : { data: BMI } } } = Diabetes
   return (
     <Table size="sm" responsive>
       <thead>

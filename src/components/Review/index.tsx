@@ -16,7 +16,7 @@ const PopoverContent = (props: any) => {
         <>
         <PopoverHeader>Error <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i></PopoverHeader>
         <PopoverBody>
-            <span dangerouslySetInnerHTML={{__html: props.data.error}} ></span>
+            <span dangerouslySetInnerHTML={{__html: props.error}} ></span>
         </PopoverBody>
         </>
     );
@@ -37,10 +37,8 @@ const PopoverContentSuccess = (props: any) => {
 
 const ReviewModal = (props: any) => {
 
-    const {tabsContext: tabs, setIsSavingData} = useContext(AppContext)
+    const {tabsContext: tabs, setIsSavingData, validateSubmitForm, ContextData} = useContext(AppContext)
     
-    // console.log(tabs)
-    // debugger
     const [tables, setTables] = useState(() => {
         const arr = new Array(tabs.length);
         for (let i=0; i<arr.length; i++) {
@@ -50,32 +48,31 @@ const ReviewModal = (props: any) => {
           return arr
     })
     
-
     return (
         <Modal isOpen={props.isOpen} toggle={props.toggle} size="lg">
             <ModalHeader toggle={props.toggle}>Form Review</ModalHeader>
             <ModalBody>
             <Container>
                 {
-                    tabs.map((tab: any, tabIndex: number) => (
+                    Object.values(ContextData).map((context: any, tabIndex: number) => (
                         <Row key={`review-modal-index-${tabIndex}`}>
                             <Col xs="12">
-                                <h4>{tab.label}</h4>
+                                <h4>{context.label}</h4>
                                 {
-                                    tab.tabs.map((item: any, itemIndex: number) => {
+                                    Object.values(context.tabs).map((item: any, itemIndex: number) => {
                                         
                                         return (
 
                                                 <div>
                                                     <Navbar color="light" light expand="md">
-                                                        <NavbarBrand href="#">{tab.label} /</NavbarBrand>
+                                                        <NavbarBrand href="#">{context.label} /</NavbarBrand>
                                                         <Nav className="mr-auto" navbar>
                                                             <NavItem>
                                                             <NavLink href="#">{item.label}</NavLink>
                                                             </NavItem>
                                                         </Nav>
                                                         {
-                                                             item.data.error && (
+                                                             item.error && (
                                                                 <NavbarText>
                                                                     <div id={`propover-error-${item.id}`} >
                                                                         <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
@@ -99,7 +96,7 @@ const ReviewModal = (props: any) => {
                                                              )
                                                         }
                                                         {
-                                                            item.data.success && ( <>
+                                                            item.success && ( <>
                                                             <div id={`propover-success-${item.id}`} >
                                                                 <i style={{color: "#155724"}} className="icon-ok-1"></i>
                                                             </div>

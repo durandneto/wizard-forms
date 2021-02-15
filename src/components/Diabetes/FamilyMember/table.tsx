@@ -4,7 +4,8 @@ import { AppContext } from '../../../context/App.Contex';
 
 const BMITable = (props: any) => {
   const { Diabetes }  = useContext(AppContext)
-  const { FamilyMember } = Diabetes
+  const { tabs: { FamilyMember : { data: FamilyMember} } } = Diabetes
+  
   return (
     <Table size="sm" responsive>
       <thead>

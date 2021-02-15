@@ -1,7 +1,7 @@
-import Cancer from '../components/Cancer'
 import { TabItemInterface, TabHeaderInterface } from '../components/TabHeader'
 import FamilyMemberComponent from "../components/Cancer/FamilyMember"
 import DiagnosticComponent from "../components/Cancer/Diagnostic"
+import { guidGenerator } from '../utils'
 
 
 export const Relationship = [{value: "MOM", label:"Mom"},
@@ -55,7 +55,7 @@ export const FamilyMemberHeartConditions  = [
 
 export interface CancerDiagnosticInterface {
    indicationTest: string;
-   isDiagnosed: boolean;
+   isDiagnosed: string;
    isRCECancerTransfer: boolean;
    treatment: string;
    OTC: string
@@ -82,7 +82,7 @@ export const familyMemberData: CancerFamilyMemberInterface = {
 
 export const DiagnosticData: CancerDiagnosticInterface = {
    indicationTest: "",
-   isDiagnosed: false,
+   isDiagnosed: "",
    isRCECancerTransfer: false,
    treatment: "",
    OTC: ""
@@ -114,7 +114,7 @@ export const CancerDiagnosticData: CancerDataInterface = {
 
 const CancerItemsTab: Array<TabItemInterface> = [
    {
-      id: 1,
+      id: guidGenerator(),
       index: 0,
       label: "Diagnostic",
       slug: "Diagnostic",
@@ -122,7 +122,7 @@ const CancerItemsTab: Array<TabItemInterface> = [
       data: CancerDiagnosticData.Diagnostic
    },
    {
-      id: 2,
+      id: guidGenerator(),
       index: 1,
       label: "Family Member",
       slug: "FamilyMember",
@@ -132,12 +132,10 @@ const CancerItemsTab: Array<TabItemInterface> = [
 ]
 
 export const CancerTab: TabHeaderInterface = {
-   id: 2,
-   index: 1,
+   id: guidGenerator(),
+   index: 2,
    label: "Cancer",
    slug: "Cancer",
-   component: (props: any) => <Cancer  {...props}/>,
-   activeTab: CancerItemsTab[0],
    tabs: CancerItemsTab,
 }
 

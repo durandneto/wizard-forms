@@ -4,7 +4,7 @@ import { AppContext } from '../../../context/App.Contex';
 
 const CancerTable = (props: any) => {
   const { Cancer }  = useContext(AppContext)
-  const { FamilyMember } = Cancer
+  const { tabs: { FamilyMember : { data: FamilyMember } } } = Cancer
   return (
     <Table size="sm" responsive>
       <thead>

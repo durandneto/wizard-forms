@@ -6,7 +6,8 @@ import { ProfileInterface } from '../../../context/Profile.Contex';
 const MedicareTable = (props: any) => {
 
   const { Profile }  = useContext(AppContext)
-  const { Medicare } = Profile
+  const { tabs: { Medicare : { data: Medicare} } } = Profile
+
   return (
     <Table size="sm" responsive>
       <thead>

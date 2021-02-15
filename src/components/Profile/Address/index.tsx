@@ -10,7 +10,7 @@ const Address = (props:any) => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const { Profile, updateContext, validateAddress }  = useContext(AppContext)
-  const { Address } = Profile
+  const { tabs: { Address } } = Profile
 
     if (props.table) {
         return <TableInfo {...props} />
@@ -34,7 +34,7 @@ const Address = (props:any) => {
             <Col xs="12" sm="6">
               <FormGroup className="position-relative">
                 <Label for="examplePassword">Full Address</Label>
-                <Input disabled={loading} value={Address.streetLine} onChange={(e) => {
+                <Input disabled={loading} value={Address.data.streetLine} onChange={(e) => {
                   updateContext("streetLine", e.target.value)
                 }}/>
               </FormGroup>
@@ -42,7 +42,7 @@ const Address = (props:any) => {
             <Col xs="12" sm="6">
               <FormGroup className="position-relative">
                 <Label for="address2">Address (line 2)</Label>
-                <Input disabled={loading} value={Address.streetLine2} id="address2" onChange={(e) => {
+                <Input disabled={loading} value={Address.data.streetLine2} id="address2" onChange={(e) => {
                   updateContext("streetLine2", e.target.value)
                 }}/>
               </FormGroup>
@@ -50,7 +50,7 @@ const Address = (props:any) => {
             <Col xs="12" sm="4" >
               <FormGroup className="position-relative">
                 <Label for="city">City</Label>
-                <Input disabled={loading} value={Address.city} id="city"  onChange={(e) => {
+                <Input disabled={loading} value={Address.data.city} id="city"  onChange={(e) => {
                   updateContext("city", e.target.value)
                 }}/>
               </FormGroup>
@@ -58,7 +58,7 @@ const Address = (props:any) => {
             <Col xs="12" sm="4" >
               <FormGroup className="position-relative">
                 <Label for="State">State</Label>
-                <Input disabled={loading} value={Address.state} id="State" onChange={(e) => {
+                <Input disabled={loading} value={Address.data.state} id="State" onChange={(e) => {
                   updateContext("state", e.target.value)
                 }} />
               </FormGroup>
@@ -66,7 +66,7 @@ const Address = (props:any) => {
             <Col xs="12" sm="4" >
               <FormGroup className="position-relative">
                 <Label for="postalcode">Postal code</Label>
-                <Input disabled={loading} value={Address.postalCode} id="postalcode" 
+                <Input disabled={loading} value={Address.data.postalCode} id="postalcode" 
                  onChange={(e) => {
                   updateContext("postalCode", e.target.value)
                 }}/>

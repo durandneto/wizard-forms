@@ -7,11 +7,10 @@ import FormItem from "../../Form/Item"
 
 const PhysicianInformation = (props:any) => {
   const { Profile, updateContext }  = useContext(AppContext)
-  const { PrimaryCare } = Profile
-
+  const { tabs: { PrimaryCare } } = Profile
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [code, setCode] = useState(PrimaryCare.code || "Area")
+  const [code, setCode] = useState(PrimaryCare.data.code || "Area")
 
   const toggleDropDown = () => setDropdownOpen(!dropdownOpen);
   
@@ -23,11 +22,11 @@ const PhysicianInformation = (props:any) => {
     <Form>
       <Container>
         {
-          props.error && (
+          PrimaryCare.error && (
               <Row>
                   <Col>
                       <Alert color="danger">
-                          {props.error}
+                          {PrimaryCare.error}
                       </Alert>
                   </Col>
               </Row>
@@ -39,7 +38,7 @@ const PhysicianInformation = (props:any) => {
               label="Doctor Full name"
               id={`DoctorFullname`}
               placeholder={"Doctor Full name"}
-              value={PrimaryCare.fullName}
+              value={PrimaryCare.data.fullName}
               onChange={(e: any) => {
                 updateContext("fullName", e.target.value)
               }}
@@ -69,7 +68,7 @@ const PhysicianInformation = (props:any) => {
                   mask="999 999 9999"
                   maskChar=" "
                   id="form-input-id-phone"
-                  value={PrimaryCare.phone} 
+                  value={PrimaryCare.data.phone} 
                   tag={InputMask}
                   onChange={e => {
                     updateContext("phone", e.target.value)

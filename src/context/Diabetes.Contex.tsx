@@ -1,8 +1,8 @@
-import Diabetes from '../components/Diabetes'
 import { TabItemInterface, TabHeaderInterface } from '../components/TabHeader'
 import DiagnosticComponent from "../components/Diabetes/Diagnostic"
 import BMIComponent from "../components/Diabetes/BMI"
 import FamilyMemberComponent from "../components/Diabetes/FamilyMember"
+import { guidGenerator } from '../utils'
 
 
 export interface DiabetesFamilyMemberInterface {
@@ -71,7 +71,7 @@ export const DiabetesData = {
 
 const DiabetesItemsTab: Array<TabItemInterface> = [
    {
-      id: 1,
+      id: guidGenerator(),
       index: 0,
       label: "BMI",
       slug: "BMI",
@@ -79,7 +79,7 @@ const DiabetesItemsTab: Array<TabItemInterface> = [
       data: DiabetesData.BMI
    },
    {
-      id: 2,
+      id: guidGenerator(),
       index: 1,
       label: "Diagnostic",
       slug: "Diagnostic",
@@ -87,7 +87,7 @@ const DiabetesItemsTab: Array<TabItemInterface> = [
       data: DiabetesData.DiagnosticList
    },
    {
-      id: 3,
+      id: guidGenerator(),
       index: 2,
       label: "Family Member",
       slug: "FamilyMember",
@@ -97,12 +97,10 @@ const DiabetesItemsTab: Array<TabItemInterface> = [
 ]
 
 export const DiabetesTab: TabHeaderInterface = {
-   id: 4,
-   index: 3,
+   id: guidGenerator(),
+   index: 4,
    label: "Diabetes",
    slug: "Diabetes",
-   component: (props: any) => <Diabetes  {...props}/>,
-   activeTab: DiabetesItemsTab[0],
    tabs: DiabetesItemsTab,
 }
 

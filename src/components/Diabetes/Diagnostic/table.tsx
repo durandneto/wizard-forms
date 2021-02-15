@@ -4,8 +4,8 @@ import { AppContext } from '../../../context/App.Contex';
 import { ProfileInterface } from '../../../context/Profile.Contex';
 
 const AddressTable = (props: any) => {
-  const { Diabetes, updateContext, Error }  = useContext(AppContext)
-  const { Diagnostic } = Diabetes
+  const { Diabetes }  = useContext(AppContext)
+  const { tabs: { Diagnostic : { data: Diagnostic} } } = Diabetes
   return (
     <Table size="sm" responsive>
       <thead>

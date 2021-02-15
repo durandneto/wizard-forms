@@ -1,7 +1,7 @@
-import Cardiac from '../components/Cardiac'
 import { TabItemInterface, TabHeaderInterface } from '../components/TabHeader'
 import FamilyMemberComponent from "../components/Cardiac/FamilyMember"
 import DiagnosticComponent from "../components/Cardiac/Diagnostic"
+import { guidGenerator } from '../utils'
 
 
 export const Relationship = [{value: "MOM", label:"Mom"},
@@ -111,7 +111,7 @@ export const CardiacDiagnosticData: CardiacDataInterface = {
 
 const CardiacItemsTab: Array<TabItemInterface> = [
    {
-      id: 1,
+      id: guidGenerator(),
       index: 0,
       label: "Diagnostic",
       slug: "Diagnostic",
@@ -119,7 +119,7 @@ const CardiacItemsTab: Array<TabItemInterface> = [
       data: CardiacDiagnosticData.Diagnostic
    },
    {
-      id: 2,
+      id: guidGenerator(),
       index: 1,
       label: "Family Member",
       slug: "FamilyMember",
@@ -129,12 +129,10 @@ const CardiacItemsTab: Array<TabItemInterface> = [
 ]
 
 export const CardiacTab: TabHeaderInterface = {
-   id: 3,
-   index: 2,
+   id: guidGenerator(),
+   index: 3,
    label: "Cardiac",
    slug: "Cardiac",
-   component: (props: any) => <Cardiac  {...props}/>,
-   activeTab: CardiacItemsTab[0],
    tabs: CardiacItemsTab,
 }
 

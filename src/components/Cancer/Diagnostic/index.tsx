@@ -11,9 +11,9 @@ const Diagnostic = (props:any) => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const { Cancer, updateContext, Error }  = useContext(AppContext)
-  const { Diagnostic } = Cancer
-  const { Cancer : { Diagnostic: ComponentError }} = Error
-    if (props.table) {
+  const { tabs: { Diagnostic }} = Cancer
+
+  if (props.table) {
       return <TableInfo {...props} />
     }
     return (
@@ -21,11 +21,11 @@ const Diagnostic = (props:any) => {
       <Form>
         <Container>
             {
-              ComponentError && (
+              Diagnostic.error && (
                 <Row>
                     <Col>
                         <Alert color="danger">
-                            {ComponentError}
+                            {Diagnostic.error}
                         </Alert>
                     </Col>
                 </Row>
@@ -44,7 +44,7 @@ const Diagnostic = (props:any) => {
                         updateContext("indicationTest", e.target.value)
                       }}
                       value={type.value}
-                      checked={Diagnostic.indicationTest === type.value}
+                      checked={Diagnostic.data.indicationTest === type.value}
                       type="radio" id={`Cancer-FamilyMemberHeartConditions-indicationTest-${index}`} key={`Cancer-FamilyMemberHeartConditions-indicationTest-${index}`} name="Cancer-FamilyMemberHeartConditions-indicationTest-Radio" label={type.label} />
                     ))
                   }
@@ -62,10 +62,10 @@ const Diagnostic = (props:any) => {
                       <CustomInput
                       inline
                       onClick={(e: any) => {
-                        updateContext("isDiagnosed", e.target.checked)
+                        updateContext("isDiagnosed", e.target.value)
                       }}
                       value={type}
-                      checked={Diagnostic.isDiagnosed}
+                      checked={Diagnostic.data.isDiagnosed === type}
                       type="radio" id={`Cancer-FamilyMemberHeartConditions-isDiagnosed-${index}`} key={`Cancer-FamilyMemberHeartConditions-isDiagnosed-${index}`} name="Cancer-FamilyMemberHeartConditions-isDiagnosed-Radio" label={type} />
                     ))
                   }
@@ -86,7 +86,7 @@ const Diagnostic = (props:any) => {
                         updateContext("treatment", e.target.value)
                       }}
                       value={treatment.value}
-                      checked={Diagnostic.treatment.value}
+                      checked={Diagnostic.data.treatment.value}
                       type="radio" id={`Cancer-FamilyMemberHeartConditions-treatment-${index}`} key={`Cancer-FamilyMemberHeartConditions-treatment-${index}`} name="Cancer-FamilyMemberHeartConditions-treatment-Radio" label={treatment.label} />
                     ))
                   }
@@ -102,7 +102,7 @@ const Diagnostic = (props:any) => {
                   onChange={(e:any) => {
                     updateContext("OTC", e.target.value)
                   }}
-                  value={Diagnostic.OTC}
+                  value={Diagnostic.data.OTC}
                   type="textarea"
                   name="text"
                   id="Cancer-FamilyMemberHeartConditions-OTC" />
@@ -118,7 +118,7 @@ const Diagnostic = (props:any) => {
                     onClick={(e: any) => {
                       updateContext("isRCECancerTransfer", e.target.checked)
                     }}
-                    checked={Diagnostic.isRCECancerTransfer}
+                    checked={Diagnostic.data.isRCECancerTransfer}
                     type="checkbox"
                     id="isRCECancerTransferCheckbox"
                     label="Yes, I'm." />
