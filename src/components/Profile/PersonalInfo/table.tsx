@@ -1,12 +1,15 @@
-import { useContext } from 'react';
-import { Table } from 'reactstrap';
-import { AppContext } from '../../../context/App.Contex';
-import { ProfileInterface } from '../../../context/Profile.Contex';
+import { useContext } from "react";
+import { Table } from "reactstrap";
+import { AppContext } from "../../../context/App.Contex";
+import { ProfileInterface } from "../../../context/Profile.Contex";
 
 const ProfileTable = (props: any) => {
-
-  const { Profile }  = useContext(AppContext)
-  const { tabs: { PersonalInfo: {data: PersonalInfo} } } = Profile
+  const { Profile } = useContext(AppContext);
+  const {
+    tabs: {
+      PersonalInfo: { data: PersonalInfo },
+    },
+  } = Profile;
   return (
     <Table size="sm" responsive>
       <thead>
@@ -37,6 +40,6 @@ const ProfileTable = (props: any) => {
       </tbody>
     </Table>
   );
-}
+};
 
 export default ProfileTable;

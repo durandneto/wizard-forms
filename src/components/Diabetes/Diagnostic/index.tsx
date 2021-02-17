@@ -1,10 +1,11 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Container, Row, CustomInput, Col, Form, FormGroup, Label, Input,
     Alert, Button } from 'reactstrap';
 import { AppContext } from '../../../context/App.Contex';
 import TableInfo from "./table"
 
-import { DiabetesDiagnosticList } from "../../../context/Diabetes.Contex"
+import { DiabetesDiagnostic, DiabetesDiagnosticDataInterface } from "../../../context/Diabetes.Contex"
+import { calculateError } from '../../../utils';
 
 const Diagnostic = (props:any) => {
 
@@ -12,6 +13,36 @@ const Diagnostic = (props:any) => {
 
   const { Diabetes, updateContext }  = useContext(AppContext)
   const { tabs: { Diagnostic }} = Diabetes
+
+
+  const save = useCallback(() => {
+    const error: DiabetesDiagnosticDataInterface = {
+      BMI: {
+        value: null
+      },
+      Diagnostic: { 
+        list: null,
+        isRCEDiabetesTransfer: null
+     },
+     FamilyMemberList: { list: null }
+      
+    }
+    
+    if (Diagnostic.data.list.length === 0) {
+      error.Diagnostic.list = "Diagnostic list can not be empty."
+    }
+
+    updateContext("error", error.Diagnostic)
+    updateContext("success", !calculateError(error.Diagnostic))
+
+  },[Diagnostic.data])
+
+  useEffect(() => {
+    updateContext("save", save)
+    return () => {
+      save()
+    }
+  }, [Diagnostic.data])
   
     if (props.table) {
         return <TableInfo {...props} />
@@ -25,7 +56,7 @@ const Diagnostic = (props:any) => {
                 <Row>
                     <Col>
                         <Alert color="danger">
-                            {Diagnostic.error}
+                            error
                         </Alert>
                     </Col>
                 </Row>
@@ -40,7 +71,7 @@ const Diagnostic = (props:any) => {
             </Col>
             <Col xs="12">
               {
-                DiabetesDiagnosticList.map((diagnostic: string) => (
+                DiabetesDiagnostic.map((diagnostic: string) => (
                   <FormGroup check inline>
                     <Label check>
                       <Input type="checkbox" value={diagnostic} checked={Diagnostic.data.list.includes(diagnostic)} onChange={e => {

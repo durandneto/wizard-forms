@@ -1,4 +1,4 @@
-import { TabItemInterface } from './TabHeader'
+import { TabItemInterface } from "./TabHeader";
 import {
   Container,
   Row,
@@ -6,67 +6,91 @@ import {
   Button,
   PopoverHeader,
   PopoverBody,
-  UncontrolledPopover
-} from 'reactstrap';
-import { useContext } from 'react';
-import { AppContext } from '../context/App.Contex';
+  UncontrolledPopover,
+} from "reactstrap";
+import { useContext, useMemo } from "react";
+import { AppContext } from "../context/App.Contex";
+import { calculateError } from "../utils";
 
 const PopoverContent = ({ tab }: any) => {
-    
-   return (
-       <>
-       <PopoverHeader>Error <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i></PopoverHeader>
-       <PopoverBody>
-           <span dangerouslySetInnerHTML={{__html: tab.error}} ></span>
-       </PopoverBody>
-       </>
-   );
-   }
+  return (
+    <>
+      <PopoverHeader>
+        Error{" "}
+        <i style={{ color: "#dc3545" }} className="icon-attention-filled"></i>
+      </PopoverHeader>
+      <PopoverBody>
+        {Object.values(tab.error).map((error: any) => (
+          <span>{error}</span>
+        ))}
+      </PopoverBody>
+    </>
+  );
+};
 
 const MyProgress = () => {
-   const { activeTab, activePanel, setCurrentPanel, nextTab,validateSubmitForm,
-      prevTab, backToPrevTab, goToNextTab, setIsReviewingData} = useContext(AppContext)
+  const {
+    activeTab,
+    activePanel,
+    setCurrentPanel,
+    nextTab,
+    validateSubmitForm,
+    prevTab,
+    backToPrevTab,
+    goToNextTab,
+    setIsReviewingData,
+  } = useContext(AppContext);
+
+  if (!activePanel.isRequired && activePanel.index === 0) {
+    return <span />;
+  }
   return (
-   <div className="progress_container">
+    <div className="progress_container">
       <Container>
         <Row>
           <Col className="progress_left_col">
-          {
-               Object.values(activeTab.tabs).map((tab: any, index: number) => {
+            {Object.values(activeTab.tabs).map((tab: any, index: number) => {
+              const style = tab.success ? { color: "#222" } : {};
+              if (tab.id === activePanel.id) style.color = "#409fff";
 
-                   const style = tab.success ? {color: '#222' } : {}
-                   if (tab.id === activePanel.id) style.color = "#409fff"
-                   return (
-                        <span style={style}
-                           onClick={() => {
-                              setCurrentPanel(tab)
-                           }} key={`profile-tab-index-progress-${index}`} id={`profile-tab-index-progress-${index}`} >
-                           {
-                              index > 0 && ` | `
-                           }
-                           {
-                              tab.label
-                           }
-                           {
-                              tab.error && <>
-                              <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
-                              <UncontrolledPopover trigger="hover" placement="left" target={`profile-tab-index-progress-${index}`}>
-                              {({ scheduleUpdate }) => (
-                                  <PopoverContent tab={tab}/>
-                              )}
-                              </UncontrolledPopover>
-                              </>
-                           }
-                           {
-                              tab.success && <i style={{color: "#155724"}} className="icon-ok-1"></i>
-                           }
-                        </span>
+              const showError: boolean = calculateError(tab.error);
+
+              console.log({ tab }, { showError }, tab.error);
+              return (
+                <span
+                  style={style}
+                  onClick={() => {
+                    setCurrentPanel(tab);
+                  }}
+                  key={`profile-tab-index-progress-${index}`}
+                  id={`profile-tab-index-progress-${index}`}
+                >
+                  {index > 0 && ` | `}
+                  {tab.label}
+                  {showError && (
+                    <>
+                      <i
+                        style={{ color: "#dc3545" }}
+                        className="icon-attention-filled"
+                      ></i>
+                      <UncontrolledPopover
+                        trigger="hover"
+                        placement="left"
+                        target={`profile-tab-index-progress-${index}`}
+                      >
+                        {({ scheduleUpdate }) => <PopoverContent tab={tab} />}
+                      </UncontrolledPopover>
+                    </>
                   )}
-               )
-            }
-            </Col>
-            <Col className="progress_right_col">
-               {/* {
+                  {tab.success && (
+                    <i style={{ color: "#155724" }} className="icon-ok-1"></i>
+                  )}
+                </span>
+              );
+            })}
+          </Col>
+          <Col className="progress_right_col">
+            {/* {
                   activePanel.index > 0 && <Button onClick={() => {
                      // setCurrentPanel(activeTab.tabs[activePanel.index - 1])
                   }} type="button" className="backward"  size="sm" name="prev">Prev</Button>
@@ -74,10 +98,16 @@ const MyProgress = () => {
                {
                   prevTab && activePanel.index === 0 && <Button onClick={backToPrevTab} type="button" className="backward" size="sm" name="prev">Back to {prevTab?.label}</Button>
                } */}
-               <Button
-                  onClick={activePanel.save}
-               type="button" color="success"   size="sm" name="save">Save</Button>
-               {/* {
+            <Button
+              onClick={activePanel.save}
+              type="button"
+              color="success"
+              size="sm"
+              name="save"
+            >
+              Save {activePanel.label}
+            </Button>
+            {/* {
                  activePanel.index < activeTab.tabs.length - 1 && <Button onClick={() => {
                   activePanel.save()
                   // setCurrentPanel(activeTab.tabs[activePanel.index + 1])
@@ -97,11 +127,11 @@ const MyProgress = () => {
 
                     setIsReviewingData(true)}} name="save">Save and Submit</Button>
                }  */}
-            </Col> 
-         </Row> 
-      </Container> 
-   </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
-}
+};
 
 export default MyProgress;

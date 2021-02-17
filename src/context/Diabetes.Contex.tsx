@@ -29,7 +29,7 @@ export const familyMemberData: DiabetesFamilyMemberInterface = {
    isRCEDiabetesTransfer: false
 }
 
-export const DiabetesDiagnosticList: Array<string> = [
+export const DiabetesDiagnostic: Array<string> = [
    "Hypertension",
    "High Cholesterol",
    "Heart Attack",
@@ -42,20 +42,24 @@ export const DiabetesDiagnosticList: Array<string> = [
    ]
 
 export interface DiabetesDiagnosticDataInterface {
-   DiagnosticList: {
-      list: Array<string>
+   Diagnostic: {
+      list: Array<string> | null | string
+      isRCEDiabetesTransfer: boolean | null | string
    };
    BMI: {
-      value: string 
+      value: string | null
    },
    FamilyMemberList: {
-      list: Array<DiabetesFamilyMemberInterface>
+      list: Array<DiabetesFamilyMemberInterface> | null
    }
 }
 
 export const DiabetesDiagnosticData: DiabetesDiagnosticDataInterface = {
-   DiagnosticList: { list:[] },
-   BMI: { value: "" },
+   Diagnostic: { 
+      list:["Pre-diabetes",  "Diabetes Mellitus (TYPE 2 Diabetes)"],
+      isRCEDiabetesTransfer: true
+   },
+   BMI: { value: "BMI Number here" },
    FamilyMemberList: { list:[] }
 }
 
@@ -64,7 +68,7 @@ export interface DiabetesInterface {
 }
 
 export const DiabetesData = {
-   DiagnosticList: DiabetesDiagnosticData.DiagnosticList,
+   Diagnostic: DiabetesDiagnosticData.Diagnostic,
    BMI: DiabetesDiagnosticData.BMI,
    FamilyMemberList: DiabetesDiagnosticData.FamilyMemberList,
 }
@@ -84,7 +88,7 @@ const DiabetesItemsTab: Array<TabItemInterface> = [
       label: "Diagnostic",
       slug: "Diagnostic",
       component: (props:any) => <DiagnosticComponent {...props} />,
-      data: DiabetesData.DiagnosticList
+      data: DiabetesData.Diagnostic
    },
    {
       id: guidGenerator(),

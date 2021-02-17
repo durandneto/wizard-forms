@@ -21,7 +21,7 @@ const FormItem = ({onBlur, type = "text", error, onChange, label, placeholder, i
         type={type}
       />
       {appendAddon && appendAddon()}
-      <FormFeedback tooltip>{error}</FormFeedback>
+      <FormFeedback>{error}</FormFeedback>
     </InputGroup>
   </FormGroup>
   )

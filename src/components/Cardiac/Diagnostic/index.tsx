@@ -1,16 +1,47 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Container, Row, Col, Form, FormGroup, Label, Input,
     Alert, CustomInput, CardImgOverlay } from 'reactstrap';
 import { AppContext } from '../../../context/App.Contex';
 import TableInfo from "./table"
 
-import { FamilyMemberHeartConditions } from "../../../context/Cardiac.Contex"
+import { CardiacDataInterface, CardiacDiagnosticInterface, FamilyMemberHeartConditions } from "../../../context/Cardiac.Contex"
+import { calculateError } from '../../../utils';
 
 const Diagnostic = (props:any) => {
   
   const [loading, setLoading] = useState<boolean>(false)
   const { Cardiac, updateContext }  = useContext(AppContext)
   const { tabs: { Diagnostic }} = Cardiac
+
+
+  const save = useCallback(() => {
+    const error: CardiacDiagnosticInterface = {
+      typeOfCardiac: null,
+      age: null,
+      prescribedMedications: null,
+      heartMedicationList: null,
+      OTC: null,
+      diabetesType: null,
+      hasDiabetes: null,
+      isRCECardioTransfer: null,
+      otherDiagnosis: null,
+    }
+    if (Diagnostic.data.typeOfCardiac.length === 0) {
+      error.typeOfCardiac = "Indicated test can not be empty."
+    }
+
+    updateContext("error", error)
+    updateContext("success", !calculateError(error))
+
+  },[Diagnostic.data])
+
+  useEffect(() => {
+    updateContext("save", save)
+    return () => {
+      save()
+    }
+  }, [Diagnostic.data])
+
 
     if (props.table) {
       return <TableInfo {...props} />
@@ -25,7 +56,7 @@ const Diagnostic = (props:any) => {
                 <Row>
                     <Col>
                         <Alert color="danger">
-                            {Diagnostic.error}
+                            error
                         </Alert>
                     </Col>
                 </Row>

@@ -1,17 +1,48 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Container, Row, Col, Form, FormGroup, Label, Input,
     Alert, CustomInput, CardImgOverlay } from 'reactstrap';
 import { AppContext } from '../../../context/App.Contex';
 import TableInfo from "./table"
 
-import { FamilyMemberHeartConditions, DiagnosedCancerList, TreatmentCancerList } from "../../../context/Cancer.Contex"
+import { FamilyMemberHeartConditions, DiagnosedCancerList, TreatmentCancerList, CancerDiagnosticInterface } from "../../../context/Cancer.Contex"
+import { calculateError } from '../../../utils';
 
 const Diagnostic = (props:any) => {
 
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { Cancer, updateContext, Error }  = useContext(AppContext)
+  const { Cancer, updateContext }  = useContext(AppContext)
   const { tabs: { Diagnostic }} = Cancer
+
+
+  const save = useCallback(() => {
+    const error: CancerDiagnosticInterface = {
+      indicationTest: null,
+      isDiagnosed: null,
+      isRCECancerTransfer: null,
+      treatment: null,
+      OTC: null,
+    }
+    
+    if (Diagnostic.data.indicationTest === "") {
+      error.indicationTest = "Indicated test can not be empty."
+    }
+
+    if (Diagnostic.data.OTC === "") {
+      error.OTC = "OTC can not be empty."
+    }
+
+    updateContext("error", error)
+    updateContext("success", !calculateError(error))
+
+  },[Diagnostic.data])
+
+  useEffect(() => {
+    updateContext("save", save)
+    return () => {
+      save()
+    }
+  }, [Diagnostic.data])
 
   if (props.table) {
       return <TableInfo {...props} />
@@ -21,11 +52,11 @@ const Diagnostic = (props:any) => {
       <Form>
         <Container>
             {
-              Diagnostic.error && (
+              calculateError(Diagnostic.error) && (
                 <Row>
                     <Col>
                         <Alert color="danger">
-                            {Diagnostic.error}
+                            error
                         </Alert>
                     </Col>
                 </Row>

@@ -19,6 +19,8 @@ import { PopoverBody, PopoverHeader, UncontrolledPopover } from 'reactstrap';
 import SubmitFormModal from './components/SubmitFormModal';
 import Review from './components/Review';
 import TemplatePage from './components/templates';
+import { submitForm } from './actions/medicare';
+import { calculateError } from './utils';
 
 
 interface RegisterFunctionInterface {
@@ -38,8 +40,10 @@ const initialPopulate =
           { 
             a[cc.slug] = {
               ...cc,
-              empty: true,
+              isRequired: cc.isRequired ? true : false,
+              empty: cc.isRequired ? true : false,
               error: null,
+              success: false,
               save: () => {
                 console.log(a[cc.slug])
               },
@@ -95,7 +99,11 @@ const generateErrors =
                         setActivePanel(t)}} 
                       >
                     <h6>{t.label}</h6>
-                    <p dangerouslySetInnerHTML={{__html: t.error}} ></p>
+                    {/* <p dangerouslySetInnerHTML={{__html: t.error}} ></p> */}
+                    {Object.values(t.error).map((error: any) => (
+                      <span>{error}</span>
+                    ))
+                  }
                   </div>)
                   }
                 })
@@ -127,6 +135,7 @@ function App() {
   const [Agent, setAgent] = useState<any>(ContextData.Agent)
   const [Cancer, setCancer] = useState<any>(ContextData.Cancer)
   const [Error, setError] = useState(() => generateErrors(TabsContext))
+  const [APPError, setAPPError] = useState<any>(null)
   const [isSavingData, setIsSavingData] = useState(false)
   const [isReviewingData, setIsReviewingData] = useState(false)
   const [validateSubmitForm, setValidadeSubmitForm] = useState<Array<RegisterFunctionInterface>>([])
@@ -168,12 +177,12 @@ function App() {
         tabs: Object.values(context.tabs).map((tab: any) => {
           if (tab.id === activePanel.id) {
             console.log(context.slug, tab.slug, key, value)
-            if (key === "error") {
-              ContextData[context.slug].tabs[tab.slug].error = value
-              ContextData[context.slug].tabs[tab.slug].empty = false
+            if (key === "error" || key === "success" || key === "save" || key === "isRequired") {
+              ContextData[context.slug].tabs[tab.slug][key] = value
             } else {
               ContextData[context.slug].tabs[tab.slug].data[key] = value
             }
+            ContextData[context.slug].tabs[tab.slug].empty = false
           }
           return tab
         })
@@ -189,7 +198,7 @@ function App() {
         tabs: Object.values(context.tabs).map((tab: any) => {
             console.log(context.slug, tab)
             if (tab.empty) {
-              ContextData[context.slug].tabs[tab.slug].error = "mandatory"
+              ContextData[context.slug].tabs[tab.slug].error = "This section is mandatory."
             }
           return tab
         })
@@ -232,6 +241,8 @@ function App() {
       Cardiac,
       Cancer,
       Agent,
+      APPError,
+      setAPPError,
       updateContext,
       validateAddress,
       setTabsContext,
@@ -259,6 +270,7 @@ function App() {
       Error,
       setError,
       Agent,
+      APPError,
       setActivePanel,
       updateContext,
       Profile,
@@ -289,7 +301,7 @@ function App() {
   return (
    <AppContext.Provider value={ContextProvider}>
      <SubmitFormModal isOpen={isSavingData} onCancel={() => {
-       setIsSavingData(false)
+        setIsSavingData(false)
      }} />
      <Review isOpen={isReviewingData} toggle={() => {
        setIsReviewingData( !isReviewingData )
@@ -336,7 +348,7 @@ function App() {
                             >
                              <span>{tab.label}</span>
                               {
-                                Object.values(tab.tabs).filter((t: any) => t.error).length > 0 && 
+                                Object.values(tab.tabs).filter((t: any) => calculateError(t.error)).length > 0 && 
                                 <>
                                 <i  style={{color: "#dc3545"}}  className="icon-attention-filled"></i>
                                 <UncontrolledPopover trigger="hover" placement="left" target={`profile-tab-index-${index}`}>
@@ -349,14 +361,20 @@ function App() {
                                 </>
                               }
                               {
-                                // tab.success && <>
-                                // <i style={{color: "#155724"}} className="icon-ok-1"></i>
-                                //   <UncontrolledPopover trigger="hover" placement="left" target={`profile-tab-index-${index}`}>
-                                // {({ scheduleUpdate }) => (
-                                //     <PopoverContentSuccess />
-                                // )}
-                                // </UncontrolledPopover>
-                                // </>
+                               (Object.values(tab.tabs).reduce((success: boolean, currenTab: any) => {
+                                  if (success) {
+                                    return currenTab.success
+                                  }
+                                  return success
+                                
+                                },true)) && <>
+                                 <i style={{color: "#155724"}} className="icon-ok-1"></i>
+                                   <UncontrolledPopover trigger="hover" placement="left" target={`profile-tab-index-${index}`}>
+                                 {({ scheduleUpdate }) => (
+                                     <PopoverContentSuccess />
+                                 )}
+                                 </UncontrolledPopover>
+                                 </>
                               }
                             </li>
                             )

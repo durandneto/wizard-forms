@@ -6,50 +6,51 @@ import PrimaryCare from "../components/Profile/PrimaryCare"
 import { guidGenerator } from '../utils'
 
 export interface ProfileUserDataInterface {
-   firstName: string;
-   lastName: string;
-   email: string;
-   gender: string;
-   birthDate: string;
-   phone: string;
-   phoneCode: string;
-   altPhone: string;
-   altPhoneCode: string;
-   ethnicity: string;
-   previousTests: Array<string>;
+   firstName: string | null;
+   lastName: string | null;
+   email: string | null;
+   gender: string | null;
+   birthDate: string | null;
+   phone: string | null;
+   phoneCode: string | null;
+   altPhone: string | null;
+   altPhoneCode: string | null;
+   ethnicity: string | null;
+   salivaSwabTest: boolean | null;
+   previousTests: Array<string> | null;
 }
 
 export interface ProfileAddressDataInterface {
-   streetLine: string;
-   streetLine2: string;
-   city: string;
-   state: string;
-   postalCode: string;
+   streetLine: string | null;
+   streetLine2: string | null;
+   city: string | null;
+   state: string | null;
+   postalCode: string | null;
 }
 
 export interface ProfileMedicareDataInterface {
 
-   Provider_LastName: string;
-   Provider_NPI: string;
-   Patient_Last: string;
-   payerCode: string;
-   Patient_First: string;
-   Patient_DOB: string;
-   memberID: string;
+   Provider_LastName: string | null;
+   Provider_NPI: string | null;
+   Patient_Last: string | null;
+   payerCode: string | null;
+   Patient_First: string | null;
+   Patient_DOB: string | null;
+   memberID: string | null;
 }
 
 export interface ProfilePrimaryCareDataInterface {
-   fullName: string;
-   phone: string;
+   fullName: string | null;
+   phone: string | null;
 }
 
 export const ProfilePrimaryCareData = {
-   fullName: "",
-   phone: "",
+   fullName: "MD. Jhon",
+   phone: "+1 7788347347",
 }
 // Cardio ober1001A Lionell Yewitt 2/9/1951 Medicare 5v32-m08-gc02
 export const ProfileMedicareData = {
-   memberID: "",
+   memberID: "9dx2tp7pc18",
    Provider_LastName: "Fastflow Marketing",
    Provider_NPI: "1609388842",
    payerCode: "00007",
@@ -59,25 +60,26 @@ export const ProfileMedicareData = {
 }
 
 export const ProfileAddressData = {
-   streetLine: "",
-   streetLine2: "",
-   city: "",
-   state: "",
-   postalCode: "",
+   streetLine: "470 S Washington st",
+   streetLine2: null,
+   city: "North Attleboro",
+   state: "MA",
+   postalCode: "2760",
 }
 
 export const ProfileUserData: ProfileUserDataInterface = {
-   firstName: "",
-   lastName: "",
-   email: "",
-   gender: "",
-   birthDate: "",
+   firstName: "Rodolfo",
+   lastName: "Gaytan",
+   email: "durand.neto@gmail.com",
+   gender: "male",
+   birthDate: "1949-08-30",
    phoneCode: "+ 1",
-   phone: "",
+   phone: "778 834 7347",
    altPhoneCode: "+ 1",
-   altPhone: "",
-   ethnicity: "",
-   previousTests: [""]
+   altPhone: "778 834 7347",
+   ethnicity: "Indian",
+   salivaSwabTest: true,
+   previousTests: ["Diabetes"]
 }
 
 export interface ProfileInterface {
@@ -99,6 +101,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
       id: guidGenerator(),
       label: "Personal Information.",
       slug: "PersonalInfo",
+      isRequired: true,
       component: (props:any) => <PersonalInfo {...props} />,
       index: 0,
       data: ProfileData.User
@@ -107,6 +110,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
       id: guidGenerator(),
       label: "Address",
       slug: "Address",
+      isRequired: true,
       component:  (props:any) =>  <Address {...props}  />,
       index: 1,
       data: ProfileData.Address
@@ -115,6 +119,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
       id: guidGenerator(),
       label: "Medicare ID",
       slug: "Medicare",
+      isRequired: true,
       component:  (props:any) =>  <MedicareID {...props}  />,
       index: 2,
       data: ProfileData.Medicare
@@ -123,6 +128,7 @@ const ProfileItemsTab: Array<TabItemInterface> = [
       id: guidGenerator(),
       label: "Primary Care",
       slug: "PrimaryCare",
+      isRequired: true,
       component:  (props:any) =>  <PrimaryCare {...props}  />,
       index: 3,
       data: ProfileData.PrimaryCare

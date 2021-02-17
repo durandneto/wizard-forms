@@ -1,9 +1,11 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { InputGroup, DropdownToggle, DropdownItem, DropdownMenu, InputGroupButtonDropdown,  Container, Alert, Row, Col, Form, FormGroup, Label, Input } from 'reactstrap';
 import { AppContext } from '../../../context/App.Contex';
 import InputMask from 'react-input-mask';
 import TableInfo from "./table"
 import FormItem from "../../Form/Item"
+import { ProfilePrimaryCareDataInterface } from '../../../context/Profile.Contex';
+import { calculateError } from '../../../utils';
 
 const PhysicianInformation = (props:any) => {
   const { Profile, updateContext }  = useContext(AppContext)
@@ -13,20 +15,53 @@ const PhysicianInformation = (props:any) => {
   const [code, setCode] = useState(PrimaryCare.data.code || "Area")
 
   const toggleDropDown = () => setDropdownOpen(!dropdownOpen);
-  
+
+  const save = useCallback(() => {
+    const error: ProfilePrimaryCareDataInterface = {
+      fullName: null ,
+      phone: null 
+    }
+
+    if (PrimaryCare.data.fullName === null || PrimaryCare.data.fullName === "" ) {
+      error.fullName = "Name can not be empty."
+    }
+
+    if (PrimaryCare.data.phone === null || PrimaryCare.data.phone === "" ) {
+      error.phone = "Name can not be empty."
+    }
+
+    updateContext("error", error)
+    updateContext("success", !calculateError(error))
+
+  },[PrimaryCare.data, updateContext])
+
+  useEffect(() => {
+    updateContext("save", save)
+    return () => {
+      save()
+    }
+  }, [PrimaryCare.data])
+
+
+  const showError: boolean = useMemo(() => {
+    return calculateError(PrimaryCare.error)
+  },[PrimaryCare.error])
+
+
   if (props.table) {
     return <TableInfo {...props} />
   }
+
   return (
   <div className="col-xs-12">
     <Form>
       <Container>
         {
-          PrimaryCare.error && (
+          showError && (
               <Row>
                   <Col>
                       <Alert color="danger">
-                          {PrimaryCare.error}
+                         error
                       </Alert>
                   </Col>
               </Row>
@@ -39,6 +74,7 @@ const PhysicianInformation = (props:any) => {
               id={`DoctorFullname`}
               placeholder={"Doctor Full name"}
               value={PrimaryCare.data.fullName}
+              error={PrimaryCare.error?.fullName}
               onChange={(e: any) => {
                 updateContext("fullName", e.target.value)
               }}
@@ -69,6 +105,7 @@ const PhysicianInformation = (props:any) => {
                   maskChar=" "
                   id="form-input-id-phone"
                   value={PrimaryCare.data.phone} 
+                  invalid={PrimaryCare.error?.phone}
                   tag={InputMask}
                   onChange={e => {
                     updateContext("phone", e.target.value)

@@ -7,6 +7,7 @@ export interface  TabItemInterface {
     success?:  string | boolean;
     component?: any;
     data?: any;
+    isRequired?: boolean;
 }
 export interface TabHeaderInterface extends TabItemInterface{
     tabs: Array<TabItemInterface>;

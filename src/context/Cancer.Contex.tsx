@@ -54,41 +54,41 @@ export const FamilyMemberHeartConditions  = [
 ]
 
 export interface CancerDiagnosticInterface {
-   indicationTest: string;
-   isDiagnosed: string;
-   isRCECancerTransfer: boolean;
-   treatment: string;
-   OTC: string
+   indicationTest: string | null;
+   isDiagnosed: string | null;
+   isRCECancerTransfer: boolean | null;
+   treatment: string | null;
+   OTC: string | null
 }
 
 
 export interface CancerFamilyMemberInterface {
-   id: string
-   relationship: string;
-   materialOrPaternal: string;
-   age: string;
-   ageOfDiagnosis: string;
-   typeOfCancer: string;
+   id: string | null
+   relationship: string | null;
+   materialOrPaternal: string | null;
+   age: string | null;
+   ageOfDiagnosis: string | null;
+   typeOfCancer: string | null;
 }
 
 export const familyMemberData: CancerFamilyMemberInterface = {
-   id: "",
-   relationship: "",
-   materialOrPaternal: "",
-   age: "",
-   ageOfDiagnosis: "",
-   typeOfCancer: "",
+   id: null,
+   relationship: null,
+   materialOrPaternal: null,
+   age: null,
+   ageOfDiagnosis: null,
+   typeOfCancer: null,
 }
 
 export const DiagnosticData: CancerDiagnosticInterface = {
-   indicationTest: "",
-   isDiagnosed: "",
+   indicationTest: "DIAGNOSTIC",
+   isDiagnosed: "Yes",
    isRCECancerTransfer: false,
-   treatment: "",
-   OTC: ""
+   treatment: "RADIATION",
+   OTC: "nothing"
 }
 
-export const CancerDiagnosticList: Array<string> = [
+export const CancerDiagnostic: Array<string> = [
    "Hypertension",
    "High Cholesterol",
    "Heart Attack",
@@ -118,6 +118,7 @@ const CancerItemsTab: Array<TabItemInterface> = [
       index: 0,
       label: "Diagnostic",
       slug: "Diagnostic",
+     
       component: (props:any) => <DiagnosticComponent {...props} />,
       data: CancerDiagnosticData.Diagnostic
    },

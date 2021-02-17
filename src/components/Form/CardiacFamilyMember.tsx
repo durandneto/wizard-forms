@@ -68,7 +68,7 @@ const CardiacsFamilyMember = ({model, success, error, onSave, id, loading, disab
           <FormGroup>
             <Label for={`RelationshipCardiacFormFamilyMember${id}`}>Relationship</Label>
             <CustomInput
-            value={fData.relationship}
+            value={fData.relationship || ''}
             onChange={(e:any) => {
               onChange({
                 ...fData,
@@ -89,7 +89,7 @@ const CardiacsFamilyMember = ({model, success, error, onSave, id, loading, disab
           <FormGroup>
             <Label for={`materialOrPaternalCardiacFormFamilyMember${id}`}>Maternal or Paternal</Label>
             <CustomInput
-            value={fData.materialOrPaternal}
+            value={fData.materialOrPaternal || ''}
             onChange={(e:any) => {
               onChange({
                 ...fData,

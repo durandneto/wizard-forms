@@ -126,7 +126,7 @@ const DiabetesFamilyMemberForm = ({model, success, error, onSave, id, loading, d
           <FormGroup>
             <Label for={`RelationshipFormFamilyMember`}>Relationship to patient</Label>
             <CustomInput
-            value={fData.relationship}
+            value={fData.relationship || ''}
             onChange={(e:any) => {
               onChange({
                 ...fData,

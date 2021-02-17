@@ -4,3 +4,7 @@ export const  guidGenerator = () => {
     };
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
+
+export const calculateError = (error: any): boolean => {
+    return error && Object.values(error).filter(r => r !== null && r !== "").length > 0
+}

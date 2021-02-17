@@ -54,7 +54,7 @@ const CancerFamilyMember = ({model, success, error, onSave, id, loading, disable
               name="AgeOfDiagnosis"
               id={`AgeOfDiagnosisCancerFormFamilyMember${id}`}
               placeholder="Age of diagnosis"
-              value={fData.ageOfDiagnosis}
+              value={fData.ageOfDiagnosis || ''}
               onChange={e => {
                 onChange({
                   ...fData,
@@ -68,7 +68,7 @@ const CancerFamilyMember = ({model, success, error, onSave, id, loading, disable
           <FormGroup>
             <Label for={`RelationshipCancerFormFamilyMember${id}`}>Relationship</Label>
             <CustomInput
-            value={fData.relationship}
+            value={fData.relationship || ''}
             onChange={(e:any) => {
               onChange({
                 ...fData,
@@ -89,7 +89,7 @@ const CancerFamilyMember = ({model, success, error, onSave, id, loading, disable
           <FormGroup>
             <Label for={`materialOrPaternalCancerFormFamilyMember${id}`}>Maternal or Paternal</Label>
             <CustomInput
-            value={fData.materialOrPaternal}
+            value={fData.materialOrPaternal || ''}
             onChange={(e:any) => {
               onChange({
                 ...fData,
@@ -164,7 +164,7 @@ const CancerFamilyMember = ({model, success, error, onSave, id, loading, disable
           <FormGroup>
             <Label for={`typeOfCancerCancerFormFamilyMember${id}`}>Has any type of Cancer?</Label>
             <CustomInput
-            value={fData.typeOfCancer}
+            value={fData.typeOfCancer || ''}
             onChange={(e:any) => {
               onChange({
                 ...fData,

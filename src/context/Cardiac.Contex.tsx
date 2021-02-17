@@ -41,15 +41,15 @@ export const FamilyMemberHeartConditions  = [
 ]
 
 export interface CardiacDiagnosticInterface {
-   typeOfCardiac: Array<string>;
-   age: string;
-   prescribedMedications: string;
-   heartMedicationList: Array<string>;
-   OTCList: Array<string>;
-   diabetesType: Array<string>;
-   hasDiabetes: boolean;
-   isRCECardioTransfer: boolean;
-   otherDiagnosis: string;
+   typeOfCardiac: Array<string> | null  | string;
+   age: string | null;
+   prescribedMedications: string | null;
+   heartMedicationList: Array<string> | null | string;
+   OTC: string | null;
+   diabetesType: string | null;
+   hasDiabetes: boolean | null; 
+   isRCECardioTransfer: boolean | null; 
+   otherDiagnosis: string | null; 
 }
 
 
@@ -74,18 +74,18 @@ export const familyMemberData: CardiacFamilyMemberInterface = {
 }
 
 export const DiagnosticData: CardiacDiagnosticInterface = {
-   typeOfCardiac: [],
+   typeOfCardiac:  [],
    age: "",
-   prescribedMedications: "",
+   prescribedMedications: "No",
    heartMedicationList:[],
-   OTCList:[],
-   diabetesType:[],
+   OTC: "Noting",
+   diabetesType: "Type 2",
    hasDiabetes: false,
    isRCECardioTransfer: false,
    otherDiagnosis: ""
 }
 
-export const CardiacDiagnosticList: Array<string> = [
+export const CardiacDiagnostic: Array<string> = [
    "Hypertension",
    "High Cholesterol",
    "Heart Attack",
