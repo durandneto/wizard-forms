@@ -1,7 +1,9 @@
-import React, { useReducer } from "react";
+import React, { useContext, useReducer } from "react";
 import TextField from "@material-ui/core/TextField";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { AgentInterface } from "../../Reducer/Agent";
+
+import { AppContext } from "../../store";
+import { AgentInterface, agentData } from "../../Reducer/Agent";
 import AgentReducer, {
   initialAgent,
   AGENT_SET_NAME,
@@ -20,59 +22,63 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-const agentData: AgentInterface = {
-  error: null,
-  success: false,
-  complete: false,
-  name: "",
-  url: "",
-};
 export default function Agent() {
   const classes = useStyles();
-  const [AgentData, dispatch] = useReducer(
-    AgentReducer,
-    agentData,
-    initialAgent
-  );
+  //   const [AgentData, dispatch] = useReducer(
+  //     AgentReducer,
+  //     agentData,
+  //     initialAgent
+  //   );
+
+  const { AgentState, AgentDispatch } = useContext(AppContext);
+
+  debugger;
   return (
     <form className={classes.root}>
       <div>
         <TextField
-          //   error={AgentData.error && AgentData.error.url !== null}
+          error={AgentState.error && AgentState.errorMessage.url !== ""}
           id="outlined-error"
           label="Recording URL"
-          defaultValue={AgentData.url}
-          value={AgentData.url}
+          defaultValue={AgentState.url}
+          value={AgentState.url}
           variant="outlined"
-          //   helperText={AgentData.error.url}
+          helperText={
+            AgentState.error && AgentState.errorMessage.url !== ""
+              ? AgentState.errorMessage.url
+              : ""
+          }
           onChange={(e: any) => {
-            dispatch({ type: AGENT_SET_URL, url: e.target.value });
+            AgentDispatch({ type: AGENT_SET_URL, url: e.target.value });
           }}
         />
         <TextField
-          //   error={AgentData.error.name}
+          error={AgentState.error && AgentState.errorMessage.name !== ""}
           id="outlined-error-helper-text"
           label="Agent name"
-          defaultValue={AgentData.name}
-          value={AgentData.name}
-          //   helperText={AgentData.error.name}
+          defaultValue={AgentState.name}
+          value={AgentState.name}
+          helperText={
+            AgentState.error && AgentState.errorMessage.name !== ""
+              ? AgentState.errorMessage.name
+              : ""
+          }
           variant="outlined"
           onChange={(e: any) => {
-            dispatch({ type: AGENT_SET_NAME, name: e.target.value });
+            AgentDispatch({ type: AGENT_SET_NAME, name: e.target.value });
           }}
         />
       </div>
       <Button
         onClick={() => {
-          dispatch({ type: AGENT_SET_ERROR });
+          AgentDispatch({ type: AGENT_SET_ERROR });
         }}
         variant="contained"
         color="primary"
       >
         Next
       </Button>
-      <div>{JSON.stringify(AgentData.error)}</div>
+      <div>{JSON.stringify(AgentState.errorMessage)}</div>
     </form>
   );
 }

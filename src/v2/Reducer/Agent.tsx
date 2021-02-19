@@ -1,8 +1,9 @@
 export interface AgentInterface {
-  error: {
-    url: null;
-    name: null;
-  } | null;
+  error: boolean;
+  errorMessage?: {
+    url: string;
+    name: string;
+  };
   success: boolean;
   complete: boolean;
   url: string;
@@ -10,7 +11,7 @@ export interface AgentInterface {
 }
 
 export const agentData: AgentInterface = {
-  error: null,
+  error: false,
   success: false,
   complete: false,
   name: "",
@@ -35,16 +36,17 @@ export const initialAgent = (initialAgent: AgentInterface) => {
 };
 
 export default function reducer(
-  state: any,
+  state: AgentInterface,
   action: AgentActionInterface
 ): AgentInterface {
   switch (action.type) {
     case AGENT_SET_ERROR:
       return {
         ...state,
-        error: {
-          name: state.name === "" ? "name empty" : null,
-          url: state.url === "" ? "url empty" : null,
+        error: state.name === "" || state.url === "",
+        errorMessage: {
+          name: state.name === "" ? "name empty" : "",
+          url: state.url === "" ? "url empty" : "",
         },
       };
     case AGENT_SET_URL:
