@@ -4,7 +4,7 @@ import {
   Alert,
   DropdownMenu,
   DropdownItem,
-  InputGroupButtonDropdown,
+  FormFeedback,
   InputGroup,
   Container,
   Row,
@@ -36,8 +36,11 @@ const Ethnicity: Array<string> = [
   "Pacific Islander",
   "Other",
 ];
+
 const PersonalInfo = (props: any) => {
-  const { Profile, updateContext } = useContext(AppContext);
+  const { Profile, updateContext, ContextData, setContextData } = useContext(
+    AppContext
+  );
   const {
     tabs: { PersonalInfo },
   } = Profile;
@@ -65,7 +68,9 @@ const PersonalInfo = (props: any) => {
       altPhoneCode: null,
       ethnicity: null,
       salivaSwabTest: null,
+      isAlzheimerorDementiatype: null,
       previousTests: null,
+      isNursingLiving: null,
     };
 
     if (
@@ -75,11 +80,26 @@ const PersonalInfo = (props: any) => {
       error.firstName = "First name can not be empty.";
     }
 
+    if (PersonalInfo.data.previousTests.length === 0) {
+      error.previousTests = "Previous generic test can not be empty.";
+    }
+
     if (
       PersonalInfo.data.lastName === null ||
       PersonalInfo.data.lastName === ""
     ) {
       error.lastName = "Last name can not be empty.";
+    }
+
+    if (PersonalInfo.data.gender === null || PersonalInfo.data.gender === "") {
+      error.gender = "Gender can not be empty.";
+    }
+
+    if (
+      PersonalInfo.data.ethnicity === null ||
+      PersonalInfo.data.ethnicity === ""
+    ) {
+      error.ethnicity = "Ethnicity can not be empty.";
     }
 
     if (
@@ -102,9 +122,6 @@ const PersonalInfo = (props: any) => {
 
   useEffect(() => {
     updateContext("save", save);
-    return () => {
-      save();
-    };
   }, [PersonalInfo.data]);
 
   const showError: boolean = useMemo(() => {
@@ -121,13 +138,6 @@ const PersonalInfo = (props: any) => {
     <div className="col-xs-12">
       <Form>
         <Container>
-          {showError && (
-            <Row>
-              <Col>
-                <Alert color="danger">error</Alert>
-              </Col>
-            </Row>
-          )}
           <Row>
             <Col xs="12" sm="4">
               <FormItem
@@ -155,6 +165,7 @@ const PersonalInfo = (props: any) => {
               <Label for="RadioMale">Gender</Label>
               <FormGroup>
                 <CustomInput
+                  invalid={PersonalInfo.error?.gender}
                   onChange={(e) => {
                     updateContext("gender", e.target.value);
                   }}
@@ -171,6 +182,7 @@ const PersonalInfo = (props: any) => {
                   onChange={(e) => {
                     updateContext("gender", e.target.value);
                   }}
+                  invalid={PersonalInfo.error?.gender}
                   bsSize="sm"
                   type="radio"
                   value="female"
@@ -180,12 +192,13 @@ const PersonalInfo = (props: any) => {
                   label="Female"
                   inline
                 />
+                <FormFeedback>{PersonalInfo.error?.gender}</FormFeedback>
               </FormGroup>
             </Col>
-            <Col xs="12" sm="6">
+            <Col xs="12" sm="4">
               <Label for={`form-input-id-phone`}>Phone</Label>
               <InputGroup>
-                <InputGroupButtonDropdown
+                {/* <InputGroupButtonDropdown
                   addonType="append"
                   isOpen={dropdownOpen}
                   toggle={toggleDropDown}
@@ -210,11 +223,11 @@ const PersonalInfo = (props: any) => {
                       + 778
                     </DropdownItem>
                   </DropdownMenu>
-                </InputGroupButtonDropdown>
+                </InputGroupButtonDropdown> */}
                 <Input
                   type="tel"
-                  mask="999 999 9999"
-                  maskChar=" "
+                  mask="999999999999999"
+                  maskChar=""
                   id="form-input-id-phone"
                   value={PersonalInfo.data.phone}
                   invalid={PersonalInfo.error?.phone}
@@ -225,10 +238,10 @@ const PersonalInfo = (props: any) => {
                 />
               </InputGroup>
             </Col>
-            <Col xs="12" sm="6">
+            <Col xs="12" sm="4">
               <Label for={`form-input-id-phone`}>Alt. Phone</Label>
               <InputGroup>
-                <InputGroupButtonDropdown
+                {/* <InputGroupButtonDropdown
                   addonType="append"
                   isOpen={dropdownAltOpen}
                   toggle={toggleAltDropDown}
@@ -253,11 +266,11 @@ const PersonalInfo = (props: any) => {
                       + 778
                     </DropdownItem>
                   </DropdownMenu>
-                </InputGroupButtonDropdown>
+                </InputGroupButtonDropdown> */}
                 <Input
                   type="tel"
-                  mask="999 999 9999"
-                  maskChar=" "
+                  mask="999999999999999"
+                  maskChar=""
                   id="form-input-id-phone"
                   tag={InputMask}
                   value={PersonalInfo.data.altPhone}
@@ -268,9 +281,7 @@ const PersonalInfo = (props: any) => {
                 />
               </InputGroup>
             </Col>
-            <br />
-            <br />
-            <Col xs="12">
+            <Col xs="4">
               <FormItem
                 id="emailAddress"
                 label="Email Address"
@@ -281,7 +292,9 @@ const PersonalInfo = (props: any) => {
                 }}
               />
             </Col>
-            <Col xs="12">
+          </Row>
+          <Row>
+            <Col sx="12" sm="4">
               <FormGroup>
                 <Label for="birthDate">Birth Date</Label>
                 <Input
@@ -289,6 +302,8 @@ const PersonalInfo = (props: any) => {
                   type="date"
                   name="date"
                   id="birthDate"
+                  min="1920-01-01"
+                  max="2000-01-01"
                   placeholder="Birth date"
                   value={PersonalInfo.data.birthDate}
                   invalid={PersonalInfo.error?.birthDate}
@@ -298,10 +313,10 @@ const PersonalInfo = (props: any) => {
                 />
               </FormGroup>
             </Col>
+          </Row>
+          <Row>
             <Col xs="12">
-              <Label for="RadioEthnicity">
-                <b>Ethnicity</b>
-              </Label>
+              <Label for="RadioEthnicity">Ethnicity</Label>
               <FormGroup>
                 {Ethnicity.map((et, key) => (
                   <CustomInput
@@ -309,6 +324,7 @@ const PersonalInfo = (props: any) => {
                     bsSize="sm"
                     type="radio"
                     value={et}
+                    invalid={PersonalInfo.error?.ethnicity}
                     checked={PersonalInfo.data.ethnicity === et}
                     name="RadioEthnicity"
                     id={`Ethnicity-id-${key}`}
@@ -319,95 +335,47 @@ const PersonalInfo = (props: any) => {
                 ))}
               </FormGroup>
             </Col>
-            <Col xs="12">
-              <Label for="RadioEthnicity">
-                <b>Previous Tests only </b>
-              </Label>
+            <Col xs="12" sm="6">
+              <br />
+              <FormGroup>
+                <Label for={`typeOfNursinLiving`}>
+                  <b>
+                    Currenly living in a nursing home or assisted living
+                    facility?
+                  </b>
+                </Label>
+                <CustomInput
+                  value={PersonalInfo.data.isNursingLiving}
+                  onChange={(e: any) => {
+                    updateContext("isNursingLiving", e.target.value);
+                  }}
+                  type="select"
+                  id={`typeOfNursinLiving`}
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </CustomInput>
+              </FormGroup>
             </Col>
-            <Col xs="12">
-              <FormGroup check inline>
-                <Label check>
-                  <Input
-                    type="checkbox"
-                    value="Cardiac"
-                    checked={PersonalInfo.data.previousTests.includes(
-                      "Cardiac"
-                    )}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        updateContext("previousTests", [
-                          ...PersonalInfo.data.previousTests,
-                          e.target.value,
-                        ]);
-                      } else {
-                        const index = PersonalInfo.data.previousTests.findIndex(
-                          (i: string) => i === e.target.value
-                        );
-                        const newPreviousTests =
-                          PersonalInfo.data.previousTests;
-                        newPreviousTests.splice(index, 1);
-                        updateContext("previousTests", newPreviousTests);
-                      }
-                    }}
-                  />{" "}
-                  Cardiac
+            <Col xs="12" sm="6">
+              <br />
+              <FormGroup>
+                <Label for={`AlzheimerorDementiatype`}>
+                  <b>Do you have Alzheimer's or Dementia?</b>
                 </Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Label check>
-                  <Input
-                    type="checkbox"
-                    value="Diabetes"
-                    checked={PersonalInfo.data.previousTests.includes(
-                      "Diabetes"
-                    )}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        updateContext("previousTests", [
-                          ...PersonalInfo.data.previousTests,
-                          e.target.value,
-                        ]);
-                      } else {
-                        const index = PersonalInfo.data.previousTests.findIndex(
-                          (i: string) => i === e.target.value
-                        );
-                        const newPreviousTests =
-                          PersonalInfo.data.previousTests;
-                        newPreviousTests.splice(index, 1);
-
-                        updateContext("previousTests", newPreviousTests);
-                      }
-                    }}
-                  />{" "}
-                  Diabetes
-                </Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Label check>
-                  <Input
-                    type="checkbox"
-                    value="Cancer"
-                    checked={PersonalInfo.data.previousTests.includes("Cancer")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        updateContext("previousTests", [
-                          ...PersonalInfo.data.previousTests,
-                          e.target.value,
-                        ]);
-                      } else {
-                        const index = PersonalInfo.data.previousTests.findIndex(
-                          (i: string) => i === e.target.value
-                        );
-                        const newPreviousTests =
-                          PersonalInfo.data.previousTests;
-                        newPreviousTests.splice(index, 1);
-
-                        updateContext("previousTests", newPreviousTests);
-                      }
-                    }}
-                  />{" "}
-                  Cancer
-                </Label>
+                <CustomInput
+                  value={PersonalInfo.data.isAlzheimerorDementiatype}
+                  onChange={(e: any) => {
+                    updateContext("isAlzheimerorDementiatype", e.target.value);
+                  }}
+                  type="select"
+                  id={`AlzheimerorDementiatype`}
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </CustomInput>
               </FormGroup>
             </Col>
             <Col xs="12">
@@ -418,21 +386,107 @@ const PersonalInfo = (props: any) => {
             </Col>
             <Col xs="12">
               <FormGroup check inline>
-                <Label check>
-                  <Input
-                    type="checkbox"
-                    value="Yes"
-                    checked={PersonalInfo.data.salivaSwabTest === "Yes"}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        updateContext("salivaSwabTest", "Yes");
-                      } else {
-                        updateContext("salivaSwabTest", "No");
-                      }
-                    }}
-                  />{" "}
-                  Yes, I did.
-                </Label>
+                <Input
+                  type="checkbox"
+                  value="Yes"
+                  checked={PersonalInfo.data.salivaSwabTest === "Yes"}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      updateContext("salivaSwabTest", "Yes");
+                    } else {
+                      updateContext("salivaSwabTest", "No");
+                    }
+                  }}
+                />
+                <Label check>Yes, I did.</Label>
+              </FormGroup>
+            </Col>
+            <Col xs="12">
+              <br />
+              <Label for="RadioEthnicity">
+                <b>Previous Generic Test </b>
+              </Label>
+            </Col>
+            <Col xs="12">
+              <FormGroup check inline>
+                <Input
+                  type="checkbox"
+                  value="Cardiac"
+                  checked={PersonalInfo.data.previousTests.includes("Cardiac")}
+                  invalid={PersonalInfo.error?.previousTests}
+                  onChange={(e) => {
+                    ContextData.Cardiac.show = !e.target.checked;
+                    setContextData({ ...ContextData });
+                    if (e.target.checked) {
+                      updateContext("previousTests", [
+                        ...PersonalInfo.data.previousTests,
+                        e.target.value,
+                      ]);
+                    } else {
+                      const index = PersonalInfo.data.previousTests.findIndex(
+                        (i: string) => i === e.target.value
+                      );
+                      const newPreviousTests = PersonalInfo.data.previousTests;
+                      newPreviousTests.splice(index, 1);
+                      updateContext("previousTests", newPreviousTests);
+                    }
+                  }}
+                />
+                <Label check>Cardiac</Label>
+              </FormGroup>
+              <FormGroup check inline>
+                <Input
+                  type="checkbox"
+                  value="Diabetes"
+                  invalid={PersonalInfo.error?.previousTests}
+                  checked={PersonalInfo.data.previousTests.includes("Diabetes")}
+                  onChange={(e) => {
+                    ContextData.Diabetes.show = !e.target.checked;
+                    setContextData({ ...ContextData });
+                    if (e.target.checked) {
+                      updateContext("previousTests", [
+                        ...PersonalInfo.data.previousTests,
+                        e.target.value,
+                      ]);
+                    } else {
+                      const index = PersonalInfo.data.previousTests.findIndex(
+                        (i: string) => i === e.target.value
+                      );
+                      const newPreviousTests = PersonalInfo.data.previousTests;
+                      newPreviousTests.splice(index, 1);
+
+                      updateContext("previousTests", newPreviousTests);
+                    }
+                  }}
+                />
+                <Label check>Diabetes</Label>
+              </FormGroup>
+              <FormGroup check inline>
+                <Input
+                  type="checkbox"
+                  value="Cancer"
+                  checked={PersonalInfo.data.previousTests.includes("Cancer")}
+                  invalid={PersonalInfo.error?.previousTests}
+                  onChange={(e) => {
+                    ContextData.Cancer.show = !e.target.checked;
+                    setContextData({ ...ContextData });
+                    if (e.target.checked) {
+                      updateContext("previousTests", [
+                        ...PersonalInfo.data.previousTests,
+                        e.target.value,
+                      ]);
+                    } else {
+                      const index = PersonalInfo.data.previousTests.findIndex(
+                        (i: string) => i === e.target.value
+                      );
+                      const newPreviousTests = PersonalInfo.data.previousTests;
+                      newPreviousTests.splice(index, 1);
+
+                      updateContext("previousTests", newPreviousTests);
+                    }
+                  }}
+                />
+                <Label check>Cancer</Label>
               </FormGroup>
             </Col>
           </Row>

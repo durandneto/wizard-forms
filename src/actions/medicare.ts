@@ -1,7 +1,7 @@
 import axios from "axios";
 import { token } from "../context/Auth.Context"
 import { AppDataInterface } from "../context/Tabs.Context";
-import { BASE_URL, BASE_URL_ECS } from "./profile";
+import { BASE_URL } from "./profile";
 
 interface saveDataInterface {
     recordingUrl: string | null;
@@ -93,7 +93,7 @@ export const submitForm = (AppData: any) => {
             "Authorization": `Bearer ${token}`
         }
     };
-    debugger
+    alert("The afiliate ID is missing");
     const postData: saveDataInterface = {
         recordingUrl: AppData.Agent.tabs.Info.data.url,
         agentName: AppData.Agent.tabs.Info.data.name,
@@ -113,7 +113,7 @@ export const submitForm = (AppData: any) => {
         birthDate: AppData.Profile.tabs.PersonalInfo.data.birthDate,
         alzheimerorDementia:false,
         medicareId: AppData.Profile.tabs.Medicare.data.memberID,
-        extendedMedicareLeadData: "",
+        extendedMedicareLeadData: AppData.Profile.tabs.Medicare.data.extendedMedicareLeadData,
         salivaSwabTest:false,
         height: "",
         weight: "",
@@ -162,6 +162,6 @@ export const submitForm = (AppData: any) => {
         }     
     };
       
-    return axios.post(`${BASE_URL_ECS}/medicare`, postData, axiosConfig)
-    .then((res: any) => res.json() )
+    return axios.post(`${BASE_URL}/medicare`, postData, axiosConfig)
+    .then((res: any) => res.data )
 }

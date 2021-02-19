@@ -1513,9 +1513,8 @@ ul.list li {
   justify-content: space-between;
   width: 100%;
   position: relative;
-  margin: 5px 0;
   list-style: none;
-  padding: 10px;
+  padding: 5px;
 }
 ul.list li:hover {
   cursor: pointer;
@@ -1527,6 +1526,8 @@ ul.list li.active {
   color: #fff;
   background-color: #0e71eb;
   border-radius: 8px;
+  padding: 10px;
+  margin: 5px 0;
 }
 
 /* Hamburger menu button*/

@@ -32,9 +32,11 @@ const PopoverContent = (props: any) => {
         <i style={{ color: "#dc3545" }} className="icon-attention-filled"></i>
       </PopoverHeader>
       <PopoverBody>
-        {Object.values(props.error).map((error: any) => (
-          <span>{error}</span>
-        ))}
+        {Object.values(props.error)
+          .filter((r: any) => r !== null)
+          .map((error: any) => (
+            <span>{Object.values(error)}</span>
+          ))}
       </PopoverBody>
     </>
   );

@@ -13,6 +13,7 @@ import { AppContext } from "../context/App.Contex";
 import { calculateError } from "../utils";
 
 const PopoverContent = ({ tab }: any) => {
+  debugger;
   return (
     <>
       <PopoverHeader>
@@ -20,9 +21,11 @@ const PopoverContent = ({ tab }: any) => {
         <i style={{ color: "#dc3545" }} className="icon-attention-filled"></i>
       </PopoverHeader>
       <PopoverBody>
-        {Object.values(tab.error).map((error: any) => (
-          <span>{error}</span>
-        ))}
+        {Object.values(tab.error)
+          .filter((r: any) => r !== null)
+          .map((error: any) => (
+            <span>{Object.values(error)}</span>
+          ))}
       </PopoverBody>
     </>
   );
@@ -34,16 +37,15 @@ const MyProgress = () => {
     activePanel,
     setCurrentPanel,
     nextTab,
-    validateSubmitForm,
+    goToNextPanel,
     prevTab,
+    backToPrevPanel,
     backToPrevTab,
     goToNextTab,
     setIsReviewingData,
   } = useContext(AppContext);
 
-  if (!activePanel.isRequired && activePanel.index === 0) {
-    return <span />;
-  }
+  console.log(activePanel);
   return (
     <div className="progress_container">
       <Container>
@@ -54,14 +56,23 @@ const MyProgress = () => {
               if (tab.id === activePanel.id) style.color = "#409fff";
 
               const showError: boolean = calculateError(tab.error);
+              console.log("---------------");
+              console.log("---------------");
+              console.log("Progress eror");
+              console.log({ showError });
+              console.log("---------------");
+              console.log("---------------");
+              console.log("---------------");
 
-              console.log({ tab }, { showError }, tab.error);
               return (
                 <span
                   style={style}
                   onClick={() => {
-                    setCurrentPanel(tab);
+                    if (!tab.empty) {
+                      setCurrentPanel(tab);
+                    }
                   }}
+                  className={tab.empty ? "disabled" : ""}
                   key={`profile-tab-index-progress-${index}`}
                   id={`profile-tab-index-progress-${index}`}
                 >
@@ -90,15 +101,31 @@ const MyProgress = () => {
             })}
           </Col>
           <Col className="progress_right_col">
-            {/* {
-                  activePanel.index > 0 && <Button onClick={() => {
-                     // setCurrentPanel(activeTab.tabs[activePanel.index - 1])
-                  }} type="button" className="backward"  size="sm" name="prev">Prev</Button>
-               }
-               {
-                  prevTab && activePanel.index === 0 && <Button onClick={backToPrevTab} type="button" className="backward" size="sm" name="prev">Back to {prevTab?.label}</Button>
-               } */}
-            <Button
+            {activePanel.index > 0 && (
+              <Button
+                onClick={() => {
+                  backToPrevPanel();
+                }}
+                type="button"
+                className="backward"
+                size="sm"
+                name="prev"
+              >
+                Prev
+              </Button>
+            )}
+            {prevTab && activePanel.index === 0 && (
+              <Button
+                onClick={backToPrevTab}
+                type="button"
+                className="backward"
+                size="sm"
+                name="prev"
+              >
+                Prev
+              </Button>
+            )}
+            {/* <Button
               onClick={activePanel.save}
               type="button"
               color="success"
@@ -106,22 +133,40 @@ const MyProgress = () => {
               name="save"
             >
               Save {activePanel.label}
+            </Button> */}
+            {/* {activePanel.index < Object.values(activeTab.tabs).length - 1 && ( */}
+            {/* {activePanel.index < Object.values(activeTab.tabs).length - 1 && ( */}
+
+            <Button
+              onClick={() => {
+                activePanel.save();
+              }}
+              tpe="button"
+              className="forward"
+              size="sm"
+              name="save"
+            >
+              Next
             </Button>
+            {/* )} */}
+
+            {/* {nextTab &&
+              activePanel.index ===
+                Object.values(activeTab.tabs).length - 1 && (
+                <Button
+                  onClick={() => {
+                    activePanel.save();
+                    goToNextTab();
+                  }}
+                  type="button"
+                  className="forward"
+                  size="sm"
+                  name="save"
+                >
+                  Save and Go to {nextTab?.label}
+                </Button>
+              )} */}
             {/* {
-                 activePanel.index < activeTab.tabs.length - 1 && <Button onClick={() => {
-                  activePanel.save()
-                  // setCurrentPanel(activeTab.tabs[activePanel.index + 1])
-               }} tpe="button" className="forward"  size="sm" name="save">Save and Next</Button>
-               }
-               
-               {
-                 nextTab && activePanel.index === activeTab.tabs.length - 1 && <Button onClick={() => {
-                     activePanel.save()
-                     goToNextTab()
-                  }
-                  } type="button" className="forward" size="sm" name="save">Save and Go to {nextTab?.label}</Button>
-               }
-               {
                  !nextTab && activePanel.index === activeTab.tabs.length - 1 && <Button type="button" className="forward" size="sm" onClick={() => {
                     console.log({validateSubmitForm})
 

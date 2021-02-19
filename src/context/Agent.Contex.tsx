@@ -8,8 +8,8 @@ export interface AgentDataInterface {
 }
 
 export const AgentInfoData: AgentDataInterface = {
-  name: "Agent Name here",
-  url: "http://durand.com",
+  name: "",
+  url: "",
 };
 
 const AgentItemsTab: Array<TabItemInterface> = [

@@ -2,9 +2,7 @@ import axios from "axios"
 import { token } from "../context/Auth.Context"
 import { ProfileAddressDataInterface, ProfileMedicareDataInterface, ProfileUserDataInterface } from "../context/Profile.Contex"
 
-// export const BASE_URL = "https://services.oberholtzermedia.com"
 export const BASE_URL = "http://ec2co-ecsel-uixxpxra75ed-1580772910.us-west-2.elb.amazonaws.com"
-export const BASE_URL_ECS = "http://ec2co-ecsel-uixxpxra75ed-1580772910.us-west-2.elb.amazonaws.com"
 
 export const validateAddress = (Address: ProfileAddressDataInterface) => {
     const axiosConfig = {
@@ -15,7 +13,7 @@ export const validateAddress = (Address: ProfileAddressDataInterface) => {
     };
     const data = `?street=${Address.streetLine}&street2=${Address.streetLine2}&city=${Address.city}&state=${Address.state}&zipcode=${Address.postalCode}`
     return axios.get(`${BASE_URL}/address-validation/${data}`, axiosConfig)
-        .then((r: any) => r.json())
+        .then((r: any) => r.data)
 }
 
 export const checkMedicare = (User: ProfileUserDataInterface, Medicare: ProfileMedicareDataInterface) => {

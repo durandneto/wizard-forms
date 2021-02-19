@@ -6,5 +6,10 @@ export const  guidGenerator = () => {
 }
 
 export const calculateError = (error: any): boolean => {
-    return error && Object.values(error).filter(r => r !== null && r !== "").length > 0
+    if (!error) return false
+    const errors = (Object.values(error).filter(r => {
+        if (typeof r === "object") return calculateError(r)
+        return r !== null && r !== ""
+    }).length > 0)
+    return errors
 }
