@@ -44,6 +44,8 @@ export default function reducer(
       return {
         ...state,
         error: state.name === "" || state.url === "",
+        success: state.name !== "" && state.url !== "",
+        complete: state.name !== "" && state.url !== "",
         errorMessage: {
           name: state.name === "" ? "name empty" : "",
           url: state.url === "" ? "url empty" : "",

@@ -1,7 +1,10 @@
 import { StepperInterface } from "../components/common/Stepper";
+import Agent from "../components/Agent";
+import User from "../components/User";
 
 export const SET_CURRENT_STEP = "STEP/SET_CURRENT_STEP";
-export const SET_CURRENT_CHILDREN = "STEP/SET_CURRENT_CHILDREN";
+export const SET_STEP_ERROR = "STEP/SET_STEP_ERROR";
+export const SET_STEP_SUCCESS = "STEP/SET_STEP_SUCCESS";
 
 export type StepperActionInterface =
   | {
@@ -9,14 +12,64 @@ export type StepperActionInterface =
       step: number;
     }
   | {
-      type: "STEP/SET_CURRENT_CHILDREN";
-      children: React.ReactNode;
+      type: "STEP/SET_STEP_ERROR";
+    }
+  | {
+      type: "STEP/SET_STEP_SUCCESS";
     };
 
 export const initialStepper = (initialStepper: StepperInterface) => {
   return {
     ...initialStepper,
   };
+};
+
+const MainSteps2 = [
+  {
+    label: "Agent",
+    slug: "Agent",
+    children: <Agent />,
+    error: false,
+    success: false,
+    completed: false,
+  },
+  {
+    label: "Profile",
+    slug: "Profile",
+    children: <User />,
+    error: false,
+    success: false,
+    completed: false,
+  },
+  {
+    label: "Cancer",
+    slug: "Cancer",
+    children: <Agent />,
+    error: false,
+    success: false,
+    completed: false,
+  },
+  {
+    label: "Cardiac",
+    slug: "Cardiac",
+    children: <Agent />,
+    error: false,
+    success: false,
+    completed: false,
+  },
+  {
+    label: "Diabetes",
+    slug: "Diabetes",
+    children: <Agent />,
+    error: false,
+    success: false,
+    completed: false,
+  },
+];
+export const stepControlData: StepperInterface = {
+  activeStep: 1,
+  control: false,
+  steps: MainSteps2,
 };
 
 export default function reducer(
@@ -28,6 +81,22 @@ export default function reducer(
       return {
         ...state,
         activeStep: action.step,
+      };
+    case SET_STEP_ERROR:
+      state.steps[state.activeStep].error = true;
+      state.steps[state.activeStep].success = false;
+      state.steps[state.activeStep].completed = false;
+      return {
+        ...state,
+      };
+    case SET_STEP_SUCCESS:
+      state.steps[state.activeStep].success = true;
+      state.steps[state.activeStep].completed = true;
+      state.steps[state.activeStep].error = false;
+
+      return {
+        ...state,
+        activeStep: state.activeStep + 1,
       };
     default:
       return state;

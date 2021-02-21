@@ -60,7 +60,7 @@ export default function MainStepper({
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep} className={classes.root}>
         {steps.map((step, index) => {
           return (
             <Step key={step.label} completed={step.completed}>

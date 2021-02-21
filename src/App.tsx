@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useContext, useReducer } from "react";
 import reducer, { AppInterface, init } from "./v2/Reducer/App";
 import { StepperInterface } from "./v2/components/common/Stepper";
 import SteppReducer, {
@@ -13,6 +13,7 @@ import Slide from "@material-ui/core/Slide";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Agent from "./v2/components/Agent";
 import MainStepper from "./v2/components/common/Stepper";
+import { AppContext } from "./v2/store";
 
 interface Props {
   /**
@@ -25,9 +26,7 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    Container: {
-      backgroundColor: "#fff",
-    },
+    Container: { backgroundColor: "#fff" },
     AppBar: {
       backgroundColor: "#39394d",
       color: "#fff",
@@ -65,60 +64,9 @@ function Counter({ count }: AppInterface) {
   );
 }
 
-const MainSteps2 = [
-  {
-    label: "Agent",
-    slug: "Agent",
-    children: <Agent />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-  {
-    label: "Profile",
-    slug: "Profile",
-    children: <Agent />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-  {
-    label: "Cancer",
-    slug: "Cancer",
-    children: <Counter count={10} />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-  {
-    label: "Cardiac",
-    slug: "Cardiac",
-    children: <Counter count={10} />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-  {
-    label: "Diabetes",
-    slug: "Diabetes",
-    children: <Counter count={10} />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-];
-const stepControl: StepperInterface = {
-  activeStep: 0,
-  control: false,
-  steps: MainSteps2,
-};
 export default function App(props: Props) {
   const classes = useStyles();
-  const [MainSteps, dispatch] = useReducer(
-    SteppReducer,
-    stepControl,
-    initialStepper
-  );
+  const { StepperState, StepperDispatch } = useContext(AppContext);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -129,22 +77,22 @@ export default function App(props: Props) {
         <div>Header</div>
       </Box>
       <Container className={classes.Container}>
-        <Box my={2}>
-          <MainStepper
-            steps={MainSteps.steps}
-            activeStep={MainSteps.activeStep}
-            control={MainSteps.control}
-            onNext={(nextStep) => {
-              dispatch({ type: SET_CURRENT_STEP, step: nextStep });
-            }}
-            onPrevious={(previoustStep) => {
-              dispatch({ type: SET_CURRENT_STEP, step: previoustStep });
-            }}
-            onFinished={() => {
-              alert("finished");
-            }}
-          />
-        </Box>
+        {/* <Box my={2}> */}
+        <MainStepper
+          steps={StepperState.steps}
+          activeStep={StepperState.activeStep}
+          control={StepperState.control}
+          // onNext={(nextStep) => {
+          //   StepperDispatch({ type: SET_CURRENT_STEP, step: nextStep });
+          // }}
+          // onPrevious={(previoustStep) => {
+          //   StepperDispatch({ type: SET_CURRENT_STEP, step: previoustStep });
+          // }}
+          onFinished={() => {
+            alert("finished");
+          }}
+        />
+        {/* </Box> */}
       </Container>
     </React.Fragment>
   );
