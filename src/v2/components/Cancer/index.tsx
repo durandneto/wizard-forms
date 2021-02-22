@@ -12,7 +12,8 @@ import {
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import CancerQuiz from "./quiz";
 import SaveIcon from "@material-ui/icons/Save";
-
+import ReportProblemIcon from "@material-ui/icons/ReportProblem";
+import Alert from "@material-ui/lab/Alert";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     form: {
@@ -85,6 +86,25 @@ export default function Cancer() {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} spacing={3}>
+          {CancerState.error ? (
+            <Grid item xs={12}>
+              <Alert severity="error">
+                {JSON.stringify(CancerState.errorMessage)}
+              </Alert>
+            </Grid>
+          ) : (
+            <>
+              {CancerState.success && (
+                <Grid item xs={12}>
+                  <Alert severity="success">
+                    This section was validated successfully .
+                  </Alert>
+                </Grid>
+              )}
+            </>
+          )}
+        </Grid>
+        <Grid item xs={12} spacing={3}>
           <Typography gutterBottom variant="h5" component="h2">
             Cancer
           </Typography>
@@ -131,7 +151,9 @@ export default function Cancer() {
             size="small"
             disabled={!CancerState.success}
             className={classes.button}
-            endIcon={<NavigateNextIcon />}
+            endIcon={
+              CancerState.error ? <ReportProblemIcon /> : <NavigateNextIcon />
+            }
             onClick={() => {
               StepperDispatch({ type: GOT_TO_NEXT_STEP });
             }}

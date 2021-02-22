@@ -18,6 +18,7 @@ import {
 } from "../../Reducer/Stepper";
 import { USER_SET_ERROR } from "../../Reducer/User";
 import SaveIcon from "@material-ui/icons/Save";
+import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -145,7 +146,9 @@ export default function User() {
           variant="contained"
           color="primary"
           disabled={!UserState.success}
-          endIcon={<NavigateNextIcon />}
+          endIcon={
+            UserState.error ? <ReportProblemIcon /> : <NavigateNextIcon />
+          }
           onClick={() => {
             StepperDispatch({ type: GOT_TO_NEXT_STEP });
           }}

@@ -26,6 +26,7 @@ export default function reducer(
       return {
         ...state,
         error: hasErr ? hasErr : state.error,
+        success: !hasErr,
         errorMessage: {
           ...state.errorMessage,
           Diagnostic: {

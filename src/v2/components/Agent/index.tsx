@@ -12,6 +12,7 @@ import {
 } from "../../Reducer/Stepper";
 import Accordeon from "../common/Accordeon";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -157,7 +158,9 @@ export default function Agent() {
           variant="contained"
           color="primary"
           disabled={!AgentState.success}
-          endIcon={<NavigateNextIcon />}
+          endIcon={
+            AgentState.error ? <ReportProblemIcon /> : <NavigateNextIcon />
+          }
           onClick={() => {
             StepperDispatch({ type: GOT_TO_NEXT_STEP });
           }}

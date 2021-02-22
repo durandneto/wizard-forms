@@ -20,6 +20,18 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       backgroundColor: "transparent",
     },
+    rootContainer: {
+      width: "100%",
+      boxShadow: "none",
+      border: "solid 1px #ebebeb",
+      borderRadius: "10px",
+      "&:hove": {
+        background: "red",
+      },
+      backgroundColor: "transparent",
+      padding: "5px 20px",
+      margin: "10px 0",
+    },
     error: {
       margin: "-3px 15px",
       color: "red",
@@ -70,6 +82,7 @@ export interface AccordeonInterface {
   children: React.ReactNode;
   error?: boolean;
   success?: boolean;
+  noBorder?: boolean;
   control?: boolean;
   initialClosed?: boolean;
   onChange?: (item: any) => void;
@@ -86,6 +99,7 @@ export default function ControlledAccordions({
   value,
   description,
   errorMessage,
+  noBorder,
   onChange,
 }: AccordeonInterface) {
   const classes = useStyles();
@@ -93,7 +107,7 @@ export default function ControlledAccordions({
     initialClosed ? false : true
   );
   return (
-    <div className={classes.root}>
+    <div className={noBorder ? classes.root : classes.rootContainer}>
       <Accordion
         expanded={expanded}
         // onClick={() => setExpanded(!expanded)}

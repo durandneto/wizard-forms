@@ -42,6 +42,7 @@ export default function CancerQuiz(props: CancerQuizInterface) {
   console.log(props.errorMessage);
   return (
     <Accordeon
+      noBorder
       // error={props.errorMessage.isDiagnosed !== ""}
       {...props}
       control
