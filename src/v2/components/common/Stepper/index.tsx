@@ -10,6 +10,16 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    content: {
+      width: "60%",
+    },
+    stepperMain: {
+      margin: "40px 0",
+      width: "100%",
     },
     button: {
       marginRight: theme.spacing(1),
@@ -60,7 +70,7 @@ export default function MainStepper({
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep} className={classes.root}>
+      <Stepper activeStep={activeStep} className={classes.stepperMain}>
         {steps.map((step, index) => {
           return (
             <Step key={step.label} completed={step.completed}>
@@ -71,7 +81,7 @@ export default function MainStepper({
           );
         })}
       </Stepper>
-      <div>
+      <div className={classes.content}>
         {activeStep === steps.length && control ? (
           <div>
             <Typography className={classes.instructions}>

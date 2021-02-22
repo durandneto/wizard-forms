@@ -11,6 +11,7 @@ import {
 } from "../../Reducer/Stepper";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import CancerQuiz from "./quiz";
+import SaveIcon from "@material-ui/icons/Save";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -106,6 +107,7 @@ export default function Cancer() {
             });
           }}
           cancerList={CancerState.Diagnostic.cancerList}
+          errorMessage={CancerState.errorMessage.Diagnostic}
           value={CancerState.Diagnostic.isDiagnosed}
           title="Have you ever been diagnosed with any type of cancer?"
         />
@@ -113,8 +115,22 @@ export default function Cancer() {
           <Button
             variant="contained"
             color="primary"
-            disabled={true}
-            // disabled={!CancerState.success}
+            size="small"
+            className={classes.button}
+            startIcon={<SaveIcon />}
+            disabled={CancerState.success}
+            onClick={() => {
+              CancerDispatch({ type: CANCER_SET_ERROR });
+            }}
+          >
+            Validate form
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            disabled={!CancerState.success}
+            className={classes.button}
             endIcon={<NavigateNextIcon />}
             onClick={() => {
               StepperDispatch({ type: GOT_TO_NEXT_STEP });

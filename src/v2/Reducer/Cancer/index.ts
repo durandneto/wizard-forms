@@ -1,3 +1,4 @@
+import { checkDiagnosticError } from "./Cancer.functions";
 import { CancerInterface } from "./Cancer.model";
 
 export const CANCER_SET_ERROR = "CANCER/CANCER_SET_ERROR";
@@ -21,8 +22,18 @@ export default function reducer(
 ): CancerInterface {
   switch (action.type) {
     case CANCER_SET_ERROR:
+      const [hasErr, DiaMessage] = checkDiagnosticError(state.Diagnostic);
       return {
         ...state,
+        error: hasErr ? hasErr : state.error,
+        errorMessage: {
+          ...state.errorMessage,
+          Diagnostic: {
+            error: hasErr,
+            success: !hasErr,
+            message: DiaMessage,
+          },
+        },
       };
     case CANCER_UPDATE:
       if (action.key === "isDiagnosed" && action.value === "No") {

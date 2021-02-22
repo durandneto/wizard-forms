@@ -6,27 +6,16 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Alert from "@material-ui/lab/Alert";
 
-import { Button, Select, TextField } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
 import {
   USER_SET_ERROR_MEDI_CARE,
   USER_UPDATE_MEDICARE_INFO,
 } from "../../../Reducer/User";
-import { AddressStatesList } from "../../../Reducer/User/User.initialState";
-import InputPhone from "../../common/InputPhone";
 import { checkMedicare } from "../../../../actions/profile";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -144,38 +133,44 @@ export default function UserMedicareForm() {
         <Button
           onClick={() => {
             // UserDispatch({ type: USER_SET_ERROR_MEDI_CARE });
-            // if (!loading) {
-            setLoading(true);
-            try {
-              checkMedicare(UserState)
-                .then((r: any) => {
-                  setErr("");
-                  UserDispatch({
-                    type: USER_UPDATE_MEDICARE_INFO,
-                    key: "extendedMedicareLeadData",
-                    value: r,
-                  });
-                  UserDispatch({ type: USER_SET_ERROR_MEDI_CARE });
-                  setLoading(false);
-                })
-                .catch((err: any) => {
-                  setErr(err);
+            if (!loading) {
+              setLoading(true);
+              try {
+                if (UserState.MediCare.memberID === "") {
                   UserDispatch({
                     type: USER_SET_ERROR_MEDI_CARE,
                   });
-                  UserDispatch({
-                    type: USER_UPDATE_MEDICARE_INFO,
-                    key: "extendedMedicareLeadData",
-                    value: {},
-                  });
                   setLoading(false);
-                });
-            } catch (err) {
-              setErr(err);
-              UserDispatch({ type: USER_SET_ERROR_MEDI_CARE });
-              setLoading(false);
+                } else
+                  checkMedicare(UserState)
+                    .then((r: any) => {
+                      setErr("");
+                      UserDispatch({
+                        type: USER_UPDATE_MEDICARE_INFO,
+                        key: "extendedMedicareLeadData",
+                        value: r,
+                      });
+                      UserDispatch({ type: USER_SET_ERROR_MEDI_CARE });
+                      setLoading(false);
+                    })
+                    .catch((err: any) => {
+                      setErr(err);
+                      UserDispatch({
+                        type: USER_SET_ERROR_MEDI_CARE,
+                      });
+                      UserDispatch({
+                        type: USER_UPDATE_MEDICARE_INFO,
+                        key: "extendedMedicareLeadData",
+                        value: {},
+                      });
+                      setLoading(false);
+                    });
+              } catch (err) {
+                setErr(err);
+                UserDispatch({ type: USER_SET_ERROR_MEDI_CARE });
+                setLoading(false);
+              }
             }
-            // }
           }}
           variant="outlined"
           color="primary"

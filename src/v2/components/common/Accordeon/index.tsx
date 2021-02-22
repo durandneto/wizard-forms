@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hove": {
         background: "red",
       },
+      backgroundColor: "transparent",
     },
     error: {
       margin: "-3px 15px",
@@ -27,6 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 0,
       color: "#0051b0",
       flex: 1,
+    },
+    headingWarning: {
+      margin: 0,
+      color: "yellow",
     },
     headingSuccess: {
       margin: 0,
@@ -43,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     border: {
       borderBottom: "solid 0.5px #0051b0",
-      margin: "5px 0",
+      margin: "20px 0",
       display: "flex",
       justifyContent: "space-between",
     },
@@ -64,12 +69,12 @@ export interface AccordeonInterface {
   description?: string;
   children: React.ReactNode;
   error?: boolean;
-  errorMessage?: string;
   success?: boolean;
   control?: boolean;
   initialClosed?: boolean;
   onChange?: (item: any) => void;
   value?: string;
+  errorMessage?: any;
 }
 export default function ControlledAccordions({
   title,
@@ -80,6 +85,7 @@ export default function ControlledAccordions({
   initialClosed,
   value,
   description,
+  errorMessage,
   onChange,
 }: AccordeonInterface) {
   const classes = useStyles();
@@ -108,8 +114,10 @@ export default function ControlledAccordions({
             variant="h6"
             component="h3"
             className={
-              success || value === "No"
+              (success || value === "No") && !error
                 ? classes.headingSuccess
+                : error && value === "No"
+                ? classes.headingWarning
                 : error
                 ? classes.headingError
                 : classes.heading
@@ -117,9 +125,13 @@ export default function ControlledAccordions({
           >
             {title}
 
-            {error && <ReportProblemIcon className={classes.error} />}
+            {error && !success && (
+              <ReportProblemIcon className={classes.error} />
+            )}
             {success ||
-              (value === "No" && <DoneAllIcon className={classes.success} />)}
+              (value === "No" && !error && (
+                <DoneAllIcon className={classes.success} />
+              ))}
           </Typography>
           {control && (
             <ButtonGroup size="small" aria-label="small outlined button group">

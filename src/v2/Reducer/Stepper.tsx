@@ -72,7 +72,7 @@ const MainSteps2 = [
   },
 ];
 export const stepControlData: StepperInterface = {
-  activeStep: 0,
+  activeStep: 2,
   control: false,
   steps: MainSteps2,
 };

@@ -26,7 +26,7 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    Container: { backgroundColor: "#fff" },
+    Container: {},
     AppBar: {
       backgroundColor: "#39394d",
       color: "#fff",
@@ -72,28 +72,29 @@ export default function App(props: Props) {
       <CssBaseline />
       <Box className={classes.AppBar} my={2} display="flex">
         <div>Fixed bar</div>
-      </Box>
+      </Box>{" "}
+      {/* 
       <Box className={classes.AppHeader} my={2} display="flex">
         <div>Header</div>
-      </Box>
-      <Container className={classes.Container}>
-        {/* <Box my={2}> */}
-        <MainStepper
-          steps={StepperState.steps}
-          activeStep={StepperState.activeStep}
-          control={StepperState.control}
-          // onNext={(nextStep) => {
-          //   StepperDispatch({ type: SET_CURRENT_STEP, step: nextStep });
-          // }}
-          // onPrevious={(previoustStep) => {
-          //   StepperDispatch({ type: SET_CURRENT_STEP, step: previoustStep });
-          // }}
-          onFinished={() => {
-            alert("finished");
-          }}
-        />
-        {/* </Box> */}
-      </Container>
+      </Box> */}
+      {/* <Container className={classes.Container}> */}
+      {/* <Box my={2}> */}
+      <MainStepper
+        steps={StepperState.steps}
+        activeStep={StepperState.activeStep}
+        control={StepperState.control}
+        // onNext={(nextStep) => {
+        //   StepperDispatch({ type: SET_CURRENT_STEP, step: nextStep });
+        // }}
+        // onPrevious={(previoustStep) => {
+        //   StepperDispatch({ type: SET_CURRENT_STEP, step: previoustStep });
+        // }}
+        onFinished={() => {
+          alert("finished");
+        }}
+      />
+      {/* </Box> */}
+      {/* </Container> */}
     </React.Fragment>
   );
 }

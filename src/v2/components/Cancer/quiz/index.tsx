@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Accordeon from "../../common/Accordeon";
+import { CancerDiagnosticErrorInterface } from "../../../Reducer/Cancer/Cancer.model";
 
 interface CancerQuizInterface {
   success?: boolean;
@@ -23,6 +24,7 @@ interface CancerQuizInterface {
   onUpdateChildren: (slug: string, key: string, value: any) => void;
   value: string;
   cancerList: any;
+  errorMessage: any;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,8 +39,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export default function CancerQuiz(props: CancerQuizInterface) {
   const classes = useStyles();
+  console.log(props.errorMessage);
   return (
-    <Accordeon {...props} control initialClosed>
+    <Accordeon
+      // error={props.errorMessage.isDiagnosed !== ""}
+      {...props}
+      control
+      initialClosed
+    >
       <Grid container spacing={3}>
         {Object.entries(props.cancerList).map((list: any, index: number) => {
           const [key, value] = list;
@@ -50,6 +58,8 @@ export default function CancerQuiz(props: CancerQuizInterface) {
               key={`cancer-list-map-${index}`}
               control
               initialClosed
+              error={props.errorMessage.message.cancerList[key] !== ""}
+              // success={props.errorMessage.cancerList[key].message.success}
               onChange={(value: any) => {
                 props.onUpdateChildren(key, "value", value);
               }}
