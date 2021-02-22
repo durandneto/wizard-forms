@@ -1,3 +1,30 @@
+export interface PrimaryCareDataInterface {
+  name: string;
+  phone: string;
+}
+
+export interface ProfileMedicareDataInterface {
+  Provider_LastName: string;
+  Provider_NPI: string;
+  payerCode: string;
+  memberID: string;
+  extendedMedicareLeadData?: any;
+}
+
+export interface UserAddressInfoErrorInterface {
+  street: string;
+  street2: string;
+  city: string;
+  state: string;
+  zipcode: string;
+}
+export interface UserAddressInfoDataInterface {
+  street: string;
+  street2: string;
+  city: string;
+  state: string;
+  zipcode: string;
+}
 export interface UserDataErrorInterface {
   firstName: string;
   lastName: string;
@@ -5,14 +32,8 @@ export interface UserDataErrorInterface {
   gender: string;
   birthDate: string;
   phone: string;
-  phoneCode: string;
   altPhone: string;
-  altPhoneCode: string;
   ethnicity: string;
-  salivaSwabTest: string;
-  isNursingLiving: string;
-  isAlzheimerorDementiatype: string;
-  previousTests: string;
 }
 export interface UserDataInterface {
   firstName: string;
@@ -21,14 +42,20 @@ export interface UserDataInterface {
   gender: string;
   birthDate: string;
   phone: string;
-  phoneCode: string;
   altPhone: string;
-  altPhoneCode: string;
   ethnicity: string;
+}
+export interface UserAditionalInformationDataInterface {
+  previousTests: Array<string>;
   salivaSwabTest?: boolean;
   isAlzheimerorDementiatype?: boolean;
   isNursingLiving?: boolean;
-  previousTests: Array<string>;
+}
+export interface UserAditionalInformationErrorInterface {
+  previousTests: string;
+  salivaSwabTest: string;
+  isAlzheimerorDementiatype: string;
+  isNursingLiving: string;
 }
 
 export interface UserInterface {
@@ -40,7 +67,31 @@ export interface UserInterface {
       success: boolean;
       message: UserDataErrorInterface;
     };
+    AditionalInformation: {
+      error: boolean;
+      success: boolean;
+      message: UserAditionalInformationErrorInterface;
+    };
+    AddressInfo: {
+      error: boolean;
+      success: boolean;
+      message: UserAddressInfoErrorInterface;
+    };
+    MediCare: {
+      error: boolean;
+      success: boolean;
+      message: ProfileMedicareDataInterface;
+    };
+    PrimaryCare: {
+      error: boolean;
+      success: boolean;
+      message: PrimaryCareDataInterface;
+    };
   };
 
   PersonalInfo: UserDataInterface;
+  AddressInfo: UserAddressInfoDataInterface;
+  AditionalInformation: UserAditionalInformationDataInterface;
+  MediCare: ProfileMedicareDataInterface;
+  PrimaryCare: PrimaryCareDataInterface;
 }

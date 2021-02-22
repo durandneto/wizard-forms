@@ -33,10 +33,7 @@ export interface ProfileAddressDataInterface {
 export interface ProfileMedicareDataInterface {
   Provider_LastName: string | null;
   Provider_NPI: string | null;
-  Patient_Last: string | null;
   payerCode: string | null;
-  Patient_First: string | null;
-  Patient_DOB: string | null;
   memberID: string | null;
   extendedMedicareLeadData?: any;
 }
@@ -50,15 +47,12 @@ export const ProfilePrimaryCareData = {
   fullName: "",
   phone: "",
 };
-// Cardio ober1001A Lionell Yewitt 2/9/1951 Medicare 5v32-m08-gc02
+// Cardio ober1001A Lionell Yewitt 2/9/1951 MediCare 5v32-m08-gc02
 export const ProfileMedicareData = {
   memberID: "",
   Provider_LastName: "Fastflow Marketing",
   Provider_NPI: "1609388842",
   payerCode: "00007",
-  Patient_Last: "Gaytan",
-  Patient_First: "Rodolfo",
-  Patient_DOB: "8/30/1949",
 };
 
 export const ProfileAddressData = {
@@ -89,14 +83,14 @@ export const ProfileUserData: ProfileUserDataInterface = {
 export interface ProfileInterface {
   User: ProfileUserDataInterface;
   Address: ProfileAddressDataInterface;
-  Medicare: ProfileMedicareDataInterface;
+  MediCare: ProfileMedicareDataInterface;
   PrimaryCare: ProfilePrimaryCareDataInterface;
 }
 
 export const ProfileData = {
   User: ProfileUserData,
   Address: ProfileAddressData,
-  Medicare: ProfileMedicareData,
+  MediCare: ProfileMedicareData,
   PrimaryCare: ProfilePrimaryCareData,
 };
 
@@ -121,12 +115,12 @@ const ProfileItemsTab: Array<TabItemInterface> = [
   },
   {
     id: guidGenerator(),
-    label: "Medicare",
-    slug: "Medicare",
+    label: "MediCare",
+    slug: "MediCare",
     isRequired: true,
     component: (props: any) => <MedicareID {...props} />,
     index: 2,
-    data: ProfileData.Medicare,
+    data: ProfileData.MediCare,
   },
   {
     id: guidGenerator(),

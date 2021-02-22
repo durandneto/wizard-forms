@@ -1,6 +1,6 @@
 export interface AgentInterface {
   error: boolean;
-  errorMessage?: {
+  errorMessage: {
     url: string;
     name: string;
   };
@@ -16,10 +16,14 @@ export const agentData: AgentInterface = {
   complete: false,
   name: "",
   url: "",
+  errorMessage: {
+    name: "",
+    url: "",
+  },
 };
 
 export const AGENT_SET_ERROR = "AGENT/AGENT_SET_ERROR";
-export const AGENT_SET_NAME = "AGENT/AGENT_SET_NAME";
+export const AGENT_UPDATE = "AGENT/AGENT_UPDATE";
 export const AGENT_SET_URL = "AGENT/AGENT_SET_URL";
 
 export type AgentActionInterface =
@@ -27,7 +31,7 @@ export type AgentActionInterface =
       type: "AGENT/AGENT_SET_ERROR";
     }
   | { type: "AGENT/AGENT_SET_URL"; url: string }
-  | { type: "AGENT/AGENT_SET_NAME"; name: string };
+  | { type: "AGENT/AGENT_UPDATE"; key: string; value: any };
 
 export const initialAgent = (initialAgent: AgentInterface) => {
   return {
@@ -51,15 +55,10 @@ export default function reducer(
           url: state.url === "" ? "url empty" : "",
         },
       };
-    case AGENT_SET_URL:
+    case AGENT_UPDATE:
       return {
         ...state,
-        url: action.url,
-      };
-    case AGENT_SET_NAME:
-      return {
-        ...state,
-        name: action.name,
+        [action.key]: action.value,
       };
     default:
       return state;

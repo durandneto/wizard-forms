@@ -1,10 +1,12 @@
 import { StepperInterface } from "../components/common/Stepper";
 import Agent from "../components/Agent";
 import User from "../components/User";
+import Cancer from "../components/Cancer";
 
 export const SET_CURRENT_STEP = "STEP/SET_CURRENT_STEP";
 export const SET_STEP_ERROR = "STEP/SET_STEP_ERROR";
 export const SET_STEP_SUCCESS = "STEP/SET_STEP_SUCCESS";
+export const GOT_TO_NEXT_STEP = "STEP/GOT_TO_NEXT_STEP";
 
 export type StepperActionInterface =
   | {
@@ -13,6 +15,9 @@ export type StepperActionInterface =
     }
   | {
       type: "STEP/SET_STEP_ERROR";
+    }
+  | {
+      type: "STEP/GOT_TO_NEXT_STEP";
     }
   | {
       type: "STEP/SET_STEP_SUCCESS";
@@ -44,7 +49,7 @@ const MainSteps2 = [
   {
     label: "Cancer",
     slug: "Cancer",
-    children: <Agent />,
+    children: <Cancer />,
     error: false,
     success: false,
     completed: false,
@@ -67,7 +72,7 @@ const MainSteps2 = [
   },
 ];
 export const stepControlData: StepperInterface = {
-  activeStep: 1,
+  activeStep: 2,
   control: false,
   steps: MainSteps2,
 };
@@ -94,6 +99,10 @@ export default function reducer(
       state.steps[state.activeStep].completed = true;
       state.steps[state.activeStep].error = false;
 
+      return {
+        ...state,
+      };
+    case GOT_TO_NEXT_STEP:
       return {
         ...state,
         activeStep: state.activeStep + 1,

@@ -6,6 +6,8 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import { ButtonGroup, Button } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import DoneAllIcon from "@material-ui/icons/DoneAll";
+import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,17 +15,41 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       boxShadow: "none",
       margin: 0,
+      "&:hove": {
+        background: "red",
+      },
+    },
+    error: {
+      margin: "-3px 15px",
+      color: "red",
     },
     heading: {
       margin: 0,
       color: "#0051b0",
       flex: 1,
     },
+    headingSuccess: {
+      margin: 0,
+      color: "green",
+      flex: 1,
+      "&:hove": {
+        color: "yellow",
+      },
+    },
+    headingError: {
+      margin: 0,
+      color: "red",
+      flex: 1,
+    },
     border: {
       borderBottom: "solid 0.5px #0051b0",
-      margin: "0 !important",
+      margin: "5px 0",
       display: "flex",
       justifyContent: "space-between",
+    },
+    success: {
+      fill: "green",
+      margin: "-3px 15px",
     },
     secondaryHeading: {
       margin: 0,
@@ -35,12 +61,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface AccordeonInterface {
   title: string;
-  description: string;
+  description?: string;
   children: React.ReactNode;
   error?: boolean;
   errorMessage?: string;
   success?: boolean;
   control?: boolean;
+  initialClosed?: boolean;
+  onChange?: (item: any) => void;
+  value?: string;
 }
 export default function ControlledAccordions({
   title,
@@ -48,19 +77,15 @@ export default function ControlledAccordions({
   control,
   error,
   success,
+  initialClosed,
+  value,
   description,
+  onChange,
 }: AccordeonInterface) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState<boolean>(false);
-  const [choice, setChoice] = React.useState<string>("");
-
-  //   const handleChange = (panel: string) => (
-  //     event: React.ChangeEvent<{}>,
-  //     isExpanded: boolean
-  //   ) => {
-  //     setExpanded(isExpanded ? panel : false);
-  //   };
-
+  const [expanded, setExpanded] = React.useState<boolean>(
+    initialClosed ? false : true
+  );
   return (
     <div className={classes.root}>
       <Accordion
@@ -80,11 +105,21 @@ export default function ControlledAccordions({
         >
           <Typography
             gutterBottom
-            variant="h5"
+            variant="h6"
             component="h3"
-            className={classes.heading}
+            className={
+              success || value === "No"
+                ? classes.headingSuccess
+                : error
+                ? classes.headingError
+                : classes.heading
+            }
           >
             {title}
+
+            {error && <ReportProblemIcon className={classes.error} />}
+            {success ||
+              (value === "No" && <DoneAllIcon className={classes.success} />)}
           </Typography>
           {control && (
             <ButtonGroup size="small" aria-label="small outlined button group">
@@ -93,21 +128,23 @@ export default function ControlledAccordions({
                   e.stopPropagation();
                   e.preventDefault();
                   setExpanded(false);
-                  setChoice("No");
+                  // setChoice("No");
+                  onChange && onChange("No");
                 }}
-                variant={choice === "No" ? "contained" : "outlined"}
+                variant={value === "No" ? "contained" : "outlined"}
                 disableElevation
               >
                 No
               </Button>
               <Button
                 color="primary"
-                variant={choice === "Yes" ? "contained" : "outlined"}
+                variant={value === "Yes" ? "contained" : "outlined"}
                 onClick={(e: any) => {
                   e.stopPropagation();
                   e.preventDefault();
                   setExpanded(true);
-                  setChoice("Yes");
+                  // setChoice("Yes");
+                  onChange && onChange("Yes");
                 }}
                 disableElevation
               >

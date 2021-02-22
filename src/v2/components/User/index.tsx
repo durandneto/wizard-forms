@@ -1,13 +1,23 @@
 import React, { useContext, useEffect } from "react";
-import TextField from "@material-ui/core/TextField";
+
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Accordeon from "../common/Accordeon";
-import { AppContext } from "../../store";
-import { USER_SET_URL, USER_SET_ERROR } from "../../Reducer/User";
-import { Button, Grid, Paper, Typography } from "@material-ui/core";
-import { SET_STEP_ERROR, SET_STEP_SUCCESS } from "../../Reducer/Stepper";
 
+import { Button, Grid, Paper, Typography } from "@material-ui/core";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import PersonalInfoForm from "./forms/PersonalInfo";
+import AddressInfoForm from "./forms/AddressInfo";
+import AditionalInfoForm from "./forms/AditionalInfo";
+import MedicareForm from "./forms/MediCare";
+import PrimaryCareForm from "./forms/PrimaryCare";
+import { AppContext } from "../../store";
+import {
+  SET_STEP_ERROR,
+  SET_STEP_SUCCESS,
+  GOT_TO_NEXT_STEP,
+} from "../../Reducer/Stepper";
+import { USER_SET_ERROR } from "../../Reducer/User";
+import SaveIcon from "@material-ui/icons/Save";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "flex-end",
       display: "flex",
       marginTop: "30px",
+    },
+    button: {
+      margin: "0 15px",
+      backgroundColor: "green",
     },
     root: {
       flexGrow: 1,
@@ -36,21 +50,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export default function User() {
   const classes = useStyles();
-  // const { UserState, UserDispatch, StepperDispatch } = useContext(AppContext);
+  const { UserState, UserDispatch, StepperDispatch } = useContext(AppContext);
 
-  // useEffect(() => {
-  //   if (UserState.error) {
-  //     console.log("useEffect ErroR");
-  //     StepperDispatch({ type: SET_STEP_ERROR });
-  //   }
-  // }, [UserState.error]);
+  useEffect(() => {
+    if (UserState.error) {
+      StepperDispatch({ type: SET_STEP_ERROR });
+    }
+  }, [UserState.error]);
 
-  // useEffect(() => {
-  //   if (UserState.success) {
-  //     console.log("useEffect SUcces");
-  //     StepperDispatch({ type: SET_STEP_SUCCESS });
-  //   }
-  // }, [UserState.success]);
+  useEffect(() => {
+    if (UserState.success) {
+      StepperDispatch({ type: SET_STEP_SUCCESS });
+    }
+  }, [UserState.success]);
 
   return (
     <div className={classes.root}>
@@ -65,42 +77,81 @@ export default function User() {
           </Typography>
         </Grid>
         <Grid item xs={12} spacing={3}>
-          <Accordeon title="Personal Info" description="description" control>
+          <Accordeon
+            error={UserState.errorMessage.PersonalInfo.error}
+            success={UserState.errorMessage.PersonalInfo.success}
+            title="Personal Info"
+            description="description here"
+          >
             <PersonalInfoForm />
           </Accordeon>
         </Grid>
         <Grid item xs={12} spacing={3}>
-          <Accordeon title="Address" description="description">
-            content here
+          <Accordeon
+            error={UserState.errorMessage.AddressInfo.error}
+            success={UserState.errorMessage.AddressInfo.success}
+            title="Address"
+            description="description"
+          >
+            <AddressInfoForm />
           </Accordeon>
         </Grid>
         <Grid item xs={12} spacing={3}>
-          <Accordeon title="Previous Tests" description="description">
-            content here
+          <Accordeon
+            error={UserState.errorMessage.AditionalInformation.error}
+            success={UserState.errorMessage.AditionalInformation.success}
+            title="Aditional Information"
+            description="description"
+          >
+            <AditionalInfoForm />
           </Accordeon>
         </Grid>
         <Grid item xs={12} spacing={3}>
-          <Accordeon title="Medicare" description="description" control>
-            content here
+          <Accordeon
+            error={UserState.errorMessage.MediCare.error}
+            success={UserState.errorMessage.MediCare.success}
+            title="MediCare"
+            description="description"
+          >
+            <MedicareForm />
           </Accordeon>
         </Grid>
         <Grid item xs={12} spacing={3}>
-          <Accordeon title="Primary Care" description="description" control>
-            content here
+          <Accordeon
+            title="Primary Care"
+            error={UserState.errorMessage.PrimaryCare.error}
+            success={UserState.errorMessage.PrimaryCare.success}
+            description="description"
+          >
+            <PrimaryCareForm />
           </Accordeon>
         </Grid>
       </Grid>
       <Grid item xs={12} spacing={3} className={classes.action}>
         <Button
-          onClick={() => {
-            // UserDispatch({ type: USER_SET_ERROR });
-          }}
           variant="contained"
           color="primary"
+          size="small"
+          className={classes.button}
+          startIcon={<SaveIcon />}
+          disabled={UserState.success}
+          onClick={() => {
+            UserDispatch({ type: USER_SET_ERROR });
+          }}
+        >
+          Validate form
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={!UserState.success}
+          endIcon={<NavigateNextIcon />}
+          onClick={() => {
+            StepperDispatch({ type: GOT_TO_NEXT_STEP });
+          }}
         >
           Next
         </Button>
-        {/* <div>{JSON.stringify(UserState.errorMessage)}</div> */}
       </Grid>
     </div>
   );

@@ -15,7 +15,12 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import { USER_UPDATE, USER_SET_ERROR } from "../../../Reducer/User";
+import {
+  USER_UPDATE,
+  USER_SET_ERROR_PERSONAL_INFO,
+} from "../../../Reducer/User";
+import { EthnicityList } from "../../../Reducer/User/User.initialState";
+import InputPhone from "../../common/InputPhone";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,7 +56,6 @@ export default function UserPersonalInfoInterface() {
   // );
 
   const handleDateChange = (date: Date | null) => {
-    debugger;
     UserDispatch({
       type: USER_UPDATE,
       key: "birthDate",
@@ -70,7 +74,7 @@ export default function UserPersonalInfoInterface() {
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <TextField
             id="outlined-full-width"
             label="First Name (*) "
@@ -93,7 +97,7 @@ export default function UserPersonalInfoInterface() {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <TextField
             id="outlined-full-width"
             label="Last Name (*) "
@@ -116,7 +120,7 @@ export default function UserPersonalInfoInterface() {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <FormControl
             component="fieldset"
             error={UserState.errorMessage.PersonalInfo.message.gender}
@@ -144,9 +148,8 @@ export default function UserPersonalInfoInterface() {
             </FormHelperText>
           </FormControl>
         </Grid>
-      </Grid>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12} sm={4}>
+
+        <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               margin="normal"
@@ -167,11 +170,106 @@ export default function UserPersonalInfoInterface() {
             />
           </MuiPickersUtilsProvider>
         </Grid>
+        <Grid item xs={12} sm={6}>
+          <InputPhone
+            id="outlined-full-width"
+            label="Phone (*) "
+            error={UserState.errorMessage.PersonalInfo.message.phone !== ""}
+            style={{ margin: 8 }}
+            placeholder="Placeholder"
+            helperText={
+              UserState.errorMessage.PersonalInfo.message.phone !== ""
+                ? UserState.errorMessage.PersonalInfo.message.phone
+                : "Required"
+            }
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="dense"
+            variant="outlined"
+            value={UserState.PersonalInfo.phone}
+            name="phone"
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <InputPhone
+            id="outlined-full-width"
+            label="Alt. Phone"
+            style={{ margin: 8 }}
+            placeholder="Placeholder"
+            helperText={"Optional"}
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="dense"
+            variant="outlined"
+            value={UserState.PersonalInfo.altPhone}
+            name="altPhone"
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            id="outlined-full-width"
+            label="Email Address (*) "
+            error={UserState.errorMessage.PersonalInfo.message.email !== ""}
+            style={{ margin: 8 }}
+            placeholder="Placeholder"
+            helperText={
+              UserState.errorMessage.PersonalInfo.message.email !== ""
+                ? UserState.errorMessage.PersonalInfo.message.email
+                : "Required"
+            }
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="dense"
+            variant="outlined"
+            value={UserState.PersonalInfo.email}
+            name="email"
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl
+            component="fieldset"
+            error={UserState.errorMessage.PersonalInfo.message.ethnicity}
+            className={classes.formControl}
+          >
+            <FormLabel component="legend">Ethnicity (*) </FormLabel>
+            <RadioGroup
+              aria-label="ethnicity"
+              name="ethnicity"
+              value={UserState.PersonalInfo.ethnicity.value}
+              onChange={handleChange}
+              className={classes.radio}
+            >
+              {EthnicityList.map((et: string, key: number) => (
+                <FormControlLabel
+                  value={et}
+                  key={et}
+                  control={<Radio />}
+                  label={et}
+                />
+              ))}
+            </RadioGroup>
+            <FormHelperText>
+              {UserState.errorMessage.PersonalInfo.message.ethnicity !== ""
+                ? UserState.errorMessage.PersonalInfo.message.ethnicity
+                : "Required"}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+        {/* // /////////////////////// */}
       </Grid>
       <Grid item xs={12}>
         <Button
           onClick={() => {
-            UserDispatch({ type: USER_SET_ERROR });
+            UserDispatch({ type: USER_SET_ERROR_PERSONAL_INFO });
           }}
           variant="outlined"
           color="primary"

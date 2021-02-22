@@ -1,27 +1,30 @@
-import { useContext } from 'react';
-import { Table } from 'reactstrap';
-import { AppContext } from '../../../context/App.Contex';
-import { ProfileInterface } from '../../../context/Profile.Contex';
+import { useContext } from "react";
+import { Table } from "reactstrap";
+import { AppContext } from "../../../context/App.Contex";
+import { ProfileInterface } from "../../../context/Profile.Contex";
 
 const MedicareTable = (props: any) => {
-
-  const { Profile }  = useContext(AppContext)
-  const { tabs: { Medicare : { data: Medicare} } } = Profile
+  const { Profile } = useContext(AppContext);
+  const {
+    tabs: {
+      MediCare: { data: MediCare },
+    },
+  } = Profile;
 
   return (
     <Table size="sm" responsive>
       <thead>
         <tr>
-          <th>Medicare memberID</th>
+          <th>MediCare memberID</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{Medicare.memberID}</td>
+          <td>{MediCare.memberID}</td>
         </tr>
       </tbody>
     </Table>
   );
-}
+};
 
 export default MedicareTable;

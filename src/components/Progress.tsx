@@ -68,11 +68,8 @@ const MyProgress = () => {
                 <span
                   style={style}
                   onClick={() => {
-                    if (!tab.empty) {
-                      setCurrentPanel(tab);
-                    }
+                    setCurrentPanel(tab);
                   }}
-                  className={tab.empty ? "disabled" : ""}
                   key={`profile-tab-index-progress-${index}`}
                   id={`profile-tab-index-progress-${index}`}
                 >

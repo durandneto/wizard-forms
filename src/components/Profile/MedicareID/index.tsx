@@ -41,7 +41,7 @@ const MedicareID = (props: any) => {
     setActiveTab,
   } = useContext(AppContext);
   const {
-    tabs: { Medicare },
+    tabs: { MediCare },
   } = Profile;
   const {
     tabs: { PersonalInfo },
@@ -49,11 +49,11 @@ const MedicareID = (props: any) => {
   // const [internalError, setInternalError]  = useState<string | null>(null)
 
   const save = useCallback(() => {
-    if (Medicare.data.memberID === "" || Medicare.data.memberID === null) {
-      updateContext("error", "Medicare ID can not be empty.");
+    if (MediCare.data.memberID === "" || MediCare.data.memberID === null) {
+      updateContext("error", "MediCare ID can not be empty.");
     } else {
       setLoading(true);
-      checkMedicare(PersonalInfo.data, Medicare.data)
+      checkMedicare(PersonalInfo.data, MediCare.data)
         .then((r: any) => {
           let message = "";
           let error = false;
@@ -62,7 +62,7 @@ const MedicareID = (props: any) => {
             updateContext("success", true);
             updateContext("error", null);
           } else {
-            if (r.PayerName === "Medicare Part A and B") {
+            if (r.PayerName === "MediCare Part A and B") {
               message += r.PayerName;
               error = true;
             }
@@ -103,39 +103,39 @@ const MedicareID = (props: any) => {
           setLoading(false);
         });
     }
-  }, [Medicare.data, PersonalInfo.data, checkMedicare, updateContext]);
+  }, [MediCare.data, PersonalInfo.data, checkMedicare, updateContext]);
 
   useEffect(() => {
     updateContext("save", save);
   }, [PersonalInfo.data]);
 
   const showError: boolean = useMemo(() => {
-    return calculateError(Medicare.error);
-  }, [Medicare.error]);
+    return calculateError(MediCare.error);
+  }, [MediCare.error]);
 
   if (props.table) {
     return <TableInfo {...props} />;
   }
-  console.log(Medicare.error);
+  console.log(MediCare.error);
   return (
     <div className="col-xs-12">
       <Container>
-        {(showError || Medicare.success) && !loading && (
+        {(showError || MediCare.success) && !loading && (
           <Row>
             <Col>
-              {Medicare.error && (
+              {MediCare.error && (
                 <Alert color="danger">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: JSON.stringify(Medicare.error),
+                      __html: JSON.stringify(MediCare.error),
                     }}
                   ></div>
                 </Alert>
               )}
-              {Medicare.success && (
+              {MediCare.success && (
                 <Alert color="success">
                   <div
-                    dangerouslySetInnerHTML={{ __html: Medicare.success }}
+                    dangerouslySetInnerHTML={{ __html: MediCare.success }}
                   ></div>
                 </Alert>
               )}
@@ -146,14 +146,14 @@ const MedicareID = (props: any) => {
           <Col xs="12">
             <Form>
               <FormItem
-                label="Medicare ID"
-                // error={Medicare.error}
+                label="MediCare ID"
+                // error={MediCare.error}
                 onChange={(e: any) => {
                   updateContext("memberID", e.target.value);
                 }}
-                placeholder="Medicare ID"
+                placeholder="MediCare ID"
                 id="memberID"
-                value={Medicare.data.memberID}
+                value={MediCare.data.memberID}
                 disabled={loading}
                 appendAddon={() => (
                   <InputGroupAddon addonType="append">
