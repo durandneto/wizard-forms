@@ -13,12 +13,21 @@ export interface CancerListInterface {
     items: Array<{ label: string; value: string }>;
   };
 }
+export interface CancerFamilyMemberInterface {
+  id: string;
+  relationship: string;
+  materialOrPaternal: string;
+  age: string;
+  ageOfDiagnosis: string;
+  typeOfCancer: string;
+}
 
 export interface CancerDiagnosticErrorInterface {
   indicationTest: string;
   isDiagnosed: string;
   isRCECancerTransfer: string;
   treatment: string;
+  sugery: string;
   OTC: string;
   cancerList: {
     brain: string;
@@ -38,7 +47,8 @@ export interface CancerDiagnosticInterface {
   indicationTest: string;
   isDiagnosed: string;
   isRCECancerTransfer?: boolean;
-  treatment: string;
+  treatment: Array<string>;
+  sugery: string;
   OTC: string;
   cancerList: {
     brain: CancerListInterface;
@@ -64,6 +74,12 @@ export interface CancerInterface {
       error: boolean;
       message: CancerDiagnosticErrorInterface;
     };
+    FamilyMember: {
+      success: boolean;
+      error: boolean;
+      message: Array<CancerFamilyMemberInterface>;
+    };
   };
   Diagnostic: CancerDiagnosticInterface;
+  FamilyMember: Array<CancerFamilyMemberInterface>;
 }

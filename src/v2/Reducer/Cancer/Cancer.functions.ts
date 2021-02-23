@@ -24,7 +24,13 @@ export const checkDiagnosticError = (
   errors.cancerList = Object.entries(info.cancerList).reduce(
     (acc: any, data: any) => {
       const [key, value] = data;
-      const message = value.value === "" ? `${key} is empty` : "";
+
+      if (value.value !== "Yes") {
+        acc[key] = "";
+        return acc;
+      }
+
+      const message = value.secondValue === "" ? `${key} is empty` : "";
       if (message !== "") {
         hasErrors = true;
       }

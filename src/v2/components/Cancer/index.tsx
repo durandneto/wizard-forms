@@ -10,10 +10,14 @@ import {
   GOT_TO_NEXT_STEP,
 } from "../../Reducer/Stepper";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import CancerQuiz from "./quiz";
+import CancerQuiz from "./Quiz";
 import SaveIcon from "@material-ui/icons/Save";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 import Alert from "@material-ui/lab/Alert";
+
+import PreviousTreatment from "./PreviousTreatment";
+import FamilyHistory from "./FamilyHistory";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     form: {
@@ -131,6 +135,8 @@ export default function Cancer() {
           value={CancerState.Diagnostic.isDiagnosed}
           title="Have you ever been diagnosed with any type of cancer?"
         />
+        <PreviousTreatment />
+        <FamilyHistory />
         <Grid item xs={12} spacing={3} className={classes.action}>
           <Button
             variant="contained"

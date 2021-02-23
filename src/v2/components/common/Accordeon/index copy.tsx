@@ -22,16 +22,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     rootContainer: {
       width: "100%",
-      margin: 0,
-      // boxShadow: "none",
-      // border: "solid 1px #ebebeb",
-      // borderRadius: "10px",
-      // "&:hove": {
-      //   background: "red",
-      // },
-      // backgroundColor: "transparent",
-      // padding: "5px 20px",
-      // margin: "10px 0",
+      boxShadow: "none",
+      border: "solid 1px #ebebeb",
+      borderRadius: "10px",
+      "&:hove": {
+        background: "red",
+      },
+      backgroundColor: "transparent",
+      padding: "5px 20px",
+      margin: "10px 0",
     },
     error: {
       margin: "-3px 15px",
@@ -39,9 +38,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     heading: {
       margin: 0,
+      color: "#0051b0",
       flex: 1,
-      color: "rgba(0,0,0, .54)",
-      fontSize: "1rem",
     },
     headingWarning: {
       margin: 0,
@@ -55,32 +53,20 @@ const useStyles = makeStyles((theme: Theme) =>
         color: "yellow",
       },
     },
-    headingHighlight: {
-      margin: 0,
-      color: "#0051b0",
-      fontSize: "1rem",
-      flex: 1,
-    },
     headingError: {
       margin: 0,
       color: "red",
-      fontSize: "1rem",
       flex: 1,
     },
     border: {
-      borderBottom: "solid 1px rgba(0,0,0, .54)",
-      // margin: "20px 0",
+      borderBottom: "solid 0.5px #0051b0",
+      margin: "20px 0",
       display: "flex",
       justifyContent: "space-between",
-      margin: 0,
-      padding: 0,
     },
     success: {
       fill: "green",
       margin: "-3px 15px",
-    },
-    children: {
-      marginTop: "15px",
     },
     secondaryHeading: {
       margin: 0,
@@ -93,13 +79,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface AccordeonInterface {
   title: string;
   description?: string;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   error?: boolean;
   success?: boolean;
   noBorder?: boolean;
-  highlight?: boolean;
   control?: boolean;
-  noChildren?: boolean;
   initialClosed?: boolean;
   onChange?: (item: any) => void;
   value?: string;
@@ -116,8 +100,6 @@ export default function ControlledAccordions({
   description,
   errorMessage,
   noBorder,
-  highlight,
-  noChildren,
   onChange,
 }: AccordeonInterface) {
   const classes = useStyles();
@@ -135,9 +117,7 @@ export default function ControlledAccordions({
           expandIcon={
             <>
               {!control && (
-                <ExpandMoreIcon
-                  onClick={() => !noChildren && setExpanded(!expanded)}
-                />
+                <ExpandMoreIcon onClick={() => setExpanded(!expanded)} />
               )}
             </>
           }
@@ -148,11 +128,10 @@ export default function ControlledAccordions({
             variant="h6"
             component="h3"
             className={
-              // classes.heading
-              // (success || value === "No") && !error
-              //   ? classes.headingSuccess
-              highlight
-                ? classes.headingHighlight
+              (success || value === "No") && !error
+                ? classes.headingSuccess
+                : error && value === "No"
+                ? classes.headingWarning
                 : error
                 ? classes.headingError
                 : classes.heading
@@ -163,7 +142,10 @@ export default function ControlledAccordions({
             {error && !success && (
               <ReportProblemIcon className={classes.error} />
             )}
-            {success && !error && <DoneAllIcon className={classes.success} />}
+            {success ||
+              (value === "No" && !error && (
+                <DoneAllIcon className={classes.success} />
+              ))}
           </Typography>
           {control && (
             <ButtonGroup size="small" aria-label="small outlined button group">
@@ -171,24 +153,22 @@ export default function ControlledAccordions({
                 onClick={(e: any) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  !noChildren && setExpanded(false);
+                  setExpanded(false);
                   // setChoice("No");
                   onChange && onChange("No");
                 }}
                 variant={value === "No" ? "contained" : "outlined"}
                 disableElevation
-                size="small"
               >
                 No
               </Button>
               <Button
                 color="primary"
-                size="small"
                 variant={value === "Yes" ? "contained" : "outlined"}
                 onClick={(e: any) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  !noChildren && setExpanded(true);
+                  setExpanded(true);
                   // setChoice("Yes");
                   onChange && onChange("Yes");
                 }}
@@ -204,11 +184,7 @@ export default function ControlledAccordions({
             <Typography>{description}</Typography>
           </AccordionDetails>
         )}
-        {!noChildren && (
-          <AccordionDetails className={classes.children}>
-            {children}
-          </AccordionDetails>
-        )}
+        <AccordionDetails>{children}</AccordionDetails>
       </Accordion>
     </div>
   );

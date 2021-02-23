@@ -45,6 +45,7 @@ export default function CancerQuiz(props: CancerQuizInterface) {
       noBorder
       // error={props.errorMessage.isDiagnosed !== ""}
       {...props}
+      highlight
       control
       initialClosed
     >
@@ -70,7 +71,7 @@ export default function CancerQuiz(props: CancerQuizInterface) {
                   required
                   id="outlined-full-width"
                   label={value.secondLabel}
-                  error={props.error}
+                  error={props.errorMessage.message.cancerList[key] !== ""}
                   style={{ margin: 8 }}
                   placeholder={value.secondLabel}
                   type="number"
@@ -99,7 +100,7 @@ export default function CancerQuiz(props: CancerQuizInterface) {
                     required
                     id="outlined-full-width"
                     label={value.number.label}
-                    error={props.error}
+                    error={props.errorMessage.message.cancerList[key] !== ""}
                     style={{ margin: 8 }}
                     placeholder={value.number.label}
                     type="number"
@@ -130,9 +131,7 @@ export default function CancerQuiz(props: CancerQuizInterface) {
                 <div>
                   <FormControl
                     component="fieldset"
-                    // error={
-                    //   UserState.errorMessage.PersonalInfo.message.ethnicity
-                    // }
+                    error={props.errorMessage.message.cancerList[key] !== ""}
                     className={classes.formControl}
                   >
                     <FormLabel component="legend">
