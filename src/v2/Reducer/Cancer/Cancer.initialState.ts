@@ -260,7 +260,18 @@ export const cancerData: CancerInterface = {
     treatment: [],
     sugery: "",
     OTC: "",
-    comprehensiveCancer: [],
+    CGXTestDescription: "",
+    availableGenes: [],
+    indicationsTesting: [],
+    previousClinicalTumorResults: {
+      microsatelliteInstabilityMSIResults: "",
+      immunohistochemistryIHCResults: "",
+    },
+    previousClinicalTestingResults: {
+      germlineTestingResults: "",
+      somaticTestingResults: "",
+      other: "",
+    },
     cancerList: CancerListData,
     other: {
       age: 8,
@@ -285,6 +296,15 @@ export const cancerData: CancerInterface = {
         isRCECancerTransfer: "",
         OTC: "",
         sugery: "",
+        previousClinicalTumorResults: {
+          microsatelliteInstabilityMSIResults: "",
+          immunohistochemistryIHCResults: "",
+        },
+        previousClinicalTestingResults: {
+          germlineTestingResults: "",
+          somaticTestingResults: "",
+          other: "",
+        },
         other: {
           age: "",
           type: "",

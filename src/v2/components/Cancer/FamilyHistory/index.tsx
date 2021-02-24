@@ -24,7 +24,7 @@ const Sugery = { value: "Sugery", title: "Sugery", children: true };
 export default function PreviousTreatment() {
   const { CancerState, CancerDispatch } = useContext(AppContext);
   return (
-    <Accordeon noBorder title="Family History" highlight initialClosed>
+    <Accordeon noBorder title="Family History" highlight initialClosed control>
       <Grid container spacing={3}>
         {CancerState.FamilyMember.length < 3 && (
           <>

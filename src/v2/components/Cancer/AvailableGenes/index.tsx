@@ -47,7 +47,7 @@ export default function PreviousTreatment() {
         >
           <FormGroup>
             {availableGenesCancerList.map((item) => {
-              const includes = CancerState.Diagnostic.comprehensiveCancer.includes(
+              const includes = CancerState.Diagnostic.availableGenes.includes(
                 item.title
               );
               return (
@@ -64,19 +64,19 @@ export default function PreviousTreatment() {
                           checked={includes}
                           onChange={(e: any) => {
                             if (includes) {
-                              const index = CancerState.Diagnostic.comprehensiveCancer.findIndex(
+                              const index = CancerState.Diagnostic.availableGenes.findIndex(
                                 (i: string) => i === item.title
                               );
                               const newPreviousTests =
-                                CancerState.Diagnostic.comprehensiveCancer;
+                                CancerState.Diagnostic.availableGenes;
                               newPreviousTests.splice(index, 1);
                               handleKeyValueChange(
-                                "comprehensiveCancer",
+                                "availableGenes",
                                 newPreviousTests
                               );
                             } else {
-                              handleKeyValueChange("comprehensiveCancer", [
-                                ...CancerState.Diagnostic.comprehensiveCancer,
+                              handleKeyValueChange("availableGenes", [
+                                ...CancerState.Diagnostic.availableGenes,
                                 item.title,
                               ]);
                             }

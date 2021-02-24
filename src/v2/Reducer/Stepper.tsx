@@ -56,14 +56,6 @@ const MainSteps2 = [
     completed: false,
   },
   {
-    label: "RCE Transfer",
-    slug: "CancerTranser",
-    children: <RECTansferCancer />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-  {
     label: "Cardiac",
     slug: "Cardiac",
     children: <Agent />,
@@ -105,7 +97,7 @@ const MainSteps2 = [
   },
 ];
 export const stepControlData: StepperInterface = {
-  activeStep: 0,
+  activeStep: 2,
   control: false,
   steps: MainSteps2,
 };

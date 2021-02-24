@@ -10,12 +10,10 @@ import {
   GOT_TO_NEXT_STEP,
 } from "../../Reducer/Stepper";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import CancerQuiz from "./Quiz";
 import SaveIcon from "@material-ui/icons/Save";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 import Alert from "@material-ui/lab/Alert";
 
-import PreviousTreatment from "./PreviousTreatment";
 import FamilyHistory from "./FamilyHistory";
 import AvailableGenes from "./AvailableGenes";
 import TestDescription from "./TestDescription";

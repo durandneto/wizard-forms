@@ -36,6 +36,15 @@ export interface CancerDiagnosticErrorInterface {
     history: string;
     value: string;
   };
+  previousClinicalTestingResults: {
+    germlineTestingResults: string;
+    somaticTestingResults: string;
+    other: string;
+  };
+  previousClinicalTumorResults: {
+    microsatelliteInstabilityMSIResults: string;
+    immunohistochemistryIHCResults: string;
+  };
   cancerList: {
     brain: string;
     breast: string;
@@ -63,7 +72,18 @@ export interface CancerDiagnosticInterface {
     history: string;
     value: string;
   };
-  comprehensiveCancer: [];
+  availableGenes: Array<string>;
+  indicationsTesting: Array<string>;
+  previousClinicalTestingResults: {
+    germlineTestingResults: string;
+    somaticTestingResults: string;
+    other: string;
+  };
+  previousClinicalTumorResults: {
+    microsatelliteInstabilityMSIResults: "";
+    immunohistochemistryIHCResults: "";
+  };
+  CGXTestDescription: string;
   cancerList: {
     brain: CancerListInterface;
     breast: CancerListInterface;

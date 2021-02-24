@@ -16,7 +16,13 @@ const Sugery = { value: "Sugery", title: "Sugery", children: true };
 export default function PreviousTreatment() {
   const { CancerState, CancerDispatch } = useContext(AppContext);
   return (
-    <Accordeon noBorder title="Previous or Current Treatment" highlight>
+    <Accordeon
+      noBorder
+      title="Previous or Current Treatment"
+      highlight
+      control
+      initialClosed
+    >
       <Grid container spacing={3}>
         {cancerList.map((test: any, index: number) => {
           const treatment = CancerState.Diagnostic.treatment.find(

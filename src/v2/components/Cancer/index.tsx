@@ -16,9 +16,12 @@ import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 import Alert from "@material-ui/lab/Alert";
 
 import PreviousTreatment from "./PreviousTreatment";
+import IndicationsTesting from "./IndicationsTesting";
 import FamilyHistory from "./FamilyHistory";
-import AvailableGenes from "./AvailableGenes";
 import TestDescription from "./TestDescription";
+import PreviousClinicalTestingResults from "./PreviousClinicalTestingResults";
+import PreviousTumorTestingResults from "./PreviousTumorTestingResults";
+import AvailableGenes from "./AvailableGenes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -118,6 +121,9 @@ export default function Cancer() {
             Bladder cancer not eligible
           </Typography>
         </Grid>
+        <AvailableGenes />
+        <TestDescription />
+        <IndicationsTesting />
         <CancerQuiz
           onChange={(e: any) => {
             handleKeyValueChange("isDiagnosed", e);
@@ -140,7 +146,10 @@ export default function Cancer() {
           value={CancerState.Diagnostic.isDiagnosed}
           title="Have you ever been diagnosed with any type of cancer?"
         />
+
         <PreviousTreatment />
+        <PreviousClinicalTestingResults />
+        <PreviousTumorTestingResults />
         <FamilyHistory />
         <Grid item xs={12} spacing={3} className={classes.action}>
           <Button
@@ -160,7 +169,8 @@ export default function Cancer() {
             variant="contained"
             color="primary"
             size="small"
-            disabled={!CancerState.success}
+            // disabled={!CancerState.success}
+            disabled={true}
             className={classes.button}
             endIcon={
               CancerState.error ? <ReportProblemIcon /> : <NavigateNextIcon />

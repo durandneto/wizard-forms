@@ -9,25 +9,26 @@ import Accordeon from "../../common/Accordeon";
 
 import { availableGenesCancerList } from "../../../Reducer/Cancer/Cancer.initialState";
 import { AppContext } from "../../../store";
+import { CANCER_UPDATE } from "../../../Reducer/Cancer";
 export default function RadioButtonsGroup() {
-  const [value, setValue] = React.useState("female");
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+    CancerDispatch({
+      type: CANCER_UPDATE,
+      key: "CGXTestDescription",
+      value: (event.target as HTMLInputElement).value,
+    });
   };
 
   const { CancerState, CancerDispatch } = useContext(AppContext);
 
-  const handleKeyValueChange = (key: string, value: any) => {
-    // CancerDispatch({
-    //   type: CANCER_UPDATE,
-    //   key,
-    //   value,
-    // });
-  };
-
   return (
-    <Accordeon noBorder title="CGX Test Description" highlight initialClosed>
+    <Accordeon
+      noBorder
+      title="CGX Test Description"
+      highlight
+      initialClosed
+      control
+    >
       <Grid container spacing={3}>
         <FormControl
           required
@@ -39,11 +40,11 @@ export default function RadioButtonsGroup() {
           <RadioGroup
             aria-label="gender"
             name="gender1"
-            value={value}
+            value={CancerState.Diagnostic.CGXTestDescription}
             onChange={handleChange}
           >
             {availableGenesCancerList.map((item) => {
-              const includes = CancerState.Diagnostic.comprehensiveCancer.includes(
+              const includes = CancerState.Diagnostic.availableGenes.includes(
                 item.title
               );
               return (
