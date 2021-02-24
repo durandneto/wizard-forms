@@ -10,7 +10,7 @@ import {
   GOT_TO_NEXT_STEP,
 } from "../../Reducer/Stepper";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import CancerQuiz from "./Quiz";
+import CancerQuiz from "./Quiz2";
 import SaveIcon from "@material-ui/icons/Save";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 import Alert from "@material-ui/lab/Alert";
