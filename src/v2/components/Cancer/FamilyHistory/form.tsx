@@ -78,6 +78,11 @@ const FamilyMemberForm = ({
     [FM]
   );
 
+  console.log(
+    JSON.stringify(familyMember) === JSON.stringify(FM),
+    familyMember,
+    FM
+  );
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -268,9 +273,9 @@ const FamilyMemberForm = ({
           size="small"
           className={classes.button}
           startIcon={<AddCircleOutlineIcon />}
-          // disabled={UserState.success}
+          disabled={JSON.stringify(familyMember) === JSON.stringify(FM)}
           onClick={() => {
-            onSave(familyMember);
+            onSave(FM);
           }}
         >
           Save
