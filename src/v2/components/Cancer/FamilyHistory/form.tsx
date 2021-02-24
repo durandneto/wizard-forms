@@ -203,7 +203,7 @@ const FamilyMemberForm = ({
           rows={4}
           // error={UserState.errorMessage.PersonalInfo.message.firstName !== ""}
           style={{ margin: 8 }}
-          placeholder="Placeholder"
+          placeholder="Diagnosis and/or Symptoms:"
           helperText={
             "Required"
             // UserState.errorMessage.PersonalInfo.message.firstName !== ""
@@ -216,21 +216,21 @@ const FamilyMemberForm = ({
           }}
           margin="dense"
           variant="outlined"
-          value={FM.name}
-          name={"name"}
+          value={FM.diagnosisOrSymptoms}
+          name={"diagnosisOrSymptoms"}
           onChange={(e: any) => handleChange(e.target.name, e.target.value)}
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
           id="outlined-full-width"
-          label="Diagnosis and/or Symptoms:"
+          label="Age of Onset"
           required
           type={"number"}
           rows={4}
           // error={UserState.errorMessage.PersonalInfo.message.firstName !== ""}
           style={{ margin: 8 }}
-          placeholder="Placeholder"
+          placeholder="Age of Onset"
           helperText={
             "Required"
             // UserState.errorMessage.PersonalInfo.message.firstName !== ""
@@ -243,8 +243,8 @@ const FamilyMemberForm = ({
           }}
           margin="dense"
           variant="outlined"
-          value={FM.name}
-          name={"name"}
+          value={FM.ageOfDiagnosis}
+          name={"ageOfDiagnosis"}
           onChange={(e: any) => handleChange(e.target.name, e.target.value)}
         />
       </Grid>
