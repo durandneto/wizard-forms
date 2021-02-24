@@ -112,35 +112,11 @@ export default function Cancer() {
         </Grid>
         <Grid item xs={12} spacing={3}>
           <Typography gutterBottom variant="h5" component="h2">
-            Cancer
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Bladder cancer not eligible
+            RCE Cancer Transfer
           </Typography>
         </Grid>
-        <CancerQuiz
-          onChange={(e: any) => {
-            handleKeyValueChange("isDiagnosed", e);
-          }}
-          onOtherChange={(key: string, value: any) => {
-            handleKeyValueChange(key, value);
-          }}
-          onUpdateChildren={(slug: string, key: string, value: any) => {
-            handleKeyValueChange("cancerList", {
-              ...CancerState.Diagnostic.cancerList,
-              [slug]: {
-                ...CancerState.Diagnostic.cancerList[slug],
-                [key]: value,
-              },
-            });
-          }}
-          cancerList={CancerState.Diagnostic.cancerList}
-          other={CancerState.Diagnostic.other}
-          errorMessage={CancerState.errorMessage.Diagnostic}
-          value={CancerState.Diagnostic.isDiagnosed}
-          title="Have you ever been diagnosed with any type of cancer?"
-        />
-        <PreviousTreatment />
+        <AvailableGenes />
+        <TestDescription />
         <FamilyHistory />
         <Grid item xs={12} spacing={3} className={classes.action}>
           <Button

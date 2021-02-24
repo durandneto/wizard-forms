@@ -21,9 +21,11 @@ interface CancerQuizInterface {
   error?: boolean;
   title: string;
   onChange: (item: any) => void;
+  onOtherChange: (item: any, value: any) => void;
   onUpdateChildren: (slug: string, key: string, value: any) => void;
   value: string;
   cancerList: any;
+  other: any;
   errorMessage: any;
 }
 
@@ -39,7 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export default function CancerQuiz(props: CancerQuizInterface) {
   const classes = useStyles();
-  console.log(props.errorMessage);
+  const { cancerList, other } = props;
+
   return (
     <Accordeon
       noBorder
@@ -50,7 +53,7 @@ export default function CancerQuiz(props: CancerQuizInterface) {
       initialClosed
     >
       <Grid container spacing={3}>
-        {Object.entries(props.cancerList).map((list: any, index: number) => {
+        {Object.entries(cancerList).map((list: any, index: number) => {
           const [key, value] = list;
           console.log([key, value]);
           return (
@@ -165,6 +168,112 @@ export default function CancerQuiz(props: CancerQuizInterface) {
             </Accordeon>
           );
         })}
+        <Accordeon
+          title={"Other Cancer"}
+          control
+          initialClosed={other.value !== "Yes"}
+          value={other.value}
+          error={props.errorMessage.message.other.value !== ""}
+          // success={props.errorMessage.cancerList[key].message.success}
+          onChange={(value: any) => {
+            props.onOtherChange("other", {
+              ...other,
+              value,
+            });
+          }}
+        >
+          <div style={{ marginRight: "15px" }}>
+            <TextField
+              required
+              id="outlined-full-width"
+              label={"Onset Age"}
+              error={props.errorMessage.message.other.age !== ""}
+              style={{ margin: 8 }}
+              placeholder={"Onset Age"}
+              type="number"
+              helperText={
+                // AgentState.errorMessage.name !== ""
+                // ? AgentState.errorMessage.name
+                // : "Required"
+                "Number, required"
+              }
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              margin="dense"
+              variant="outlined"
+              value={other.age}
+              name={"age"}
+              onChange={(e: any) => {
+                props.onOtherChange("other", {
+                  ...other,
+                  age: e.target.value,
+                });
+              }}
+            />
+          </div>
+          <div>
+            <TextField
+              required
+              id="outlined-full-width"
+              label={"Cancer Type"}
+              error={props.errorMessage.message.other.type !== ""}
+              style={{ margin: 8 }}
+              // placeholder={value.number.label}
+              helperText={
+                // AgentState.errorMessage.name !== ""
+                // ? AgentState.errorMessage.name
+                // : "Required"
+                "Required"
+              }
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              margin="dense"
+              variant="outlined"
+              value={other.type}
+              name={"type"}
+              onChange={(e: any) => {
+                props.onOtherChange("other", {
+                  ...other,
+                  type: e.target.value,
+                });
+              }}
+            />
+          </div>
+          <div style={{ marginLeft: "15px" }}>
+            <TextField
+              required
+              id="outlined-full-width"
+              label={"Clinical History"}
+              error={props.errorMessage.message.other.history !== ""}
+              style={{ margin: 8 }}
+              // placeholder={value.number.label}
+              helperText={
+                // AgentState.errorMessage.name !== ""
+                // ? AgentState.errorMessage.name
+                // : "Required"
+                "Required"
+              }
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              margin="dense"
+              variant="outlined"
+              value={other.history}
+              name={"history"}
+              onChange={(e: any) => {
+                props.onOtherChange("other", {
+                  ...other,
+                  history: e.target.value,
+                });
+              }}
+            />
+          </div>
+        </Accordeon>
       </Grid>
     </Accordeon>
   );

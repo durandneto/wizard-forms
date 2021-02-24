@@ -30,6 +30,12 @@ export interface CancerDiagnosticErrorInterface {
   treatment: string;
   sugery: string;
   OTC: string;
+  other: {
+    age: string;
+    type: string;
+    history: string;
+    value: string;
+  };
   cancerList: {
     brain: string;
     breast: string;
@@ -51,6 +57,13 @@ export interface CancerDiagnosticInterface {
   treatment: Array<string>;
   sugery: string;
   OTC: string;
+  other: {
+    age: number;
+    type: string;
+    history: string;
+    value: string;
+  };
+  comprehensiveCancer: [];
   cancerList: {
     brain: CancerListInterface;
     breast: CancerListInterface;

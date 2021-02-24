@@ -2,6 +2,7 @@ import { StepperInterface } from "../components/common/Stepper";
 import Agent from "../components/Agent";
 import User from "../components/User";
 import Cancer from "../components/Cancer";
+import RECTansferCancer from "../components/Cancer/RCETransfer";
 
 export const SET_CURRENT_STEP = "STEP/SET_CURRENT_STEP";
 export const SET_STEP_ERROR = "STEP/SET_STEP_ERROR";
@@ -55,9 +56,25 @@ const MainSteps2 = [
     completed: false,
   },
   {
+    label: "RCE Transfer",
+    slug: "CancerTranser",
+    children: <RECTansferCancer />,
+    error: false,
+    success: false,
+    completed: false,
+  },
+  {
     label: "Cardiac",
     slug: "Cardiac",
     children: <Agent />,
+    error: false,
+    success: false,
+    completed: false,
+  },
+  {
+    label: "RCE Transfer",
+    slug: "CancerTranser",
+    children: <Cancer />,
     error: false,
     success: false,
     completed: false,
@@ -70,9 +87,25 @@ const MainSteps2 = [
     success: false,
     completed: false,
   },
+  {
+    label: "RCE Transfer",
+    slug: "CancerTranser",
+    children: <Cancer />,
+    error: false,
+    success: false,
+    completed: false,
+  },
+  {
+    label: "Review",
+    slug: "CancerTranser",
+    children: <Cancer />,
+    error: false,
+    success: false,
+    completed: false,
+  },
 ];
 export const stepControlData: StepperInterface = {
-  activeStep: 2,
+  activeStep: 0,
   control: false,
   steps: MainSteps2,
 };
