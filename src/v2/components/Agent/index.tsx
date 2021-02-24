@@ -84,6 +84,7 @@ export default function Agent() {
           </Typography>
         </Grid>
         <Accordeon
+          highlight
           error={AgentState.error}
           success={AgentState.success}
           title="Info"

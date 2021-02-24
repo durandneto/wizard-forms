@@ -79,6 +79,7 @@ export default function User() {
         </Grid>
         <Grid item xs={12} spacing={3}>
           <Accordeon
+            highlight
             error={UserState.errorMessage.PersonalInfo.error}
             success={UserState.errorMessage.PersonalInfo.success}
             title="Personal Info"
@@ -89,6 +90,7 @@ export default function User() {
         </Grid>
         <Grid item xs={12} spacing={3}>
           <Accordeon
+            highlight
             error={UserState.errorMessage.AddressInfo.error}
             success={UserState.errorMessage.AddressInfo.success}
             title="Address"
@@ -99,6 +101,7 @@ export default function User() {
         </Grid>
         <Grid item xs={12} spacing={3}>
           <Accordeon
+            highlight
             error={UserState.errorMessage.AditionalInformation.error}
             success={UserState.errorMessage.AditionalInformation.success}
             title="Aditional Information"
@@ -109,6 +112,7 @@ export default function User() {
         </Grid>
         <Grid item xs={12} spacing={3}>
           <Accordeon
+            highlight
             error={UserState.errorMessage.MediCare.error}
             success={UserState.errorMessage.MediCare.success}
             title="MediCare"
@@ -119,6 +123,7 @@ export default function User() {
         </Grid>
         <Grid item xs={12} spacing={3}>
           <Accordeon
+            highlight
             title="Primary Care"
             error={UserState.errorMessage.PrimaryCare.error}
             success={UserState.errorMessage.PrimaryCare.success}

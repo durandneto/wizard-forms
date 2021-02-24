@@ -164,11 +164,12 @@ export const CancerListData = {
 
 export const familyMemberData: CancerFamilyMemberInterface = {
   id: "",
+  name: "",
   relationship: "",
-  materialOrPaternal: "",
-  age: "",
+  gender: "",
+  dob: "",
   ageOfDiagnosis: "",
-  typeOfCancer: "",
+  diagnosisOrSymptoms: "",
 };
 
 export const cancerData: CancerInterface = {

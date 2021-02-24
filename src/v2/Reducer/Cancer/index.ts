@@ -1,7 +1,7 @@
 import { guidGenerator } from "../../../utils";
 import { checkDiagnosticError } from "./Cancer.functions";
 import { familyMemberData } from "./Cancer.initialState";
-import { CancerInterface } from "./Cancer.model";
+import { CancerFamilyMemberInterface, CancerInterface } from "./Cancer.model";
 
 export const CANCER_SET_ERROR = "CANCER/CANCER_SET_ERROR";
 export const CANCER_UPDATE = "CANCER/CANCER_UPDATE";
@@ -15,12 +15,14 @@ export type CancerActionInterface =
     }
   | {
       type: "CANCER/CANCER_UPDATE_FAMILY_MEMBER";
+      fm: CancerFamilyMemberInterface;
     }
   | {
       type: "CANCER/CANCER_ADD_FAMILY_MEMBER";
     }
   | {
       type: "CANCER/CANCER_REMOVE_FAMILY_MEMBER";
+      id: string;
     }
   | { type: "CANCER/CANCER_UPDATE"; key: string; value: any };
 
@@ -47,14 +49,26 @@ export default function reducer(
         ],
       };
     case CANCER_REMOVE_FAMILY_MEMBER:
+      const fmIndex = state.FamilyMember.findIndex((f) => f.id === action.id);
+      let newaFm = state.FamilyMember;
+      if (fmIndex > -1) {
+        newaFm.splice(fmIndex, 1);
+      }
       return {
         ...state,
-        FamilyMember: [...state.FamilyMember, familyMemberData],
+        FamilyMember: [...newaFm],
       };
     case CANCER_UPDATE_FAMILY_MEMBER:
+      const fmaIndex = state.FamilyMember.findIndex(
+        (f) => f.id === action.fm.id
+      );
+      let newFm = state.FamilyMember;
+      if (fmaIndex > -1) {
+        newFm[fmaIndex] = action.fm;
+      }
       return {
         ...state,
-        FamilyMember: [...state.FamilyMember, familyMemberData],
+        FamilyMember: [...newFm],
       };
     case CANCER_SET_ERROR:
       const [hasErr, DiaMessage] = checkDiagnosticError(state.Diagnostic);

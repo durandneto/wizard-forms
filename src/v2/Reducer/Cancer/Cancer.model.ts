@@ -16,10 +16,11 @@ export interface CancerListInterface {
 export interface CancerFamilyMemberInterface {
   id: string;
   relationship: string;
-  materialOrPaternal: string;
-  age: string;
+  name: string;
+  dob: string;
+  gender: string;
   ageOfDiagnosis: string;
-  typeOfCancer: string;
+  diagnosisOrSymptoms: string;
 }
 
 export interface CancerDiagnosticErrorInterface {
