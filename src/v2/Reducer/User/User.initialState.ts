@@ -101,6 +101,7 @@ export const userData: UserInterface = {
     Provider_LastName: "Fastflow Marketing",
     Provider_NPI: "1609388842",
     payerCode: "00007",
+    extendedMedicareLeadData: {},
   },
   AditionalInformation: {
     previousTests: [],

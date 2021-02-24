@@ -148,7 +148,7 @@ export default function UserMedicareForm() {
                       UserDispatch({
                         type: USER_UPDATE_MEDICARE_INFO,
                         key: "extendedMedicareLeadData",
-                        value: r,
+                        value: r || {},
                       });
                       UserDispatch({ type: USER_SET_ERROR_MEDI_CARE });
                       setLoading(false);
@@ -213,7 +213,8 @@ export default function UserMedicareForm() {
                     case key === "MedicareInfoSummary":
                       return (
                         <>
-                          {UserState.MediCare.extendedMedicareLeadData &&
+                          {UserState.MediCare.extendedMedicareLeadData
+                            .MedicareInfoSummary &&
                             Object.entries(
                               UserState.MediCare.extendedMedicareLeadData
                                 .MedicareInfoSummary

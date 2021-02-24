@@ -8,7 +8,7 @@ export interface ProfileMedicareDataInterface {
   Provider_NPI: string;
   payerCode: string;
   memberID: string;
-  extendedMedicareLeadData?: any;
+  extendedMedicareLeadData: any;
 }
 
 export interface UserAddressInfoErrorInterface {

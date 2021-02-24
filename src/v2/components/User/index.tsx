@@ -8,7 +8,7 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import PersonalInfoForm from "./forms/PersonalInfo";
 import AddressInfoForm from "./forms/AddressInfo";
 import AditionalInfoForm from "./forms/AditionalInfo";
-import MedicareForm from "./forms/MediCare";
+import MedicareForm from "./forms/MediCare2";
 import PrimaryCareForm from "./forms/PrimaryCare";
 import { AppContext } from "../../store";
 import {
