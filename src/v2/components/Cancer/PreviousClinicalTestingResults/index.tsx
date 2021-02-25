@@ -157,31 +157,6 @@ export default function PreviousTreatment() {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="outlined-full-width"
-            label={"Other, specify"}
-            // error={props.errorMessage.message.cancerList[key] !== ""}
-            style={{ margin: 8 }}
-            // placeholder={value.number.label}
-            helperText={
-              // AgentState.errorMessage.name !== ""
-              // ? AgentState.errorMessage.name
-              // : "Required"
-              "Required"
-            }
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="dense"
-            variant="outlined"
-            value={CancerState.Diagnostic.previousClinicalTestingResults.other}
-            name={"other"}
-            onChange={handleChange}
-          />
-        </Grid>
       </Grid>
     </Accordeon>
   );

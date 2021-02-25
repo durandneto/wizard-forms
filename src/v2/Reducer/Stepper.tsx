@@ -2,12 +2,13 @@ import { StepperInterface } from "../components/common/Stepper";
 import Agent from "../components/Agent";
 import User from "../components/User";
 import Cancer from "../components/Cancer";
-import RECTansferCancer from "../components/Cancer/RCETransfer";
+import Cardiac from "../components/Cardiac";
 
 export const SET_CURRENT_STEP = "STEP/SET_CURRENT_STEP";
 export const SET_STEP_ERROR = "STEP/SET_STEP_ERROR";
 export const SET_STEP_SUCCESS = "STEP/SET_STEP_SUCCESS";
-export const GOT_TO_NEXT_STEP = "STEP/GOT_TO_NEXT_STEP";
+export const GO_TO_NEXT_STEP = "STEP/GO_TO_NEXT_STEP";
+export const BACK_TO_PREV_STEP = "STEP/BACK_TO_PREV_STEP";
 
 export type StepperActionInterface =
   | {
@@ -18,7 +19,10 @@ export type StepperActionInterface =
       type: "STEP/SET_STEP_ERROR";
     }
   | {
-      type: "STEP/GOT_TO_NEXT_STEP";
+      type: "STEP/BACK_TO_PREV_STEP";
+    }
+  | {
+      type: "STEP/GO_TO_NEXT_STEP";
     }
   | {
       type: "STEP/SET_STEP_SUCCESS";
@@ -58,31 +62,7 @@ const MainSteps2 = [
   {
     label: "Cardiac",
     slug: "Cardiac",
-    children: <Agent />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-  {
-    label: "RCE Transfer",
-    slug: "CancerTranser",
-    children: <Cancer />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-  {
-    label: "Diabetes",
-    slug: "Diabetes",
-    children: <Agent />,
-    error: false,
-    success: false,
-    completed: false,
-  },
-  {
-    label: "RCE Transfer",
-    slug: "CancerTranser",
-    children: <Cancer />,
+    children: <Cardiac />,
     error: false,
     success: false,
     completed: false,
@@ -90,9 +70,9 @@ const MainSteps2 = [
   {
     label: "Review",
     slug: "CancerTranser",
-    children: <Cancer />,
+    children: <p>In Progress</p>,
     error: false,
-    success: false,
+    success: true,
     completed: false,
   },
 ];
@@ -127,11 +107,20 @@ export default function reducer(
       return {
         ...state,
       };
-    case GOT_TO_NEXT_STEP:
+    case GO_TO_NEXT_STEP:
       return {
         ...state,
         activeStep: state.activeStep + 1,
       };
+    case BACK_TO_PREV_STEP:
+      if (state.activeStep > 0) {
+        return {
+          ...state,
+          activeStep: state.activeStep - 1,
+        };
+      } else {
+        return state;
+      }
     default:
       return state;
   }

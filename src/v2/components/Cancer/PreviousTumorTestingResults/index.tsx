@@ -88,7 +88,6 @@ export default function PreviousTreatment() {
       noBorder
       title="Previous Tumor Testing Results"
       highlight
-      control
       initialClosed
     >
       <Grid container spacing={3}>

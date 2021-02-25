@@ -14,11 +14,13 @@ import { AppContext } from "../../store";
 import {
   SET_STEP_ERROR,
   SET_STEP_SUCCESS,
-  GOT_TO_NEXT_STEP,
+  GO_TO_NEXT_STEP,
+  BACK_TO_PREV_STEP,
 } from "../../Reducer/Stepper";
 import { USER_SET_ERROR } from "../../Reducer/User";
 import SaveIcon from "@material-ui/icons/Save";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
+import NavigatePrevIcon from "@material-ui/icons/NavigateBefore";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,11 +33,12 @@ const useStyles = makeStyles((theme: Theme) =>
     action: {
       justifyContent: "flex-end",
       display: "flex",
-      marginTop: "30px",
+      position: "fixed",
+      top: 0,
+      right: 0,
     },
     button: {
-      margin: "0 15px",
-      backgroundColor: "green",
+      margin: theme.spacing(1, 1, 0, 0),
     },
     root: {
       flexGrow: 1,
@@ -136,11 +139,21 @@ export default function User() {
       <Grid item xs={12} spacing={3} className={classes.action}>
         <Button
           variant="contained"
+          size="small"
+          className={classes.button}
+          startIcon={<NavigatePrevIcon />}
+          onClick={() => {
+            StepperDispatch({ type: BACK_TO_PREV_STEP });
+          }}
+        >
+          PREV
+        </Button>
+        <Button
+          variant="contained"
           color="primary"
           size="small"
           className={classes.button}
           startIcon={<SaveIcon />}
-          disabled={UserState.success}
           onClick={() => {
             UserDispatch({ type: USER_SET_ERROR });
           }}
@@ -150,12 +163,14 @@ export default function User() {
         <Button
           variant="contained"
           color="primary"
+          size="small"
           disabled={!UserState.success}
+          className={classes.button}
           endIcon={
             UserState.error ? <ReportProblemIcon /> : <NavigateNextIcon />
           }
           onClick={() => {
-            StepperDispatch({ type: GOT_TO_NEXT_STEP });
+            StepperDispatch({ type: GO_TO_NEXT_STEP });
           }}
         >
           Next

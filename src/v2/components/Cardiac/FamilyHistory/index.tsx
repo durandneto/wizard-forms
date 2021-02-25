@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
 import Accordeon from "../../common/Accordeon";
-import { Button, Grid, Paper, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { AppContext } from "../../../store";
 import FamilyMemberForm from "./form";
 import {
-  CANCER_ADD_FAMILY_MEMBER,
-  CANCER_UPDATE,
-  CANCER_UPDATE_FAMILY_MEMBER,
-  CANCER_REMOVE_FAMILY_MEMBER,
-} from "../../../Reducer/Cancer";
-import { CancerFamilyMemberInterface } from "../../../Reducer/Cancer/Cancer.model";
+  CARDIAC_ADD_FAMILY_MEMBER,
+  CARDIAC_UPDATE,
+  CARDIAC_UPDATE_FAMILY_MEMBER,
+  CARDIAC_REMOVE_FAMILY_MEMBER,
+} from "../../../Reducer/Cardiac";
+import { CardiacFamilyMemberInterface } from "../../../Reducer/Cardiac/Cardiac.model";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-const cancerList = [
+const cardiacList = [
   {
     value: "Allogeneic",
     title: "Allogeneic bone marrow or peripheral stem cell transplant",
@@ -22,13 +22,13 @@ const cancerList = [
 ];
 const Sugery = { value: "Sugery", title: "Sugery", children: true };
 export default function PreviousTreatment() {
-  const { CancerState, CancerDispatch } = useContext(AppContext);
+  const { CardiacState, CardiacDispatch } = useContext(AppContext);
   return (
-    <Accordeon noBorder title="Family History" highlight initialClosed>
+    <Accordeon noBorder title="Family History" highlight>
       <Grid container spacing={3}>
-        {CancerState.FamilyMember.length < 3 && (
+        {CardiacState.FamilyMember.length < 3 && (
           <>
-            {CancerState.FamilyMember.length === 0 && (
+            {CardiacState.FamilyMember.length === 0 && (
               <Grid item xs={12} spacing={3}>
                 <Typography variant="body2" color="textSecondary" component="p">
                   You didn't add any Family Member yet, to add a new Family
@@ -41,8 +41,8 @@ export default function PreviousTreatment() {
                 startIcon={<AddCircleOutlineIcon />}
                 size="small"
                 onClick={() => {
-                  CancerDispatch({
-                    type: CANCER_ADD_FAMILY_MEMBER,
+                  CardiacDispatch({
+                    type: CARDIAC_ADD_FAMILY_MEMBER,
                   });
                 }}
                 variant="outlined"
@@ -53,8 +53,8 @@ export default function PreviousTreatment() {
             </Grid>
           </>
         )}
-        {CancerState.FamilyMember.map(
-          (F: CancerFamilyMemberInterface, index: number) => (
+        {CardiacState.FamilyMember.map(
+          (F: CardiacFamilyMemberInterface, index: number) => (
             <Accordeon
               title={`Family Member ${index}`}
               key={`Family-Member-${F.id}`}
@@ -63,8 +63,8 @@ export default function PreviousTreatment() {
                   debugger;
                 } else {
                   debugger;
-                  CancerDispatch({
-                    type: CANCER_UPDATE,
+                  CardiacDispatch({
+                    type: CARDIAC_UPDATE,
                     key: "sugery",
                     value: "",
                   });
@@ -74,14 +74,14 @@ export default function PreviousTreatment() {
               <FamilyMemberForm
                 familyMember={F}
                 onRemove={(id: string) => {
-                  CancerDispatch({
-                    type: CANCER_REMOVE_FAMILY_MEMBER,
+                  CardiacDispatch({
+                    type: CARDIAC_REMOVE_FAMILY_MEMBER,
                     id,
                   });
                 }}
-                onSave={(fm: CancerFamilyMemberInterface) => {
-                  CancerDispatch({
-                    type: CANCER_UPDATE_FAMILY_MEMBER,
+                onSave={(fm: CardiacFamilyMemberInterface) => {
+                  CardiacDispatch({
+                    type: CARDIAC_UPDATE_FAMILY_MEMBER,
                     fm,
                   });
                 }}

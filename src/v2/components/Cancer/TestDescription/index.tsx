@@ -22,13 +22,7 @@ export default function RadioButtonsGroup() {
   const { CancerState, CancerDispatch } = useContext(AppContext);
 
   return (
-    <Accordeon
-      noBorder
-      title="CGX Test Description"
-      highlight
-      initialClosed
-      control
-    >
+    <Accordeon noBorder title="CGX Test Description" highlight initialClosed>
       <Grid container spacing={3}>
         <FormControl
           required

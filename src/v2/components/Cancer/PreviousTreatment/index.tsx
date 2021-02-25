@@ -20,7 +20,6 @@ export default function PreviousTreatment() {
       noBorder
       title="Previous or Current Treatment"
       highlight
-      control
       initialClosed
     >
       <Grid container spacing={3}>

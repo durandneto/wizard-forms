@@ -8,11 +8,12 @@ import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import {
   SET_STEP_ERROR,
   SET_STEP_SUCCESS,
-  GOT_TO_NEXT_STEP,
+  GO_TO_NEXT_STEP,
 } from "../../Reducer/Stepper";
 import Accordeon from "../common/Accordeon";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
+import SaveIcon from "@material-ui/icons/Save";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,7 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
     action: {
       justifyContent: "flex-end",
       display: "flex",
-      marginTop: "30px",
+      position: "fixed",
+      top: 0,
+      right: 0,
+    },
+    button: {
+      margin: theme.spacing(1, 1, 0, 0),
     },
     root: {
       flexGrow: 1,
@@ -36,10 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
       textAlign: "center",
       color: theme.palette.text.secondary,
-      backgroundColor: "transparent",
-    },
-    button: {
-      margin: theme.spacing(1, 1, 0, 0),
     },
   })
 );
@@ -139,18 +141,6 @@ export default function Agent() {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Button
-                onClick={() => {
-                  AgentDispatch({ type: AGENT_SET_ERROR });
-                }}
-                variant="outlined"
-                color="primary"
-                className={classes.button}
-              >
-                Save
-              </Button>
-            </Grid>
           </Grid>
         </Accordeon>
       </Grid>
@@ -158,12 +148,26 @@ export default function Agent() {
         <Button
           variant="contained"
           color="primary"
+          size="small"
+          className={classes.button}
+          startIcon={<SaveIcon />}
+          onClick={() => {
+            AgentDispatch({ type: AGENT_SET_ERROR });
+          }}
+        >
+          Validate form
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
           disabled={!AgentState.success}
+          className={classes.button}
+          size="small"
           endIcon={
             AgentState.error ? <ReportProblemIcon /> : <NavigateNextIcon />
           }
           onClick={() => {
-            StepperDispatch({ type: GOT_TO_NEXT_STEP });
+            StepperDispatch({ type: GO_TO_NEXT_STEP });
           }}
         >
           Next

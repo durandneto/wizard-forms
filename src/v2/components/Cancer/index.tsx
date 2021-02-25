@@ -7,7 +7,8 @@ import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import {
   SET_STEP_ERROR,
   SET_STEP_SUCCESS,
-  GOT_TO_NEXT_STEP,
+  GO_TO_NEXT_STEP,
+  BACK_TO_PREV_STEP,
 } from "../../Reducer/Stepper";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import CancerQuiz from "./Quiz";
@@ -22,7 +23,7 @@ import TestDescription from "./TestDescription";
 import PreviousClinicalTestingResults from "./PreviousClinicalTestingResults";
 import PreviousTumorTestingResults from "./PreviousTumorTestingResults";
 import AvailableGenes from "./AvailableGenes";
-
+import NavigatePrevIcon from "@material-ui/icons/NavigateBefore";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     form: {
@@ -34,7 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
     action: {
       justifyContent: "flex-end",
       display: "flex",
-      marginTop: "30px",
+      position: "fixed",
+      top: "-15px",
+      right: 0,
     },
     root: {
       flexGrow: 1,
@@ -153,12 +156,22 @@ export default function Cancer() {
         <FamilyHistory />
         <Grid item xs={12} spacing={3} className={classes.action}>
           <Button
+            size="small"
+            variant="contained"
+            className={classes.button}
+            startIcon={<NavigatePrevIcon />}
+            onClick={() => {
+              StepperDispatch({ type: BACK_TO_PREV_STEP });
+            }}
+          >
+            PREV
+          </Button>
+          <Button
             variant="contained"
             color="primary"
             size="small"
             className={classes.button}
             startIcon={<SaveIcon />}
-            disabled={CancerState.success}
             onClick={() => {
               CancerDispatch({ type: CANCER_SET_ERROR });
             }}
@@ -169,14 +182,13 @@ export default function Cancer() {
             variant="contained"
             color="primary"
             size="small"
-            // disabled={!CancerState.success}
-            disabled={true}
+            disabled={!CancerState.success}
             className={classes.button}
             endIcon={
               CancerState.error ? <ReportProblemIcon /> : <NavigateNextIcon />
             }
             onClick={() => {
-              StepperDispatch({ type: GOT_TO_NEXT_STEP });
+              StepperDispatch({ type: GO_TO_NEXT_STEP });
             }}
           >
             Next
